@@ -32,6 +32,21 @@ linear-gradient(170deg,transparent 48%,#0875bb 49% 52%,transparent 53%);filter:b
 .legend{position:absolute;bottom:15px;right:18px;font-size:12px;background:#ffffffd9;padding:7px 10px;border-radius:10px}
 .highlights{display:grid;grid-template-columns:190px repeat(3,1fr);gap:12px;margin-top:16px}.hl{background:#fff;border-radius:17px;padding:18px;box-shadow:0 8px 25px #07558a18;display:flex;align-items:center;gap:13px}.hl.title{font-size:21px;font-weight:900;background:#dff4ff}.num{flex:0 0 44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:24px;font-weight:900;background:var(--green)}.hl:nth-child(3) .num{background:#f5aa00}.hl:nth-child(4) .num{background:var(--red)}
 footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding:15px;text-align:center;font-weight:700;letter-spacing:2px}
+
+.maluku-map{min-height:485px;background:linear-gradient(180deg,#effaff,#dff5ff);position:relative}
+
+
+
+
+
+
+.malut-card{right:7%;top:14%;border-color:#8b35d1}.maluku-card{left:8%;bottom:18%;border-color:#0b67b2}
+.map-title-small{position:absolute;top:18px;left:20px;font-weight:900;color:#0b4d83;letter-spacing:.5px}
+#realMap{position:absolute;inset:45px 20px 35px;width:calc(100% - 40px);height:calc(100% - 80px)}
+.map-land{stroke:#fff;stroke-width:1.2;vector-effect:non-scaling-stroke}
+.map-maluku{fill:#168bc1}.map-malut{fill:#8b35d1}
+.map-error{font-size:16px;fill:#b42318;font-weight:700}
+
 @media(max-width:950px){.cards,.grid,.highlights{grid-template-columns:1fr}.card{min-height:150px}.map{min-height:520px}.tag{letter-spacing:3px}.hl.title{justify-content:center}}
 @media print{body{background:white}.wrap{max-width:none;padding:0}.controls{display:none}.panel,.card,.hl,.hero{box-shadow:none}button{display:none}}
 </style>
@@ -39,8 +54,8 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <body>
 <div class="wrap">
 <section class="hero">
-<h1>PROGRES KONTRAKTUAL</h1>
-<div class="sub">KONSTRUKSI PEMBANGUNAN KNMP TA 2026</div>
+<h1>PROGRES KONTRAK</h1>
+<div class="sub">KONSTRUKSI PEMBANGUNAN KNMP MALUKU DAN MALUKU UTARA TA 2026</div>
 <div class="tag">INFRASTRUKTUR TANGGUH &nbsp;|&nbsp; KONEKTIVITAS MERATA &nbsp;|&nbsp; INDONESIA MAJU</div>
 </section>
 
@@ -57,15 +72,12 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <table><thead><tr><th>No</th><th>Wilayah</th><th>Target</th><th>Realisasi</th><th>Belum</th><th>Persentase</th></tr></thead><tbody id="rows"></tbody><tfoot id="foot"></tfoot></table>
 </div>
 <div class="panel">
-<h2>SEBARAN TARGET DAN REALISASI KONTRAK PER WILAYAH</h2>
-<div class="map"><div class="islands"></div>
-<div class="region r1">SUMATERA<br><b>312 | 254 | 58</b></div>
-<div class="region r2">JAWA<br><b>134 | 134 | 0</b></div>
-<div class="region r3">KALIMANTAN<br><b>89 | 69 | 20</b></div>
-<div class="region r4">SULAWESI<br><b>274 | 245 | 29</b></div>
-<div class="region r5">MALUKU UTARA<br><b>66 | 38 | 28</b></div>
-<div class="region r6">MALUKU<br><b>79 | 58 | 21</b></div>
-<div class="region r7">BALI & NUSA TENGGARA<br><b>115 | 113 | 2</b></div>
+<h2>SEBARAN TARGET DAN REALISASI KONTRAK MALUKU & MALUKU UTARA</h2>
+<div class="map maluku-map">
+<svg id="realMap" viewBox="0 0 620 485" role="img" aria-label="Peta geografis Maluku dan Maluku Utara"></svg>
+<div class="region malut-card">MALUKU UTARA<br><b id="map-malut">-</b></div>
+<div class="region maluku-card">MALUKU<br><b id="map-maluku">-</b></div>
+<div class="map-title-small">Peta Wilayah Maluku & Maluku Utara</div>
 <div class="legend">Angka: Target | Realisasi | Belum Kontrak</div>
 </div>
 </div>
@@ -79,6 +91,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 </section>
 <footer>INFRASTRUKTUR TANGGUH &nbsp; • &nbsp; KONEKTIVITAS MERATA &nbsp; • &nbsp; MANFAAT UNTUK RAKYAT &nbsp; • &nbsp; TA 2026</footer>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
 let data = [];
 const SHEET_ID="1269tZjx2g-yHz_7uU0HNg7Lta-KrDc7FrjoLbW43cDw";
@@ -104,7 +117,51 @@ function updateDashboard(){
  document.getElementById('realPct').textContent=pct(r,t).toFixed(1).replace('.',',')+'%';document.getElementById('realRing').style.setProperty('--p',pct(r,t));
  document.getElementById('belumPct').textContent=pct(b,t).toFixed(1).replace('.',',')+'%';document.getElementById('belumRing').style.setProperty('--p',pct(b,t));
  render();
+ const maluku=data.find(x=>x.wilayah.toLowerCase()==='maluku');
+ const malut=data.find(x=>x.wilayah.toLowerCase()==='maluku utara');
+ if(maluku) document.getElementById('map-maluku').textContent=`${fmt(maluku.target)} | ${fmt(maluku.realisasi)} | ${fmt(maluku.belum)}`;
+ if(malut) document.getElementById('map-malut').textContent=`${fmt(malut.target)} | ${fmt(malut.realisasi)} | ${fmt(malut.belum)}`;
 }
+
+async function loadRealMap(){
+ const svg=document.getElementById('realMap');
+ const NS='http://www.w3.org/2000/svg';
+ try{
+  const sources=[
+   {url:'https://raw.githubusercontent.com/ghapsara/indonesia-atlas/master/kabupaten-kota/Maluku/maluku-simplified-topo.json',cls:'map-maluku'},
+   {url:'https://raw.githubusercontent.com/ghapsara/indonesia-atlas/master/kabupaten-kota/Maluku%20Utara/maluku-utara-simplified-topo.json',cls:'map-malut'}
+  ];
+  const geos=[];
+  for(const src of sources){
+   const topo=await (await fetch(src.url)).json();
+   const key=Object.keys(topo.objects)[0];
+   const geo=topojson.feature(topo,topo.objects[key]);
+   geos.push({geo,cls:src.cls});
+  }
+  const all=geos.flatMap(g=>g.geo.features.flatMap(f=>flattenCoords(f.geometry.coordinates)));
+  const xs=all.map(p=>p[0]),ys=all.map(p=>p[1]);
+  const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+  const W=620,H=485,pad=55,scale=Math.min((W-2*pad)/(maxX-minX),(H-2*pad)/(maxY-minY));
+  const project=p=>[pad+(p[0]-minX)*scale,H-pad-(p[1]-minY)*scale];
+  for(const g of geos){
+   for(const f of g.geo.features){
+    const path=document.createElementNS(NS,'path');
+    path.setAttribute('d',geometryPath(f.geometry,project));
+    path.setAttribute('class','map-land '+g.cls);
+    svg.appendChild(path);
+   }
+  }
+ }catch(e){
+  const t=document.createElementNS(NS,'text');t.setAttribute('x','40');t.setAttribute('y','240');t.setAttribute('class','map-error');
+  t.textContent='Peta tidak dapat dimuat. Periksa koneksi internet.';svg.appendChild(t);
+ }
+}
+function flattenCoords(c){return typeof c[0]==='number'?[c]:c.flatMap(flattenCoords)}
+function geometryPath(g,proj){
+ const polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];
+ return polys.map(poly=>poly.map(r=>r.map((p,i)=>{const q=proj(p);return (i?'L':'M')+q[0].toFixed(1)+','+q[1].toFixed(1)}).join('')+'Z').join('')).join('');
+}
+
 async function loadSheet(){
  try{
   const res=await fetch(SHEET_URL,{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
@@ -113,6 +170,7 @@ async function loadSheet(){
   document.getElementById('rows').innerHTML='<tr><td colspan="6" style="padding:24px;color:#b42318"><b>Google Sheets belum dapat dibaca.</b><br>Pastikan akses: Siapa saja yang memiliki link → Pelihat.</td></tr>';
  }
 }
+loadRealMap();
 loadSheet();
 </script>
 </body></html>
