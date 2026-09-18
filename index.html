@@ -85,9 +85,9 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 
 <section class="highlights">
 <div class="hl title">▥ &nbsp; HIGHLIGHT UTAMA</div>
-<div class="hl"><div class="num">1</div><div>Realisasi kontrak mencapai <b>85,2%</b> dari target <b>1.069 lokasi</b>.</div></div>
-<div class="hl"><div class="num">2</div><div>Wilayah <b>Jawa</b> telah mencapai <b>100%</b> realisasi kontrak.</div></div>
-<div class="hl"><div class="num">3</div><div>Percepatan diperlukan di <b>Maluku Utara (57,6%)</b> dan <b>Kalimantan (77,5%)</b>.</div></div>
+<div class="hl"><div class="num">1</div><div id="hl-total">Memuat progres kontrak Maluku dan Maluku Utara...</div></div>
+<div class="hl"><div class="num">2</div><div id="hl-maluku">Memuat progres Maluku...</div></div>
+<div class="hl"><div class="num">3</div><div id="hl-malut">Memuat progres Maluku Utara...</div></div>
 </section>
 <footer>INFRASTRUKTUR TANGGUH &nbsp; • &nbsp; KONEKTIVITAS MERATA &nbsp; • &nbsp; MANFAAT UNTUK RAKYAT &nbsp; • &nbsp; TA 2026</footer>
 </div>
@@ -121,6 +121,21 @@ function updateDashboard(){
  const malut=data.find(x=>x.wilayah.toLowerCase()==='maluku utara');
  if(maluku) document.getElementById('map-maluku').textContent=`${fmt(maluku.target)} | ${fmt(maluku.realisasi)} | ${fmt(maluku.belum)}`;
  if(malut) document.getElementById('map-malut').textContent=`${fmt(malut.target)} | ${fmt(malut.realisasi)} | ${fmt(malut.belum)}`;
+
+ const fokus=[maluku,malut].filter(Boolean);
+ const totalTarget=fokus.reduce((a,x)=>a+x.target,0);
+ const totalReal=fokus.reduce((a,x)=>a+x.realisasi,0);
+ const totalBelum=Math.max(0,totalTarget-totalReal);
+ const totalPct=pct(totalReal,totalTarget).toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1});
+ document.getElementById('hl-total').innerHTML=`Realisasi kontrak <b>Maluku dan Maluku Utara</b> mencapai <b>${totalPct}%</b>: <b>${fmt(totalReal)}</b> dari target <b>${fmt(totalTarget)}</b>, dengan <b>${fmt(totalBelum)}</b> belum kontrak.`;
+ if(maluku){
+   const p=pct(maluku.realisasi,maluku.target).toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1});
+   document.getElementById('hl-maluku').innerHTML=`<b>Maluku</b>: realisasi <b>${fmt(maluku.realisasi)}</b> dari target <b>${fmt(maluku.target)}</b> (<b>${p}%</b>), belum kontrak <b>${fmt(maluku.belum)}</b>.`;
+ }
+ if(malut){
+   const p=pct(malut.realisasi,malut.target).toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1});
+   document.getElementById('hl-malut').innerHTML=`<b>Maluku Utara</b>: realisasi <b>${fmt(malut.realisasi)}</b> dari target <b>${fmt(malut.target)}</b> (<b>${p}%</b>), belum kontrak <b>${fmt(malut.belum)}</b>.`;
+ }
 }
 
 async function loadRealMap(){
