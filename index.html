@@ -80,7 +80,14 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <footer>INFRASTRUKTUR TANGGUH &nbsp; • &nbsp; KONEKTIVITAS MERATA &nbsp; • &nbsp; MANFAAT UNTUK RAKYAT &nbsp; • &nbsp; TA 2026</footer>
 </div>
 <script>
-const data = [{"wilayah": "Bali dan Nusa Tenggara", "target": 115, "realisasi": 113, "belum": 2}, {"wilayah": "Jawa", "target": 134, "realisasi": 134, "belum": 0}, {"wilayah": "Kalimantan", "target": 89, "realisasi": 69, "belum": 20}, {"wilayah": "Maluku", "target": 79, "realisasi": 58, "belum": 21}, {"wilayah": "Maluku Utara", "target": 66, "realisasi": 38, "belum": 28}, {"wilayah": "Sulawesi", "target": 274, "realisasi": 245, "belum": 29}, {"wilayah": "Sumatera", "target": 312, "realisasi": 254, "belum": 58}];
+let data = [];
+const SHEET_ID="1269tZjx2g-yHz_7uU0HNg7Lta-KrDc7FrjoLbW43cDw";
+const SHEET_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+function parseCSV(text){
+ const lines=text.trim().split(/\r?\n/);
+ const parse=line=>{let r=[],v="",q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c=='"'){if(q&&line[i+1]=='"'){v+='"';i++}else q=!q}else if(c==','&&!q){r.push(v);v=""}else v+=c}r.push(v);return r};
+ return lines.slice(1).map(line=>{const c=parse(line),target=Number(c[1]||0),realisasi=Number(c[2]||0);return {wilayah:(c[0]||"").trim(),target,realisasi,belum:Math.max(0,target-realisasi)}}).filter(x=>x.wilayah);
+}
 const fmt=n=>n.toLocaleString('id-ID');
 function pct(a,b){return b?100*a/b:0}
 function render(){
@@ -91,10 +98,21 @@ function render(){
   return `<tr><td>${i+1}</td><td>${x.wilayah}</td><td>${fmt(x.target)}</td><td>${fmt(x.realisasi)}</td><td>${fmt(x.belum)}</td><td><div style="display:flex;align-items:center;gap:8px"><div class="bar"><div class="fill" style="width:${p}%;${c?'background:'+c:''}"></div></div><b>${p.toFixed(1).replace('.',',')}%</b></div></td></tr>`
  }).join('');
 }
-const t=data.reduce((s,x)=>s+x.target,0),r=data.reduce((s,x)=>s+x.realisasi,0),b=data.reduce((s,x)=>s+x.belum,0);
-document.getElementById('target').textContent=fmt(t);document.getElementById('real').textContent=fmt(r);document.getElementById('belum').textContent=fmt(b);
-document.getElementById('realPct').textContent=pct(r,t).toFixed(1).replace('.',',')+'%';document.getElementById('realRing').style.setProperty('--p',pct(r,t));
-document.getElementById('belumPct').textContent=pct(b,t).toFixed(1).replace('.',',')+'%';document.getElementById('belumRing').style.setProperty('--p',pct(b,t));
-render();
+function updateDashboard(){
+ const t=data.reduce((s,x)=>s+x.target,0),r=data.reduce((s,x)=>s+x.realisasi,0),b=data.reduce((s,x)=>s+x.belum,0);
+ document.getElementById('target').textContent=fmt(t);document.getElementById('real').textContent=fmt(r);document.getElementById('belum').textContent=fmt(b);
+ document.getElementById('realPct').textContent=pct(r,t).toFixed(1).replace('.',',')+'%';document.getElementById('realRing').style.setProperty('--p',pct(r,t));
+ document.getElementById('belumPct').textContent=pct(b,t).toFixed(1).replace('.',',')+'%';document.getElementById('belumRing').style.setProperty('--p',pct(b,t));
+ render();
+}
+async function loadSheet(){
+ try{
+  const res=await fetch(SHEET_URL,{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
+  data=parseCSV(await res.text()); updateDashboard();
+ }catch(e){
+  document.getElementById('rows').innerHTML='<tr><td colspan="6" style="padding:24px;color:#b42318"><b>Google Sheets belum dapat dibaca.</b><br>Pastikan akses: Siapa saja yang memiliki link → Pelihat.</td></tr>';
+ }
+}
+loadSheet();
 </script>
 </body></html>
