@@ -52,6 +52,8 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 .page2grid{display:grid;grid-template-columns:.85fr 1.35fr;gap:16px}.ks{padding:18px}.ksbox{border-radius:18px;padding:16px 18px;margin-bottom:14px}.ksbox.bad{background:#fff0ef;border-left:7px solid #ef233c}.ksbox.good{background:#effcf5;border-left:7px solid #07955c}.kshead{font-size:22px;font-weight:900;margin-bottom:10px}.ksitem{display:flex;gap:12px;margin:10px 0;line-height:1.35}.ksnum{width:34px;height:34px;flex:0 0 34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;background:#ef233c}.good .ksnum{background:#07955c}.projection{padding:0 0 10px}.projrow{display:grid;grid-template-columns:1.25fr .75fr .75fr .75fr 1.4fr;align-items:center;border-bottom:1px solid #deebf2;min-height:74px}.projrow>div{padding:12px;text-align:center}.projrow.head{background:#07508e;color:#fff;font-weight:800;min-height:54px}.projrow .name{text-align:left;font-weight:900}.pbar{height:18px;background:#dce7ec;border-radius:20px;overflow:hidden}.pbar>i{display:block;height:100%;background:linear-gradient(90deg,#08a260,#3dc67d);border-radius:20px}.bottom3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}.mini{background:#fff;border-radius:18px;padding:18px;box-shadow:0 8px 25px #07558a18}.mini b{display:block;font-size:18px;margin-bottom:5px}.page2hero{margin-bottom:16px}.totalpill{display:inline-flex;gap:10px;align-items:center;background:#fff;border-radius:16px;padding:10px 16px;margin-top:15px;font-weight:800;box-shadow:0 6px 18px #07558a18}.totalpill strong{font-size:28px}
 @media(max-width:950px){.cards,.grid,.highlights,.page2grid,.bottom3{grid-template-columns:1fr}.card{min-height:150px}.map{min-height:520px}.tag{letter-spacing:3px}.hl.title{justify-content:center}}
 @media print{body{background:white}.wrap{max-width:none;padding:0}.controls{display:none}.panel,.card,.hl,.hero{box-shadow:none}button{display:none}}
+.company-cards{grid-template-columns:repeat(4,1fr)}@media(max-width:1100px){.company-cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.company-cards{grid-template-columns:1fr}}
+.p2company{width:100%;border-collapse:collapse;font-size:13px}.p2company th{background:#075695;color:#fff;padding:10px 7px}.p2company td{padding:10px 7px;border-bottom:1px solid #d6e8f3}.p2company tfoot td{background:#075695;color:#fff;font-size:15px}
 </style>
 </head>
 <body>
@@ -64,26 +66,27 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="tag">INFRASTRUKTUR TANGGUH &nbsp;|&nbsp; KONEKTIVITAS MERATA &nbsp;|&nbsp; INDONESIA MAJU</div>
 </section>
 
-<section class="cards">
-<div class="card"><div class="icon">◎</div><div style="flex:1"><div class="label">Target Lokasi</div><div class="big" id="target">1.069</div><div class="unit">lokasi</div></div></div>
-<div class="card green"><div class="icon">▤</div><div style="flex:1"><div class="label">Realisasi Kontrak</div><div class="big" id="real">911</div><div class="unit">lokasi</div></div><div class="ring" id="realRing" style="--p:85.2"><span id="realPct">85,2%</span></div></div>
-<div class="card orange"><div class="icon">⚙</div><div style="flex:1"><div class="label">Belum Kontrak</div><div class="big" id="belum">158</div><div class="unit">lokasi</div></div><div class="ring" id="belumRing" style="--p:14.8;--c:#ff6500"><span id="belumPct">14,8%</span></div></div>
+<section class="cards company-cards">
+<div class="card"><div class="icon">▦</div><div style="flex:1"><div class="label">Total Perusahaan</div><div class="big" id="company-total">0</div><div class="unit">penyedia</div></div></div>
+<div class="card green"><div class="icon">✓</div><div style="flex:1"><div class="label">Sudah Kontrak</div><div class="big" id="company-contract">0</div><div class="unit">perusahaan</div></div></div>
+<div class="card orange"><div class="icon">⚙</div><div style="flex:1"><div class="label">Dalam Proses</div><div class="big" id="company-process">0</div><div class="unit">perusahaan</div></div></div>
+<div class="card"><div class="icon">!</div><div style="flex:1"><div class="label">Ada Kendala</div><div class="big" id="company-issue">0</div><div class="unit">perusahaan</div></div></div>
 </section>
 
 <section class="grid">
 <div class="panel">
-<h2>TABEL PROGRES PER WILAYAH</h2>
-<div class="controls"><input id="search" placeholder="Cari wilayah..." oninput="render()"><button onclick="window.print()">Cetak / PDF</button></div>
-<table><thead><tr><th>No</th><th>Wilayah</th><th>Target</th><th>Realisasi</th><th>Belum</th><th>Persentase</th></tr></thead><tbody id="rows"></tbody><tfoot id="foot"></tfoot></table>
+<h2>MONITORING STATUS PERUSAHAAN / PENYEDIA</h2>
+<div class="controls"><input id="search" placeholder="Cari perusahaan, wilayah, status, atau kendala..." oninput="render()"><button onclick="window.print()">Cetak / PDF</button></div>
+<table><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Status</th><th>Kendala</th><th>Keterangan</th></tr></thead><tbody id="rows"></tbody></table>
 </div>
 <div class="panel">
-<h2>SEBARAN TARGET DAN REALISASI KONTRAK MALUKU & MALUKU UTARA</h2>
+<h2>SEBARAN STATUS PERUSAHAAN MALUKU & MALUKU UTARA</h2>
 <div class="map maluku-map">
 <svg id="realMap" viewBox="0 0 620 485" role="img" aria-label="Peta geografis Maluku dan Maluku Utara"></svg>
 <div class="region malut-card">MALUKU UTARA<br><b id="map-malut">-</b></div>
 <div class="region maluku-card">MALUKU<br><b id="map-maluku">-</b></div>
 <div class="map-title-small">Peta Wilayah Maluku & Maluku Utara</div>
-<div class="legend">Angka: Target | Realisasi | Belum Kontrak</div>
+<div class="legend">Angka: Total | Sudah Kontrak | Dalam Proses | Ada Kendala</div>
 </div>
 </div>
 </section>
@@ -99,30 +102,23 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <section class="hero page2hero">
 <h1>PELAKSANAAN KONTRAK</h1>
 <div class="sub">KONSTRUKSI PEMBANGUNAN KNMP MALUKU DAN MALUKU UTARA TA 2026</div>
-<div class="tag">KENDALA &nbsp;|&nbsp; SOLUSI &nbsp;|&nbsp; PROYEKSI PENYELESAIAN</div>
-<div class="totalpill">◎ Total Target Maluku & Maluku Utara <strong id="p2total">-</strong> lokasi</div>
+<div class="tag">KENDALA &nbsp;|&nbsp; SOLUSI &nbsp;|&nbsp; STATUS KONTRAK</div>
+<div class="totalpill">◎ Total Perusahaan / Penyedia Maluku & Maluku Utara <strong id="p2total">0</strong></div>
 </section>
 <section class="page2grid">
 <div class="panel"><h2>KENDALA DAN SOLUSI</h2><div class="ks">
-<div class="ksbox bad"><div class="kshead">⚠ Kendala</div>
-<div class="ksitem"><span class="ksnum">1</span><span>Penyedia membutuhkan waktu yang cukup lama untuk membuat penawaran dan melengkapi dokumen kualifikasi.</span></div>
-<div class="ksitem"><span class="ksnum">2</span><span>Beberapa penyedia masih membutuhkan survei lapangan sebelum menyampaikan penawaran.</span></div>
-<div class="ksitem"><span class="ksnum">3</span><span>Respons calon penyedia yang diundang masih lambat dan dapat berganti saat proses penunjukan langsung.</span></div></div>
-<div class="ksbox good"><div class="kshead">💡 Solusi</div>
-<div class="ksitem"><span class="ksnum">1</span><span>Melakukan pendampingan kepada penyedia agar segera merespons undangan, membuat dokumen penawaran, dan melengkapi dokumen kualifikasi.</span></div>
-<div class="ksitem"><span class="ksnum">2</span><span>Percepatan penerbitan SPPBJ dan tanda tangan kontrak bagi penyedia yang telah memenuhi kualifikasi dan menyampaikan dokumen penawaran.</span></div></div>
+<div class="ksbox bad"><div class="kshead">⚠ Kendala</div><div id="kendala-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
+<div class="ksbox good"><div class="kshead">💡 Solusi</div><div id="solusi-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
 </div></div>
-<div class="panel"><h2>PROYEKSI PENYELESAIAN PEKERJAAN</h2><div class="projection">
-<div class="projrow head"><div>Wilayah</div><div>Target</div><div>Realisasi</div><div>Sisa</div><div>Progres Kontrak</div></div>
-<div class="projrow"><div class="name">MALUKU</div><div id="p2-m-t">-</div><div id="p2-m-r">-</div><div id="p2-m-b">-</div><div><div class="pbar"><i id="p2-m-bar" style="width:0%"></i></div><b id="p2-m-p">-</b></div></div>
-<div class="projrow"><div class="name">MALUKU UTARA</div><div id="p2-u-t">-</div><div id="p2-u-r">-</div><div id="p2-u-b">-</div><div><div class="pbar"><i id="p2-u-bar" style="width:0%"></i></div><b id="p2-u-p">-</b></div></div>
-<div class="projrow"><div class="name">JUMLAH</div><div id="p2-t-t">-</div><div id="p2-t-r">-</div><div id="p2-t-b">-</div><div><div class="pbar"><i id="p2-t-bar" style="width:0%"></i></div><b id="p2-t-p">-</b></div></div>
-</div></div>
+<div class="panel"><h2>PROYEKSI PENYELESAIAN PEKERJAAN</h2>
+<div class="legend" style="margin:0 0 10px">Berdasarkan perusahaan / penyedia</div>
+<div style="overflow:auto"><table class="p2company"><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Target Selesai</th><th>Status</th><th>Kendala</th></tr></thead><tbody id="projection-rows"><tr><td colspan="7">Memuat data...</td></tr></tbody><tfoot><tr><td colspan="3"><b>JUMLAH</b></td><td id="projection-total"><b>0</b></td><td colspan="3"></td></tr></tfoot></table></div>
+</div>
 </section>
 <section class="bottom3">
-<div class="mini"><b>◎ TARGET UTAMA</b>Seluruh pekerjaan selesai sesuai jadwal pelaksanaan pada TA 2026.</div>
-<div class="mini"><b>⚙ KOMITMEN</b>Percepatan proses kontraktual untuk mendukung kelancaran pelaksanaan pembangunan KNMP.</div>
-<div class="mini"><b>♟ MANFAAT</b>Meningkatkan konektivitas, mendukung pertumbuhan ekonomi, dan pemerataan pembangunan.</div>
+<div class="mini"><b>◎ <span id="judul-target">TARGET UTAMA</span></b><span id="isi-target">Memuat data...</span></div>
+<div class="mini"><b>⚙ <span id="judul-komitmen">KOMITMEN</span></b><span id="isi-komitmen">Memuat data...</span></div>
+<div class="mini"><b>♟ <span id="judul-manfaat">MANFAAT</span></b><span id="isi-manfaat">Memuat data...</span></div>
 </section>
 </div>
 <footer>INFRASTRUKTUR TANGGUH &nbsp; • &nbsp; KONEKTIVITAS MERATA &nbsp; • &nbsp; MANFAAT UNTUK RAKYAT &nbsp; • &nbsp; TA 2026</footer>
@@ -132,6 +128,10 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 let data = [];
 const SHEET_ID="1269tZjx2g-yHz_7uU0HNg7Lta-KrDc7FrjoLbW43cDw";
 const SHEET_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+const KS_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Kendala_Solusi`;
+const CONTENT_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Konten_Halaman2`;
+const COMPANY_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Data_Perusahaan`;
+const PROJECTION_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Proyeksi_Penyelesaian`;
 function parseCSV(text){
  const lines=text.trim().split(/\r?\n/);
  const parse=line=>{let r=[],v="",q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c=='"'){if(q&&line[i+1]=='"'){v+='"';i++}else q=!q}else if(c==','&&!q){r.push(v);v=""}else v+=c}r.push(v);return r};
@@ -140,39 +140,72 @@ function parseCSV(text){
 const fmt=n=>n.toLocaleString('id-ID');
 function pct(a,b){return b?100*a/b:0}
 function render(){
- const q=document.getElementById('search').value.toLowerCase();
- const d=data.filter(x=>x.wilayah.toLowerCase().includes(q));
- document.getElementById('rows').innerHTML=d.map((x,i)=>{
-  const p=pct(x.realisasi,x.target), c=p<65?'#ef233c':p<80?'#ffb000':'';
-  return `<tr><td>${i+1}</td><td>${x.wilayah}</td><td>${fmt(x.target)}</td><td>${fmt(x.realisasi)}</td><td>${fmt(x.belum)}</td><td><div style="display:flex;align-items:center;gap:8px"><div class="bar"><div class="fill" style="width:${p}%;${c?'background:'+c:''}"></div></div><b>${p.toFixed(1).replace('.',',')}%</b></div></td></tr>`
- }).join('');
+ const q=(document.getElementById('search').value||'').toLowerCase();
+ const d=companyData.filter(x=>[x.perusahaan,x.wilayah,x.status,x.kendala,x.keterangan].join(' ').toLowerCase().includes(q));
+ document.getElementById('rows').innerHTML=d.length?d.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td>${escapeHTML(x.status||'-')}</td><td>${escapeHTML(x.kendala||'-')}</td><td>${escapeHTML(x.keterangan||'-')}</td></tr>`).join(''):'<tr><td colspan="6" style="padding:24px;text-align:center">Belum ada data perusahaan.</td></tr>';
 }
-function updateDashboard(){
- const t=data.reduce((s,x)=>s+x.target,0),r=data.reduce((s,x)=>s+x.realisasi,0),b=data.reduce((s,x)=>s+x.belum,0);
- document.getElementById('target').textContent=fmt(t);document.getElementById('real').textContent=fmt(r);document.getElementById('belum').textContent=fmt(b);
- document.getElementById('realPct').textContent=pct(r,t).toFixed(1).replace('.',',')+'%';document.getElementById('realRing').style.setProperty('--p',pct(r,t));
- document.getElementById('belumPct').textContent=pct(b,t).toFixed(1).replace('.',',')+'%';document.getElementById('belumRing').style.setProperty('--p',pct(b,t));
+function updateCompanyDashboard(){
+ const valid=companyData.filter(x=>x.perusahaan && !x.perusahaan.toLowerCase().startsWith('contoh '));
+ const isContract=x=>x.status.toLowerCase().includes('sudah')&&x.status.toLowerCase().includes('kontrak');
+ const isProcess=x=>x.status.toLowerCase().includes('proses');
+ const hasIssue=x=>x.kendala.trim()&&x.kendala.trim()!=='-';
+ const contract=valid.filter(isContract).length,process=valid.filter(isProcess).length,issue=valid.filter(hasIssue).length;
+ document.getElementById('company-total').textContent=fmt(valid.length);
+ document.getElementById('company-contract').textContent=fmt(contract);
+ document.getElementById('company-process').textContent=fmt(process);
+ document.getElementById('company-issue').textContent=fmt(issue);
+ const region=name=>{const a=valid.filter(x=>x.wilayah.toLowerCase()===name);return {total:a.length,contract:a.filter(isContract).length,process:a.filter(isProcess).length,issue:a.filter(hasIssue).length}};
+ const m=region('maluku'),u=region('maluku utara');
+ document.getElementById('map-maluku').textContent=`${m.total} | ${m.contract} | ${m.process} | ${m.issue}`;
+ document.getElementById('map-malut').textContent=`${u.total} | ${u.contract} | ${u.process} | ${u.issue}`;
+ document.getElementById('hl-total').innerHTML=`Terdapat <b>${fmt(valid.length)} perusahaan/penyedia</b> terdata: <b>${fmt(contract)}</b> sudah kontrak, <b>${fmt(process)}</b> dalam proses, dan <b>${fmt(issue)}</b> memiliki kendala tercatat.`;
+ document.getElementById('hl-maluku').innerHTML=`<b>Maluku</b>: ${fmt(m.total)} perusahaan — <b>${fmt(m.contract)}</b> sudah kontrak, <b>${fmt(m.process)}</b> dalam proses, <b>${fmt(m.issue)}</b> ada kendala.`;
+ document.getElementById('hl-malut').innerHTML=`<b>Maluku Utara</b>: ${fmt(u.total)} perusahaan — <b>${fmt(u.contract)}</b> sudah kontrak, <b>${fmt(u.process)}</b> dalam proses, <b>${fmt(u.issue)}</b> ada kendala.`;
  render();
- const maluku=data.find(x=>x.wilayah.toLowerCase()==='maluku');
- const malut=data.find(x=>x.wilayah.toLowerCase()==='maluku utara');
- if(maluku) document.getElementById('map-maluku').textContent=`${fmt(maluku.target)} | ${fmt(maluku.realisasi)} | ${fmt(maluku.belum)}`;
- if(malut) document.getElementById('map-malut').textContent=`${fmt(malut.target)} | ${fmt(malut.realisasi)} | ${fmt(malut.belum)}`;
+}
 
- const fokus=[maluku,malut].filter(Boolean);
- const totalTarget=fokus.reduce((a,x)=>a+x.target,0);
- const totalReal=fokus.reduce((a,x)=>a+x.realisasi,0);
- const totalBelum=Math.max(0,totalTarget-totalReal);
- const totalPct=pct(totalReal,totalTarget).toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1});
- document.getElementById('hl-total').innerHTML=`Realisasi kontrak <b>Maluku dan Maluku Utara</b> mencapai <b>${totalPct}%</b>: <b>${fmt(totalReal)}</b> dari target <b>${fmt(totalTarget)}</b>, dengan <b>${fmt(totalBelum)}</b> belum kontrak.`;
- if(maluku){
-   const p=pct(maluku.realisasi,maluku.target).toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1});
-   document.getElementById('hl-maluku').innerHTML=`<b>Maluku</b>: realisasi <b>${fmt(maluku.realisasi)}</b> dari target <b>${fmt(maluku.target)}</b> (<b>${p}%</b>), belum kontrak <b>${fmt(maluku.belum)}</b>.`;
- }
- if(malut){
-   const p=pct(malut.realisasi,malut.target).toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1});
-   document.getElementById('hl-malut').innerHTML=`<b>Maluku Utara</b>: realisasi <b>${fmt(malut.realisasi)}</b> dari target <b>${fmt(malut.target)}</b> (<b>${p}%</b>), belum kontrak <b>${fmt(malut.belum)}</b>.`;
+async function loadPage2Content(){
+ try{
+  const res=await fetch(CONTENT_URL+'&_='+Date.now(),{cache:'no-store'});
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const rows=parseCSVGeneric(await res.text());
+  const map={};
+  rows.forEach(r=>map[(r[0]||'').trim().toLowerCase()]={judul:r[1]||'',isi:r[2]||''});
+  const set=(key,jid,iid)=>{
+   if(!map[key]) return;
+   document.getElementById(jid).textContent=map[key].judul;
+   document.getElementById(iid).textContent=map[key].isi;
+  };
+  set('target_utama','judul-target','isi-target');
+  set('komitmen','judul-komitmen','isi-komitmen');
+  set('manfaat','judul-manfaat','isi-manfaat');
+ }catch(e){
+  console.warn('Konten Halaman 2 gagal dimuat',e);
  }
 }
+
+async function loadKendalaSolusi(){
+ try{
+  const res=await fetch(KS_URL+'&_='+Date.now(),{cache:'no-store'});
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const rows=parseCSVGeneric(await res.text());
+  const aktif=rows.filter(r=>(r[3]||'Aktif').trim().toLowerCase()!=='nonaktif');
+  const renderKS=(kategori,id)=>{
+    const list=aktif.filter(r=>(r[0]||'').trim().toLowerCase()===kategori.toLowerCase());
+    document.getElementById(id).innerHTML=list.length?list.map((r,i)=>`<div class="ksitem"><span class="ksnum">${r[1]||i+1}</span><span>${escapeHTML(r[2]||'')}</span></div>`).join(''):'<div class="ksitem"><span>Belum ada data.</span></div>';
+  };
+  renderKS('Kendala','kendala-list'); renderKS('Solusi','solusi-list');
+ }catch(e){
+  document.getElementById('kendala-list').innerHTML='<div class="ksitem"><span>Data Kendala belum dapat dimuat.</span></div>';
+  document.getElementById('solusi-list').innerHTML='<div class="ksitem"><span>Data Solusi belum dapat dimuat.</span></div>';
+ }
+}
+function parseCSVGeneric(text){
+ const lines=text.trim().split(/\r?\n/);
+ const parse=line=>{let r=[],v="",q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c=='"'){if(q&&line[i+1]=='"'){v+='"';i++}else q=!q}else if(c==','&&!q){r.push(v);v=""}else v+=c}r.push(v);return r};
+ return lines.slice(1).map(parse).filter(r=>r.some(v=>String(v).trim()));
+}
+function escapeHTML(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
 async function loadRealMap(){
  const svg=document.getElementById('realMap');
@@ -219,10 +252,30 @@ function showPage(n){
  document.getElementById('tab1').classList.toggle('active',n===1);document.getElementById('tab2').classList.toggle('active',n===2);window.scrollTo({top:0,behavior:'smooth'});
 }
 function updatePage2(){
- const m=data.find(x=>x.wilayah.toLowerCase()==='maluku'),u=data.find(x=>x.wilayah.toLowerCase()==='maluku utara'); if(!m&&!u)return;
- const set=(pre,x)=>{if(!x)return; const p=pct(x.realisasi,x.target);document.getElementById(pre+'t').textContent=fmt(x.target);document.getElementById(pre+'r').textContent=fmt(x.realisasi);document.getElementById(pre+'b').textContent=fmt(x.belum);document.getElementById(pre+'bar').style.width=p+'%';document.getElementById(pre+'p').textContent=p.toFixed(1).replace('.',',')+'%'};
- set('p2-m-',m);set('p2-u-',u); const arr=[m,u].filter(Boolean),t=arr.reduce((a,x)=>a+x.target,0),r=arr.reduce((a,x)=>a+x.realisasi,0),b=t-r,p=pct(r,t);
- document.getElementById('p2total').textContent=fmt(t);document.getElementById('p2-t-t').textContent=fmt(t);document.getElementById('p2-t-r').textContent=fmt(r);document.getElementById('p2-t-b').textContent=fmt(b);document.getElementById('p2-t-bar').style.width=p+'%';document.getElementById('p2-t-p').textContent=p.toFixed(1).replace('.',',')+'%';
+ const valid=companyData.filter(x=>x.perusahaan && !x.perusahaan.toLowerCase().startsWith('contoh '));
+ document.getElementById('p2total').textContent=fmt(valid.length);
+}
+
+let projectionData=[];
+async function loadProjection(){
+ try{
+  const res=await fetch(PROJECTION_URL+'&_='+Date.now(),{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
+  const rows=parseCSVGeneric(await res.text());
+  projectionData=rows.map(r=>({perusahaan:(r[0]||'').trim(),wilayah:(r[1]||'').trim(),lokasi:Number(String(r[2]||'0').replace(/\./g,'').replace(',','.'))||0,target:(r[3]||'').trim(),status:(r[4]||'').trim(),kendala:(r[5]||'').trim()})).filter(x=>x.perusahaan&&!x.perusahaan.toLowerCase().startsWith('contoh '));
+  document.getElementById('projection-rows').innerHTML=projectionData.length?projectionData.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td><b>${fmt(x.lokasi)}</b></td><td>${escapeHTML(x.target||'-')}</td><td>${escapeHTML(x.status||'-')}</td><td>${escapeHTML(x.kendala||'-')}</td></tr>`).join(''):'<tr><td colspan="7" style="padding:24px;text-align:center">Belum ada data proyeksi.</td></tr>';
+  document.getElementById('projection-total').innerHTML=`<b>${fmt(projectionData.reduce((a,x)=>a+x.lokasi,0))}</b>`;
+ }catch(e){document.getElementById('projection-rows').innerHTML='<tr><td colspan="7">Data proyeksi belum dapat dimuat.</td></tr>'}
+}
+
+let companyData=[];
+async function loadCompanyData(){
+ try{
+  const res=await fetch(COMPANY_URL+'&_='+Date.now(),{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
+  const rows=parseCSVGeneric(await res.text());
+  companyData=rows.map(r=>({perusahaan:(r[0]||'').trim(),wilayah:(r[1]||'').trim(),status:(r[2]||'').trim(),kendala:(r[3]||'').trim(),keterangan:(r[4]||'').trim()})).filter(x=>x.perusahaan);
+  updateCompanyDashboard();
+  updatePage2();
+ }catch(e){document.getElementById('rows').innerHTML='<tr><td colspan="6" style="padding:24px;color:#b42318"><b>Data perusahaan belum dapat dibaca dari Google Sheets.</b></td></tr>'}
 }
 
 async function loadSheet(){
@@ -235,5 +288,9 @@ async function loadSheet(){
 }
 loadRealMap();
 loadSheet();
+loadCompanyData();
+loadProjection();
+loadKendalaSolusi();
+loadPage2Content();
 </script>
 </body></html>
