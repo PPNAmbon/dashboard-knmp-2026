@@ -77,7 +77,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="panel">
 <h2>MONITORING STATUS PERUSAHAAN / PENYEDIA</h2>
 <div class="controls"><input id="search" placeholder="Cari perusahaan, wilayah, status, atau kendala..." oninput="render()"><button onclick="window.print()">Cetak / PDF</button></div>
-<table><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Kabupaten/Kota</th><th>Hasil Pleno</th><th>Status</th><th>Kendala</th></tr></thead><tbody id="rows"></tbody></table>
+<table><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Kabupaten/Kota</th><th>Hasil Pleno</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table>
 </div>
 <div class="panel">
 <h2>SEBARAN STATUS PERUSAHAAN MALUKU & MALUKU UTARA</h2>
@@ -142,7 +142,7 @@ function pct(a,b){return b?100*a/b:0}
 function render(){
  const q=(document.getElementById('search').value||'').toLowerCase();
  const d=companyData.filter(x=>[x.perusahaan,x.wilayah,x.kabupaten,x.hasil,x.status,x.kendala].join(' ').toLowerCase().includes(q));
- document.getElementById('rows').innerHTML=d.length?d.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td><b>${fmt(x.lokasi)}</b></td><td>${escapeHTML(x.kabupaten||'-')}</td><td>${escapeHTML(x.hasil||'-')}</td><td>${escapeHTML(x.status||'-')}</td><td>${escapeHTML(x.kendala||'-')}</td></tr>`).join(''):'<tr><td colspan="8" style="padding:24px;text-align:center">Belum ada data perusahaan.</td></tr>';
+ document.getElementById('rows').innerHTML=d.length?d.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td><b>${fmt(x.lokasi)}</b></td><td>${escapeHTML(x.kabupaten||'-')}</td><td>${escapeHTML(x.hasil||'-')}</td><td>${escapeHTML(x.status||'-')}</td></tr>`).join(''):'<tr><td colspan="7" style="padding:24px;text-align:center">Belum ada data perusahaan.</td></tr>';
 }
 function updateCompanyDashboard(){
  const valid=companyData.filter(x=>x.perusahaan);
