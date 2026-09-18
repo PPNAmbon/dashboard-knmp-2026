@@ -104,8 +104,13 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 </section>
 <section class="page2grid">
 <div class="panel"><h2>KENDALA DAN SOLUSI</h2><div class="ks">
-<div class="ksbox bad"><div class="kshead">⚠ Kendala</div><div id="kendala-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
-<div class="ksbox good"><div class="kshead">💡 Solusi</div><div id="solusi-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
+<div class="ksbox bad"><div class="kshead">⚠ Kendala</div>
+<div class="ksitem"><span class="ksnum">1</span><span>Penyedia membutuhkan waktu yang cukup lama untuk membuat penawaran dan melengkapi dokumen kualifikasi.</span></div>
+<div class="ksitem"><span class="ksnum">2</span><span>Beberapa penyedia masih membutuhkan survei lapangan sebelum menyampaikan penawaran.</span></div>
+<div class="ksitem"><span class="ksnum">3</span><span>Respons calon penyedia yang diundang masih lambat dan dapat berganti saat proses penunjukan langsung.</span></div></div>
+<div class="ksbox good"><div class="kshead">💡 Solusi</div>
+<div class="ksitem"><span class="ksnum">1</span><span>Melakukan pendampingan kepada penyedia agar segera merespons undangan, membuat dokumen penawaran, dan melengkapi dokumen kualifikasi.</span></div>
+<div class="ksitem"><span class="ksnum">2</span><span>Percepatan penerbitan SPPBJ dan tanda tangan kontrak bagi penyedia yang telah memenuhi kualifikasi dan menyampaikan dokumen penawaran.</span></div></div>
 </div></div>
 <div class="panel"><h2>PROYEKSI PENYELESAIAN PEKERJAAN</h2><div class="projection">
 <div class="projrow head"><div>Wilayah</div><div>Target</div><div>Realisasi</div><div>Sisa</div><div>Progres Kontrak</div></div>
@@ -127,7 +132,6 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 let data = [];
 const SHEET_ID="1269tZjx2g-yHz_7uU0HNg7Lta-KrDc7FrjoLbW43cDw";
 const SHEET_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
-const KS_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Kendala_Solusi`;
 function parseCSV(text){
  const lines=text.trim().split(/\r?\n/);
  const parse=line=>{let r=[],v="",q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c=='"'){if(q&&line[i+1]=='"'){v+='"';i++}else q=!q}else if(c==','&&!q){r.push(v);v=""}else v+=c}r.push(v);return r};
@@ -169,30 +173,6 @@ function updateDashboard(){
    document.getElementById('hl-malut').innerHTML=`<b>Maluku Utara</b>: realisasi <b>${fmt(malut.realisasi)}</b> dari target <b>${fmt(malut.target)}</b> (<b>${p}%</b>), belum kontrak <b>${fmt(malut.belum)}</b>.`;
  }
 }
-
-
-async function loadKendalaSolusi(){
- try{
-  const res=await fetch(KS_URL+'&_='+Date.now(),{cache:'no-store'});
-  if(!res.ok) throw new Error('HTTP '+res.status);
-  const rows=parseCSVGeneric(await res.text());
-  const aktif=rows.filter(r=>(r[3]||'Aktif').trim().toLowerCase()!=='nonaktif');
-  const renderKS=(kategori,id)=>{
-    const list=aktif.filter(r=>(r[0]||'').trim().toLowerCase()===kategori.toLowerCase());
-    document.getElementById(id).innerHTML=list.length?list.map((r,i)=>`<div class="ksitem"><span class="ksnum">${r[1]||i+1}</span><span>${escapeHTML(r[2]||'')}</span></div>`).join(''):'<div class="ksitem"><span>Belum ada data.</span></div>';
-  };
-  renderKS('Kendala','kendala-list'); renderKS('Solusi','solusi-list');
- }catch(e){
-  document.getElementById('kendala-list').innerHTML='<div class="ksitem"><span>Data Kendala belum dapat dimuat.</span></div>';
-  document.getElementById('solusi-list').innerHTML='<div class="ksitem"><span>Data Solusi belum dapat dimuat.</span></div>';
- }
-}
-function parseCSVGeneric(text){
- const lines=text.trim().split(/\r?\n/);
- const parse=line=>{let r=[],v="",q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c=='"'){if(q&&line[i+1]=='"'){v+='"';i++}else q=!q}else if(c==','&&!q){r.push(v);v=""}else v+=c}r.push(v);return r};
- return lines.slice(1).map(parse).filter(r=>r.some(v=>String(v).trim()));
-}
-function escapeHTML(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
 async function loadRealMap(){
  const svg=document.getElementById('realMap');
@@ -255,6 +235,5 @@ async function loadSheet(){
 }
 loadRealMap();
 loadSheet();
-loadKendalaSolusi();
 </script>
 </body></html>
