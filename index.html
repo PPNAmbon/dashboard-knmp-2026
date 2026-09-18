@@ -68,16 +68,16 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 
 <section class="cards company-cards">
 <div class="card"><div class="icon">▦</div><div style="flex:1"><div class="label">Total Perusahaan</div><div class="big" id="company-total">0</div><div class="unit">penyedia</div></div></div>
-<div class="card green"><div class="icon">✓</div><div style="flex:1"><div class="label">Sudah Kontrak</div><div class="big" id="company-contract">0</div><div class="unit">perusahaan</div></div></div>
-<div class="card orange"><div class="icon">⚙</div><div style="flex:1"><div class="label">Dalam Proses</div><div class="big" id="company-process">0</div><div class="unit">perusahaan</div></div></div>
-<div class="card"><div class="icon">!</div><div style="flex:1"><div class="label">Ada Kendala</div><div class="big" id="company-issue">0</div><div class="unit">perusahaan</div></div></div>
+<div class="card green"><div class="icon">◎</div><div style="flex:1"><div class="label">Total Lokasi</div><div class="big" id="location-total">0</div><div class="unit">lokasi</div></div></div>
+<div class="card orange"><div class="icon">✓</div><div style="flex:1"><div class="label">Sudah Kontrak</div><div class="big" id="company-contract">0</div><div class="unit">perusahaan</div></div></div>
+<div class="card"><div class="icon">⚙</div><div style="flex:1"><div class="label">Dalam Proses</div><div class="big" id="company-process">0</div><div class="unit">perusahaan</div></div></div>
 </section>
 
 <section class="grid">
 <div class="panel">
 <h2>MONITORING STATUS PERUSAHAAN / PENYEDIA</h2>
 <div class="controls"><input id="search" placeholder="Cari perusahaan, wilayah, status, atau kendala..." oninput="render()"><button onclick="window.print()">Cetak / PDF</button></div>
-<table><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Status</th><th>Kendala</th><th>Keterangan</th></tr></thead><tbody id="rows"></tbody></table>
+<table><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Kabupaten/Kota</th><th>Hasil Pleno</th><th>Status</th><th>Kendala</th></tr></thead><tbody id="rows"></tbody></table>
 </div>
 <div class="panel">
 <h2>SEBARAN STATUS PERUSAHAAN MALUKU & MALUKU UTARA</h2>
@@ -86,7 +86,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="region malut-card">MALUKU UTARA<br><b id="map-malut">-</b></div>
 <div class="region maluku-card">MALUKU<br><b id="map-maluku">-</b></div>
 <div class="map-title-small">Peta Wilayah Maluku & Maluku Utara</div>
-<div class="legend">Angka: Total | Sudah Kontrak | Dalam Proses | Ada Kendala</div>
+<div class="legend">Ringkasan: Jumlah Perusahaan | Jumlah Lokasi</div>
 </div>
 </div>
 </section>
@@ -103,7 +103,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <h1>PELAKSANAAN KONTRAK</h1>
 <div class="sub">KONSTRUKSI PEMBANGUNAN KNMP MALUKU DAN MALUKU UTARA TA 2026</div>
 <div class="tag">KENDALA &nbsp;|&nbsp; SOLUSI &nbsp;|&nbsp; STATUS KONTRAK</div>
-<div class="totalpill">◎ Total Perusahaan / Penyedia Maluku & Maluku Utara <strong id="p2total">0</strong></div>
+<div class="totalpill">◎ <strong id="p2total">Memuat...</strong> Perusahaan/Penyedia &nbsp; • &nbsp; <strong id="p2locations">Memuat...</strong> Lokasi</div>
 </section>
 <section class="page2grid">
 <div class="panel"><h2>KENDALA DAN SOLUSI</h2><div class="ks">
@@ -111,7 +111,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="ksbox good"><div class="kshead">💡 Solusi</div><div id="solusi-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
 </div></div>
 <div class="panel"><h2>PROYEKSI PENYELESAIAN PEKERJAAN</h2>
-<div class="legend" style="margin:0 0 10px">Berdasarkan perusahaan / penyedia</div>
+<div class="legend" style="margin:0 0 10px">Berdasarkan perusahaan/penyedia • Target selesai, status, dan kendala dapat diedit dari Google Sheets</div>
 <div style="overflow:auto"><table class="p2company"><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Target Selesai</th><th>Status</th><th>Kendala</th></tr></thead><tbody id="projection-rows"><tr><td colspan="7">Memuat data...</td></tr></tbody><tfoot><tr><td colspan="3"><b>JUMLAH</b></td><td id="projection-total"><b>0</b></td><td colspan="3"></td></tr></tfoot></table></div>
 </div>
 </section>
@@ -141,27 +141,32 @@ const fmt=n=>n.toLocaleString('id-ID');
 function pct(a,b){return b?100*a/b:0}
 function render(){
  const q=(document.getElementById('search').value||'').toLowerCase();
- const d=companyData.filter(x=>[x.perusahaan,x.wilayah,x.status,x.kendala,x.keterangan].join(' ').toLowerCase().includes(q));
- document.getElementById('rows').innerHTML=d.length?d.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td>${escapeHTML(x.status||'-')}</td><td>${escapeHTML(x.kendala||'-')}</td><td>${escapeHTML(x.keterangan||'-')}</td></tr>`).join(''):'<tr><td colspan="6" style="padding:24px;text-align:center">Belum ada data perusahaan.</td></tr>';
+ const d=companyData.filter(x=>[x.perusahaan,x.wilayah,x.kabupaten,x.hasil,x.status,x.kendala].join(' ').toLowerCase().includes(q));
+ document.getElementById('rows').innerHTML=d.length?d.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td><b>${fmt(x.lokasi)}</b></td><td>${escapeHTML(x.kabupaten||'-')}</td><td>${escapeHTML(x.hasil||'-')}</td><td>${escapeHTML(x.status||'-')}</td><td>${escapeHTML(x.kendala||'-')}</td></tr>`).join(''):'<tr><td colspan="8" style="padding:24px;text-align:center">Belum ada data perusahaan.</td></tr>';
 }
 function updateCompanyDashboard(){
- const valid=companyData.filter(x=>x.perusahaan && !x.perusahaan.toLowerCase().startsWith('contoh '));
+ const valid=companyData.filter(x=>x.perusahaan);
  const isContract=x=>x.status.toLowerCase().includes('sudah')&&x.status.toLowerCase().includes('kontrak');
  const isProcess=x=>x.status.toLowerCase().includes('proses');
- const hasIssue=x=>x.kendala.trim()&&x.kendala.trim()!=='-';
- const contract=valid.filter(isContract).length,process=valid.filter(isProcess).length,issue=valid.filter(hasIssue).length;
+ const contract=valid.filter(isContract).length,process=valid.filter(isProcess).length;
+ const locations=valid.reduce((a,x)=>a+x.lokasi,0);
  document.getElementById('company-total').textContent=fmt(valid.length);
+ document.getElementById('location-total').textContent=fmt(locations);
  document.getElementById('company-contract').textContent=fmt(contract);
  document.getElementById('company-process').textContent=fmt(process);
- document.getElementById('company-issue').textContent=fmt(issue);
- const region=name=>{const a=valid.filter(x=>x.wilayah.toLowerCase()===name);return {total:a.length,contract:a.filter(isContract).length,process:a.filter(isProcess).length,issue:a.filter(hasIssue).length}};
+ const region=name=>{const a=valid.filter(x=>x.wilayah.toLowerCase()===name);return {companies:a.length,locations:a.reduce((z,x)=>z+x.lokasi,0),contract:a.filter(isContract).length,process:a.filter(isProcess).length}};
  const m=region('maluku'),u=region('maluku utara');
- document.getElementById('map-maluku').textContent=`${m.total} | ${m.contract} | ${m.process} | ${m.issue}`;
- document.getElementById('map-malut').textContent=`${u.total} | ${u.contract} | ${u.process} | ${u.issue}`;
- document.getElementById('hl-total').innerHTML=`Terdapat <b>${fmt(valid.length)} perusahaan/penyedia</b> terdata: <b>${fmt(contract)}</b> sudah kontrak, <b>${fmt(process)}</b> dalam proses, dan <b>${fmt(issue)}</b> memiliki kendala tercatat.`;
- document.getElementById('hl-maluku').innerHTML=`<b>Maluku</b>: ${fmt(m.total)} perusahaan — <b>${fmt(m.contract)}</b> sudah kontrak, <b>${fmt(m.process)}</b> dalam proses, <b>${fmt(m.issue)}</b> ada kendala.`;
- document.getElementById('hl-malut').innerHTML=`<b>Maluku Utara</b>: ${fmt(u.total)} perusahaan — <b>${fmt(u.contract)}</b> sudah kontrak, <b>${fmt(u.process)}</b> dalam proses, <b>${fmt(u.issue)}</b> ada kendala.`;
+ document.getElementById('map-maluku').textContent=`${m.companies} perusahaan | ${m.locations} lokasi`;
+ document.getElementById('map-malut').textContent=`${u.companies} perusahaan | ${u.locations} lokasi`;
+ document.getElementById('hl-total').innerHTML=`Data mencakup <b>${fmt(valid.length)} perusahaan/penyedia</b> dengan total <b>${fmt(locations)} lokasi</b>.`;
+ document.getElementById('hl-maluku').innerHTML=`<b>Maluku</b>: ${fmt(m.companies)} perusahaan/penyedia dengan <b>${fmt(m.locations)} lokasi</b>.`;
+ document.getElementById('hl-malut').innerHTML=`<b>Maluku Utara</b>: ${fmt(u.companies)} perusahaan/penyedia dengan <b>${fmt(u.locations)} lokasi</b>.`;
  render();
+}
+function updatePage2(){
+ const valid=companyData.filter(x=>x.perusahaan);
+ document.getElementById('p2total').textContent=fmt(valid.length);
+ document.getElementById('p2locations').textContent=fmt(valid.reduce((a,x)=>a+x.lokasi,0));
 }
 
 async function loadPage2Content(){
@@ -272,7 +277,7 @@ async function loadCompanyData(){
  try{
   const res=await fetch(COMPANY_URL+'&_='+Date.now(),{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
   const rows=parseCSVGeneric(await res.text());
-  companyData=rows.map(r=>({perusahaan:(r[0]||'').trim(),wilayah:(r[1]||'').trim(),status:(r[2]||'').trim(),kendala:(r[3]||'').trim(),keterangan:(r[4]||'').trim()})).filter(x=>x.perusahaan);
+  companyData=rows.map(r=>({perusahaan:(r[0]||'').trim(),wilayah:(r[1]||'').trim(),lokasi:Number(r[2]||0)||0,kabupaten:(r[3]||'').trim(),hasil:(r[4]||'').trim(),status:(r[5]||'').trim(),kendala:(r[6]||'').trim()})).filter(x=>x.perusahaan);
   updateCompanyDashboard();
   updatePage2();
  }catch(e){document.getElementById('rows').innerHTML='<tr><td colspan="6" style="padding:24px;color:#b42318"><b>Data perusahaan belum dapat dibaca dari Google Sheets.</b></td></tr>'}
