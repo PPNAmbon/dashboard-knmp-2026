@@ -47,12 +47,17 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 .map-maluku{fill:#168bc1}.map-malut{fill:#8b35d1}
 .map-error{font-size:16px;fill:#b42318;font-weight:700}
 
-@media(max-width:950px){.cards,.grid,.highlights{grid-template-columns:1fr}.card{min-height:150px}.map{min-height:520px}.tag{letter-spacing:3px}.hl.title{justify-content:center}}
+
+.navtabs{display:flex;gap:10px;justify-content:flex-end;margin:14px 0}.navbtn{background:#fff;color:var(--navy);border:2px solid #0b67b2;padding:10px 18px;border-radius:999px;box-shadow:0 5px 15px #07558a15}.navbtn.active{background:linear-gradient(90deg,#07447e,#087fc2);color:#fff}.page{display:none}.page.active{display:block}
+.page2grid{display:grid;grid-template-columns:.85fr 1.35fr;gap:16px}.ks{padding:18px}.ksbox{border-radius:18px;padding:16px 18px;margin-bottom:14px}.ksbox.bad{background:#fff0ef;border-left:7px solid #ef233c}.ksbox.good{background:#effcf5;border-left:7px solid #07955c}.kshead{font-size:22px;font-weight:900;margin-bottom:10px}.ksitem{display:flex;gap:12px;margin:10px 0;line-height:1.35}.ksnum{width:34px;height:34px;flex:0 0 34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;background:#ef233c}.good .ksnum{background:#07955c}.projection{padding:0 0 10px}.projrow{display:grid;grid-template-columns:1.25fr .75fr .75fr .75fr 1.4fr;align-items:center;border-bottom:1px solid #deebf2;min-height:74px}.projrow>div{padding:12px;text-align:center}.projrow.head{background:#07508e;color:#fff;font-weight:800;min-height:54px}.projrow .name{text-align:left;font-weight:900}.pbar{height:18px;background:#dce7ec;border-radius:20px;overflow:hidden}.pbar>i{display:block;height:100%;background:linear-gradient(90deg,#08a260,#3dc67d);border-radius:20px}.bottom3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}.mini{background:#fff;border-radius:18px;padding:18px;box-shadow:0 8px 25px #07558a18}.mini b{display:block;font-size:18px;margin-bottom:5px}.page2hero{margin-bottom:16px}.totalpill{display:inline-flex;gap:10px;align-items:center;background:#fff;border-radius:16px;padding:10px 16px;margin-top:15px;font-weight:800;box-shadow:0 6px 18px #07558a18}.totalpill strong{font-size:28px}
+@media(max-width:950px){.cards,.grid,.highlights,.page2grid,.bottom3{grid-template-columns:1fr}.card{min-height:150px}.map{min-height:520px}.tag{letter-spacing:3px}.hl.title{justify-content:center}}
 @media print{body{background:white}.wrap{max-width:none;padding:0}.controls{display:none}.panel,.card,.hl,.hero{box-shadow:none}button{display:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
+<div class="navtabs"><button class="navbtn active" id="tab1" onclick="showPage(1)">Halaman 1 · Progres</button><button class="navbtn" id="tab2" onclick="showPage(2)">Halaman 2 · Pelaksanaan</button></div>
+<div id="page1" class="page active">
 <section class="hero">
 <h1>PROGRES KONTRAK</h1>
 <div class="sub">KONSTRUKSI PEMBANGUNAN KNMP MALUKU DAN MALUKU UTARA TA 2026</div>
@@ -89,6 +94,32 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="hl"><div class="num">2</div><div id="hl-maluku">Memuat progres Maluku...</div></div>
 <div class="hl"><div class="num">3</div><div id="hl-malut">Memuat progres Maluku Utara...</div></div>
 </section>
+</div>
+<div id="page2" class="page">
+<section class="hero page2hero">
+<h1>PELAKSANAAN KONTRAK</h1>
+<div class="sub">KONSTRUKSI PEMBANGUNAN KNMP MALUKU DAN MALUKU UTARA TA 2026</div>
+<div class="tag">KENDALA &nbsp;|&nbsp; SOLUSI &nbsp;|&nbsp; PROYEKSI PENYELESAIAN</div>
+<div class="totalpill">◎ Total Target Maluku & Maluku Utara <strong id="p2total">-</strong> lokasi</div>
+</section>
+<section class="page2grid">
+<div class="panel"><h2>KENDALA DAN SOLUSI</h2><div class="ks">
+<div class="ksbox bad"><div class="kshead">⚠ Kendala</div><div id="kendala-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
+<div class="ksbox good"><div class="kshead">💡 Solusi</div><div id="solusi-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
+</div></div>
+<div class="panel"><h2>PROYEKSI PENYELESAIAN PEKERJAAN</h2><div class="projection">
+<div class="projrow head"><div>Wilayah</div><div>Target</div><div>Realisasi</div><div>Sisa</div><div>Progres Kontrak</div></div>
+<div class="projrow"><div class="name">MALUKU</div><div id="p2-m-t">-</div><div id="p2-m-r">-</div><div id="p2-m-b">-</div><div><div class="pbar"><i id="p2-m-bar" style="width:0%"></i></div><b id="p2-m-p">-</b></div></div>
+<div class="projrow"><div class="name">MALUKU UTARA</div><div id="p2-u-t">-</div><div id="p2-u-r">-</div><div id="p2-u-b">-</div><div><div class="pbar"><i id="p2-u-bar" style="width:0%"></i></div><b id="p2-u-p">-</b></div></div>
+<div class="projrow"><div class="name">JUMLAH</div><div id="p2-t-t">-</div><div id="p2-t-r">-</div><div id="p2-t-b">-</div><div><div class="pbar"><i id="p2-t-bar" style="width:0%"></i></div><b id="p2-t-p">-</b></div></div>
+</div></div>
+</section>
+<section class="bottom3">
+<div class="mini"><b>◎ TARGET UTAMA</b>Seluruh pekerjaan selesai sesuai jadwal pelaksanaan pada TA 2026.</div>
+<div class="mini"><b>⚙ KOMITMEN</b>Percepatan proses kontraktual untuk mendukung kelancaran pelaksanaan pembangunan KNMP.</div>
+<div class="mini"><b>♟ MANFAAT</b>Meningkatkan konektivitas, mendukung pertumbuhan ekonomi, dan pemerataan pembangunan.</div>
+</section>
+</div>
 <footer>INFRASTRUKTUR TANGGUH &nbsp; • &nbsp; KONEKTIVITAS MERATA &nbsp; • &nbsp; MANFAAT UNTUK RAKYAT &nbsp; • &nbsp; TA 2026</footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
@@ -96,6 +127,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 let data = [];
 const SHEET_ID="1269tZjx2g-yHz_7uU0HNg7Lta-KrDc7FrjoLbW43cDw";
 const SHEET_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+const KS_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Kendala_Solusi`;
 function parseCSV(text){
  const lines=text.trim().split(/\r?\n/);
  const parse=line=>{let r=[],v="",q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c=='"'){if(q&&line[i+1]=='"'){v+='"';i++}else q=!q}else if(c==','&&!q){r.push(v);v=""}else v+=c}r.push(v);return r};
@@ -138,6 +170,30 @@ function updateDashboard(){
  }
 }
 
+
+async function loadKendalaSolusi(){
+ try{
+  const res=await fetch(KS_URL+'&_='+Date.now(),{cache:'no-store'});
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const rows=parseCSVGeneric(await res.text());
+  const aktif=rows.filter(r=>(r[3]||'Aktif').trim().toLowerCase()!=='nonaktif');
+  const renderKS=(kategori,id)=>{
+    const list=aktif.filter(r=>(r[0]||'').trim().toLowerCase()===kategori.toLowerCase());
+    document.getElementById(id).innerHTML=list.length?list.map((r,i)=>`<div class="ksitem"><span class="ksnum">${r[1]||i+1}</span><span>${escapeHTML(r[2]||'')}</span></div>`).join(''):'<div class="ksitem"><span>Belum ada data.</span></div>';
+  };
+  renderKS('Kendala','kendala-list'); renderKS('Solusi','solusi-list');
+ }catch(e){
+  document.getElementById('kendala-list').innerHTML='<div class="ksitem"><span>Data Kendala belum dapat dimuat.</span></div>';
+  document.getElementById('solusi-list').innerHTML='<div class="ksitem"><span>Data Solusi belum dapat dimuat.</span></div>';
+ }
+}
+function parseCSVGeneric(text){
+ const lines=text.trim().split(/\r?\n/);
+ const parse=line=>{let r=[],v="",q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c=='"'){if(q&&line[i+1]=='"'){v+='"';i++}else q=!q}else if(c==','&&!q){r.push(v);v=""}else v+=c}r.push(v);return r};
+ return lines.slice(1).map(parse).filter(r=>r.some(v=>String(v).trim()));
+}
+function escapeHTML(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
 async function loadRealMap(){
  const svg=document.getElementById('realMap');
  const NS='http://www.w3.org/2000/svg';
@@ -177,15 +233,28 @@ function geometryPath(g,proj){
  return polys.map(poly=>poly.map(r=>r.map((p,i)=>{const q=proj(p);return (i?'L':'M')+q[0].toFixed(1)+','+q[1].toFixed(1)}).join('')+'Z').join('')).join('');
 }
 
+
+function showPage(n){
+ document.getElementById('page1').classList.toggle('active',n===1);document.getElementById('page2').classList.toggle('active',n===2);
+ document.getElementById('tab1').classList.toggle('active',n===1);document.getElementById('tab2').classList.toggle('active',n===2);window.scrollTo({top:0,behavior:'smooth'});
+}
+function updatePage2(){
+ const m=data.find(x=>x.wilayah.toLowerCase()==='maluku'),u=data.find(x=>x.wilayah.toLowerCase()==='maluku utara'); if(!m&&!u)return;
+ const set=(pre,x)=>{if(!x)return; const p=pct(x.realisasi,x.target);document.getElementById(pre+'t').textContent=fmt(x.target);document.getElementById(pre+'r').textContent=fmt(x.realisasi);document.getElementById(pre+'b').textContent=fmt(x.belum);document.getElementById(pre+'bar').style.width=p+'%';document.getElementById(pre+'p').textContent=p.toFixed(1).replace('.',',')+'%'};
+ set('p2-m-',m);set('p2-u-',u); const arr=[m,u].filter(Boolean),t=arr.reduce((a,x)=>a+x.target,0),r=arr.reduce((a,x)=>a+x.realisasi,0),b=t-r,p=pct(r,t);
+ document.getElementById('p2total').textContent=fmt(t);document.getElementById('p2-t-t').textContent=fmt(t);document.getElementById('p2-t-r').textContent=fmt(r);document.getElementById('p2-t-b').textContent=fmt(b);document.getElementById('p2-t-bar').style.width=p+'%';document.getElementById('p2-t-p').textContent=p.toFixed(1).replace('.',',')+'%';
+}
+
 async function loadSheet(){
  try{
   const res=await fetch(SHEET_URL,{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
-  data=parseCSV(await res.text()); updateDashboard();
+  data=parseCSV(await res.text()); updateDashboard(); updatePage2();
  }catch(e){
   document.getElementById('rows').innerHTML='<tr><td colspan="6" style="padding:24px;color:#b42318"><b>Google Sheets belum dapat dibaca.</b><br>Pastikan akses: Siapa saja yang memiliki link → Pelihat.</td></tr>';
  }
 }
 loadRealMap();
 loadSheet();
+loadKendalaSolusi();
 </script>
 </body></html>
