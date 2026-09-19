@@ -85,7 +85,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <section class="grid">
 <div class="panel">
 <h2>MONITORING STATUS PERUSAHAAN / PENYEDIA</h2>
-<div class="controls"><input id="search" placeholder="Cari perusahaan, wilayah, status, atau kendala..." oninput="render()"><button onclick="window.print()">Cetak / PDF</button></div>
+<div class="controls"><input id="search" type="search" placeholder="Cari perusahaan, wilayah, status, atau kendala..." oninput="render()" onsearch="render()" onkeydown="if(event.key==='Enter'){event.preventDefault();render();}"><button onclick="window.print()">Cetak / PDF</button></div>
 <div class="scroll-note">↕ Scroll tabel untuk melihat seluruh perusahaan tanpa memperpanjang dashboard</div><div class="table-scroll"><table><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Kabupaten/Kota</th><th>Hasil Pleno</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div>
 </div>
 <div class="panel">
@@ -139,52 +139,13 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <h2>DAFTAR LOKASI KNMP MALUKU & MALUKU UTARA</h2>
 <div class="legend" style="margin:0 0 10px">Data bersumber dari tab Google Sheet <b>Data_Lokasi</b></div>
 <div style="margin:12px 0">
-<input id="location-search" type="search" placeholder="🔎 Cari wilayah, kabupaten/kota, hasil pleno, atau nama desa..." oninput="filterLocationTable()" style="width:100%;padding:12px 14px;border:1px solid #cfe1ed;border-radius:12px;font-size:14px;outline:none;box-sizing:border-box">
+<input id="location-search" type="search" placeholder="🔎 Cari wilayah, kabupaten/kota, hasil pleno, atau nama desa..." oninput="renderLocationData()" onsearch="renderLocationData()" onkeydown="if(event.key==='Enter'){event.preventDefault();renderLocationData();}" style="width:100%;padding:12px 14px;border:1px solid #cfe1ed;border-radius:12px;font-size:14px;outline:none;box-sizing:border-box">
 </div>
-<div class="scroll-note">↕ Scroll untuk melihat seluruh lokasi</div>
+<div class="scroll-note">↕ Scroll untuk melihat seluruh lokasi &nbsp; • &nbsp; <b id="location-count">0 data</b></div>
 <div class="table-scroll"><table><thead><tr><th>No</th><th>Wilayah</th><th>Kabupaten/Kota</th><th>Hasil Pleno</th><th>Nama Desa</th></tr></thead>
 <tbody id="location-rows"><tr><td colspan="5">Memuat data lokasi...</td></tr></tbody></table></div>
 </div></section>
-<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js">
-document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>{
- const n=el.getAttribute('data-page');
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- const target=document.getElementById('page'+n); if(target) target.classList.add('active');
- document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x===el));
- window.scrollTo({top:0,behavior:'smooth'});
-}));
-
-
-function filterLocationTable(){
- const q=(document.getElementById('location-search')?.value||'').toLowerCase().trim();
- const body=document.getElementById('location-rows');
- if(!body) return;
- [...body.querySelectorAll('tr')].forEach(tr=>{
-  tr.style.display=!q || tr.textContent.toLowerCase().includes(q) ? '' : 'none';
- });
-}
-
-
-function setupDashboardSearch(){
- const s1=document.getElementById('search');
- if(s1){
-   s1.removeAttribute('oninput');
-   s1.addEventListener('input',render);
-   s1.addEventListener('search',render);
-   s1.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();render();}});
- }
- const s3=document.getElementById('location-search');
- if(s3){
-   s3.removeAttribute('oninput');
-   s3.addEventListener('input',renderLocationData);
-   s3.addEventListener('search',renderLocationData);
-   s3.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();renderLocationData();}});
- }
-}
-if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',setupDashboardSearch);
-else setupDashboardSearch();
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
 let data = [];
 const SHEET_ID="1269tZjx2g-yHz_7uU0HNg7Lta-KrDc7FrjoLbW43cDw";
@@ -349,6 +310,8 @@ function renderLocationData(){
  );
  const body=document.getElementById('location-rows');
  if(!body) return;
+ const count=document.getElementById('location-count');
+ if(count) count.textContent=filtered.length+' data';
  body.innerHTML=filtered.length
    ? filtered.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.wilayah||'-')}</b></td><td>${escapeHTML(x.kabupaten||'-')}</td><td>${escapeHTML(x.pleno||'-')}</td><td>${escapeHTML(x.desa||'-')}</td></tr>`).join('')
    : `<tr><td colspan="5" style="padding:24px;text-align:center">${q?'Data yang dicari tidak ditemukan.':'Belum ada data lokasi.'}</td></tr>`;
