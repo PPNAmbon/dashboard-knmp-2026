@@ -164,6 +164,37 @@ function filterLocationTable(){
  });
 }
 
+
+function filterTableRows(inputId, tbodyId){
+ const input=document.getElementById(inputId), body=document.getElementById(tbodyId);
+ if(!input||!body) return;
+ const q=(input.value||'').toLowerCase().trim();
+ [...body.querySelectorAll('tr')].forEach(tr=>{
+   tr.style.display=(!q || tr.textContent.toLowerCase().includes(q)) ? '' : 'none';
+ });
+}
+function setupDashboardSearch(){
+ const configs=[
+   {input:document.getElementById('search'), body:'rows'},
+   {input:document.getElementById('location-search'), body:'location-rows'}
+ ];
+ configs.forEach(c=>{
+   if(!c.input) return;
+   c.input.removeAttribute('oninput');
+   const run=()=>filterTableRows(c.input.id,c.body);
+   c.input.addEventListener('input',run);
+   c.input.addEventListener('search',run);
+   c.input.addEventListener('keydown',e=>{
+     if(e.key==='Enter'){e.preventDefault();run();}
+   });
+ });
+}
+if(document.readyState==='loading'){
+ document.addEventListener('DOMContentLoaded',setupDashboardSearch);
+}else{
+ setupDashboardSearch();
+}
+
 </script>
 <script>
 let data = [];
