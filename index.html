@@ -67,7 +67,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <body>
 <div class="wrap">
 <div class="navtabs"><button class="navbtn active" id="tab1" onclick="showPage(1)">Halaman 1 · Progres</button><button class="navbtn" id="tab2" onclick="showPage(2)">Halaman 2 · Pelaksanaan</button>
-<button class="navbtn" id="tab2" onclick="showPage(2)">Halaman 3 · Lokasi</button></div>
+<button class="navbtn" id="tab3" onclick="showPage(3)">Halaman 3 · Lokasi</button></div>
 <div id="page1" class="page active">
 <section class="hero">
 <h1>PROGRES KONTRAK</h1>
@@ -282,8 +282,13 @@ function geometryPath(g,proj){
 
 
 function showPage(n){
- document.getElementById('page1').classList.toggle('active',n===1);document.getElementById('page2').classList.toggle('active',n===2);
- document.getElementById('tab1').classList.toggle('active',n===1);document.getElementById('tab2').classList.toggle('active',n===2);window.scrollTo({top:0,behavior:'smooth'});
+ [1,2,3].forEach(i=>{
+  const page=document.getElementById('page'+i);
+  const tab=document.getElementById('tab'+i);
+  if(page) page.classList.toggle('active',n===i);
+  if(tab) tab.classList.toggle('active',n===i);
+ });
+ window.scrollTo({top:0,behavior:'smooth'});
 }
 function updatePage2(){
  const valid=companyData.filter(x=>x.perusahaan && !x.perusahaan.toLowerCase().startsWith('contoh '));
