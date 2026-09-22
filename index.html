@@ -132,7 +132,16 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="panel"><h2>KENDALA DAN SOLUSI</h2><div class="ks">
 <div class="ksbox bad"><div class="kshead">⚠ Kendala</div><div id="kendala-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
 <div class="ksbox good"><div class="kshead">💡 Solusi</div><div id="solusi-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
-</div></div>
+</div>
+<div id="pln-info" style="margin-top:14px;padding:14px;border-radius:14px;background:#eef7ff;border:1px solid #c9e2f5">
+  <div style="font-weight:900;color:#0b4d83;margin-bottom:8px" id="pln-info-title">INFORMASI</div>
+  <div style="background:white;border-radius:12px;padding:12px 14px;border:1px solid #d7e6f2">
+    <div style="font-weight:900;color:#0b67b2;margin-bottom:7px">1. PEMBAGIAN WILAYAH PLN PROVINSI MALUKU UTARA</div>
+    <div id="pln-info-intro" style="font-size:13px;margin-bottom:10px">Memuat informasi...</div>
+    <div id="pln-info-list" style="display:grid;gap:8px"></div>
+  </div>
+</div>
+</div>
 <div class="panel"><h2>PROYEKSI PENYELESAIAN PEKERJAAN</h2>
 <div class="legend" style="margin:0 0 10px">Berdasarkan perusahaan/penyedia • Target selesai, status, dan kendala dapat diedit dari Google Sheets</div>
 <div class="scroll-note">↕ Scroll untuk melihat seluruh data proyeksi</div><div class="table-scroll"><table class="p2company"><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Nama Lokasi</th><th>Target Selesai</th><th>Kendala</th></tr></thead><tbody id="projection-rows"><tr><td colspan="7">Memuat data...</td></tr></tbody><tfoot><tr><td colspan="3"><b>JUMLAH</b></td><td id="projection-total"><b>0</b></td><td colspan="3"></td></tr></tfoot></table></div>
@@ -221,6 +230,21 @@ async function loadPage2Content(){
   set('target_utama','judul-target','isi-target');
   set('komitmen','judul-komitmen','isi-komitmen');
   set('manfaat','judul-manfaat','isi-manfaat');
+
+  if(map['informasi_pln']){
+    document.getElementById('pln-info-title').textContent='INFORMASI';
+    document.getElementById('pln-info-intro').textContent=map['informasi_pln'].isi;
+  }
+  const plnKeys=['pln_up3_ternate','pln_up3_sofifi','pln_up3_tobelo'];
+  const plnList=document.getElementById('pln-info-list');
+  const items=plnKeys.filter(k=>map[k]).map(k=>{
+    const areas=String(map[k].isi||'').split(';').map(x=>x.trim()).filter(Boolean);
+    return `<div style="background:white;border-radius:10px;padding:10px 12px;border-left:4px solid #0b67b2">
+      <b style="color:#073b70">${escapeHTML(map[k].judul)}</b>
+      <div style="font-size:12px;line-height:1.55;margin-top:4px">${areas.map(a=>'• '+escapeHTML(a)).join('<br>')}</div>
+    </div>`;
+  });
+  if(plnList) plnList.innerHTML=items.join('');
  }catch(e){
   console.warn('Konten Halaman 2 gagal dimuat',e);
  }
