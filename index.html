@@ -46,8 +46,8 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 .map-land{stroke:#fff;stroke-width:1.2;vector-effect:non-scaling-stroke}
 .map-maluku{fill:#168bc1}.map-malut{fill:#8b35d1}
 .map-error{font-size:16px;fill:#b42318;font-weight:700}
-.map-location-marker{fill:#e53935;stroke:#fff;stroke-width:3;cursor:pointer;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
-.map-location-marker:hover{r:9}
+.map-location-marker{fill:#e53935;stroke:#fff;stroke-width:1.2;cursor:pointer;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.map-location-marker:hover{r:3.8}
 .map-popup{position:absolute;z-index:8;display:none;min-width:230px;max-width:300px;background:#fff;border:1px solid #cbd5e1;border-radius:12px;padding:12px 14px;box-shadow:0 10px 28px rgba(15,23,42,.18);font-size:13px;color:#17324d}
 .map-popup.show{display:block}
 .map-popup b{font-size:15px;color:#0b4d83}
@@ -378,7 +378,7 @@ async function loadRealMap(){
   const waesala=project([127.838281,-3.159204]);
   const marker=document.createElementNS(NS,'circle');
   marker.setAttribute('cx',waesala[0]); marker.setAttribute('cy',waesala[1]);
-  marker.setAttribute('r','7'); marker.setAttribute('class','map-location-marker');
+  marker.setAttribute('r','2.5'); marker.setAttribute('class','map-location-marker');
   marker.setAttribute('tabindex','0'); marker.setAttribute('role','button');
   marker.setAttribute('aria-label','Desa Waesala, klik untuk melihat data lokasi');
   const showWaesala=()=>{
@@ -395,7 +395,7 @@ async function loadRealMap(){
   const toniku=project([127.620288,0.798038]);
   const markerToniku=document.createElementNS(NS,'circle');
   markerToniku.setAttribute('cx',toniku[0]); markerToniku.setAttribute('cy',toniku[1]);
-  markerToniku.setAttribute('r','7'); markerToniku.setAttribute('class','map-location-marker');
+  markerToniku.setAttribute('r','2.5'); markerToniku.setAttribute('class','map-location-marker');
   markerToniku.setAttribute('tabindex','0'); markerToniku.setAttribute('role','button');
   markerToniku.setAttribute('aria-label','Desa Toniku, klik untuk melihat data lokasi');
   const showToniku=()=>{
@@ -403,7 +403,7 @@ async function loadRealMap(){
   const kusu=project([127.908611,1.186944]);
   const markerKusu=document.createElementNS(NS,'circle');
   markerKusu.setAttribute('cx',kusu[0]); markerKusu.setAttribute('cy',kusu[1]);
-  markerKusu.setAttribute('r','7'); markerKusu.setAttribute('class','map-location-marker');
+  markerKusu.setAttribute('r','2.5'); markerKusu.setAttribute('class','map-location-marker');
   markerKusu.setAttribute('tabindex','0'); markerKusu.setAttribute('role','button');
   markerKusu.setAttribute('aria-label','Desa Kusu Lofra, klik untuk melihat data lokasi');
   const showKusu=()=>{const kp=document.getElementById('kusuPopup');kp.style.left=Math.min(kusu[0]+18,360)+'px';kp.style.top=Math.max(kusu[1]-55,55)+'px';kp.classList.add('show');};
@@ -414,7 +414,7 @@ async function loadRealMap(){
   const sidongoli=project([127.517018,0.888616]);
   const markerSidongoli=document.createElementNS(NS,'circle');
   markerSidongoli.setAttribute('cx',sidongoli[0]); markerSidongoli.setAttribute('cy',sidongoli[1]);
-  markerSidongoli.setAttribute('r','7'); markerSidongoli.setAttribute('class','map-location-marker');
+  markerSidongoli.setAttribute('r','2.5'); markerSidongoli.setAttribute('class','map-location-marker');
   markerSidongoli.setAttribute('tabindex','0'); markerSidongoli.setAttribute('role','button');
   markerSidongoli.setAttribute('aria-label','Desa Sidongoli Dehe, klik untuk melihat data lokasi');
   const showSidongoli=()=>{const sp=document.getElementById('sidongoliPopup');sp.style.left=Math.min(sidongoli[0]+18,360)+'px';sp.style.top=Math.max(sidongoli[1]-55,55)+'px';sp.classList.add('show');};
@@ -541,21 +541,35 @@ loadPage2Content();
 
 <script>
 (function(){
- let mapZoom=1;
+ let mapZoom=1, panX=0, panY=0, dragging=false, sx=0, sy=0, startX=0, startY=0;
  const svg=document.getElementById('realMap');
- const applyZoom=()=>{ if(svg) svg.style.transform=`scale(${mapZoom})`; };
+ const applyMap=()=>{ if(svg) svg.style.transform=`translate(${panX}px,${panY}px) scale(${mapZoom})`; };
  const zin=document.getElementById('mapZoomIn');
  const zout=document.getElementById('mapZoomOut');
  const reset=document.getElementById('mapZoomReset');
- if(zin) zin.addEventListener('click',()=>{mapZoom=Math.min(2.5,+(mapZoom+0.2).toFixed(1));applyZoom();});
- if(zout) zout.addEventListener('click',()=>{mapZoom=Math.max(0.7,+(mapZoom-0.2).toFixed(1));applyZoom();});
- if(reset) reset.addEventListener('click',()=>{mapZoom=1;applyZoom();});
+ if(zin) zin.addEventListener('click',()=>{mapZoom=Math.min(5,+(mapZoom+0.2).toFixed(1));applyMap();});
+ if(zout) zout.addEventListener('click',()=>{mapZoom=Math.max(0.7,+(mapZoom-0.2).toFixed(1));applyMap();});
+ if(reset) reset.addEventListener('click',()=>{mapZoom=1;panX=0;panY=0;applyMap();});
  if(svg){
+   svg.style.cursor='grab';
+   svg.style.touchAction='none';
    svg.addEventListener('wheel',e=>{
      e.preventDefault();
-     mapZoom=e.deltaY<0?Math.min(2.5,+(mapZoom+0.1).toFixed(1)):Math.max(0.7,+(mapZoom-0.1).toFixed(1));
-     applyZoom();
+     mapZoom=e.deltaY<0?Math.min(5,+(mapZoom+0.1).toFixed(1)):Math.max(0.7,+(mapZoom-0.1).toFixed(1));
+     applyMap();
    },{passive:false});
+   svg.addEventListener('pointerdown',e=>{
+     if(e.target && e.target.classList && e.target.classList.contains('map-location-marker')) return;
+     dragging=true;sx=e.clientX;sy=e.clientY;startX=panX;startY=panY;
+     svg.setPointerCapture(e.pointerId);svg.style.cursor='grabbing';
+   });
+   svg.addEventListener('pointermove',e=>{
+     if(!dragging)return;
+     panX=startX+(e.clientX-sx);panY=startY+(e.clientY-sy);applyMap();
+   });
+   const endDrag=e=>{dragging=false;svg.style.cursor='grab';};
+   svg.addEventListener('pointerup',endDrag);
+   svg.addEventListener('pointercancel',endDrag);
  }
 })();
 </script>
