@@ -62,7 +62,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 .company-cards{grid-template-columns:repeat(4,1fr)}@media(max-width:1100px){.company-cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.company-cards{grid-template-columns:1fr}}
 .p2company{width:100%;border-collapse:collapse;font-size:13px}.p2company th{background:#075695;color:#fff;padding:10px 7px}.p2company td{padding:10px 7px;border-bottom:1px solid #d6e8f3}.p2company tfoot td{background:#075695;color:#fff;font-size:15px}
 
-.table-scroll{max-height:430px;overflow:auto;scrollbar-gutter:stable;border-radius:0 0 18px 18px}
+.table-scroll{max-height:620px;overflow:auto;scrollbar-gutter:stable;border-radius:0 0 18px 18px}
 .table-scroll table{margin:0}
 .table-scroll thead th{position:sticky;top:0;z-index:4;box-shadow:0 2px 0 #d7e8f2}
 .table-scroll::-webkit-scrollbar{width:11px;height:11px}
@@ -126,6 +126,15 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 }
 .map-zoom-controls button:hover{background:#eaf6ff}
 #realMap{transform-origin:center center;transition:transform .18s ease}
+</style>
+
+<style>
+@media(max-height:800px){
+  #page2 .table-scroll{max-height:520px}
+}
+@media(max-width:950px){
+  #page2 .table-scroll{max-height:600px}
+}
 </style>
 </head>
 <body>
@@ -216,8 +225,8 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 </div>
 </div>
 <div class="panel"><h2>PROYEKSI PENYELESAIAN PEKERJAAN</h2>
-<div class="legend" style="margin:0 0 10px">Berdasarkan perusahaan/penyedia • Target selesai, status, dan kendala dapat diedit dari Google Sheets</div>
-<div class="scroll-note">↕ Scroll untuk melihat seluruh data proyeksi</div><div class="table-scroll"><table class="p2company"><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Nama Lokasi</th><th>Target Selesai</th><th>Kendala</th></tr></thead><tbody id="projection-rows"><tr><td colspan="7">Memuat data...</td></tr></tbody><tfoot><tr><td colspan="3"><b>JUMLAH</b></td><td id="projection-total"><b>0</b></td><td colspan="3"></td></tr></tfoot></table></div>
+
+<div class="scroll-note">↕ Scroll untuk melihat seluruh data proyeksi</div><div class="table-scroll"><table class="p2company"><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Nama Lokasi</th><th>Kendala</th></tr></thead><tbody id="projection-rows"><tr><td colspan="7">Memuat data...</td></tr></tbody><tfoot><tr><td colspan="3"><b>JUMLAH</b></td><td id="projection-total"><b>0</b></td><td colspan="3"></td></tr></tfoot></table></div>
 </div>
 </section>
 <section class="bottom3">
@@ -340,9 +349,26 @@ async function loadKendalaSolusi(){
  }
 }
 function parseCSVGeneric(text){
- const lines=text.trim().split(/\r?\n/);
- const parse=line=>{let r=[],v="",q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c=='"'){if(q&&line[i+1]=='"'){v+='"';i++}else q=!q}else if(c==','&&!q){r.push(v);v=""}else v+=c}r.push(v);return r};
- return lines.slice(1).map(parse).filter(r=>r.some(v=>String(v).trim()));
+ // Parser CSV yang mendukung line break di dalam satu sel Google Sheets.
+ const rows=[]; let row=[],v="",q=false;
+ for(let i=0;i<text.length;i++){
+  const c=text[i];
+  if(c=='"'){
+   if(q && text[i+1]=='"'){v+='"';i++;}
+   else q=!q;
+  }else if(c==',' && !q){
+   row.push(v);v="";
+  }else if((c=='\n'||c=='\r') && !q){
+   if(c=='\r' && text[i+1]=='\n') i++;
+   row.push(v);v="";
+   if(row.some(x=>String(x).trim())) rows.push(row);
+   row=[];
+  }else{
+   v+=c;
+  }
+ }
+ if(v.length||row.length){row.push(v);if(row.some(x=>String(x).trim())) rows.push(row);}
+ return rows.slice(1);
 }
 function escapeHTML(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
@@ -472,9 +498,9 @@ async function loadProjection(){
   const res=await fetch(PROJECTION_URL+'&_='+Date.now(),{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
   const rows=parseCSVGeneric(await res.text());
   projectionData=rows.map(r=>({perusahaan:(r[0]||'').trim(),wilayah:(r[1]||'').trim(),lokasi:Number(String(r[2]||'0').replace(/\./g,'').replace(',','.'))||0,namaLokasi:(r[3]||'').trim(),target:(r[4]||'').trim(),kendala:(r[5]||'').trim()})).filter(x=>x.perusahaan&&!x.perusahaan.toLowerCase().startsWith('contoh '));
-  document.getElementById('projection-rows').innerHTML=projectionData.length?projectionData.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td><b>${fmt(x.lokasi)}</b></td><td>${escapeHTML(x.namaLokasi||'-')}</td><td>${escapeHTML(x.target||'-')}</td><td>${escapeHTML(x.kendala||'-')}</td></tr>`).join(''):'<tr><td colspan="7" style="padding:24px;text-align:center">Belum ada data proyeksi.</td></tr>';
+  document.getElementById('projection-rows').innerHTML=projectionData.length?projectionData.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td><b>${fmt(x.lokasi)}</b></td><td>${escapeHTML(x.namaLokasi||'-')}</td><td>${escapeHTML(x.kendala||'-')}</td></tr>`).join(''):'<tr><td colspan="6" style="padding:24px;text-align:center">Belum ada data proyeksi.</td></tr>';
   document.getElementById('projection-total').innerHTML=`<b>${fmt(projectionData.reduce((a,x)=>a+x.lokasi,0))}</b>`;
- }catch(e){document.getElementById('projection-rows').innerHTML='<tr><td colspan="7">Data proyeksi belum dapat dimuat.</td></tr>'}
+ }catch(e){document.getElementById('projection-rows').innerHTML='<tr><td colspan="6">Data proyeksi belum dapat dimuat.</td></tr>'}
 }
 
 
