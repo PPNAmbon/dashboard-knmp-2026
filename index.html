@@ -102,6 +102,12 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="region malut-card">MALUKU UTARA<br><b id="map-malut">-</b></div>
 <div class="region maluku-card">MALUKU<br><b id="map-maluku">-</b></div>
 <div class="map-title-small">Peta Wilayah Maluku & Maluku Utara</div>
+<div id="tonikuPopup" class="map-popup">
+<button type="button" class="close-map-popup" aria-label="Tutup">×</button>
+<b>Desa Toniku</b>
+<div>Halmahera Barat · Maluku Utara</div>
+<div class="coord">0.798038, 127.620288</div>
+</div>
 <div id="waesalaPopup" class="map-popup">
 <button type="button" class="close-map-popup" aria-label="Tutup">×</button>
 <b>Desa Waesala</b>
@@ -317,6 +323,26 @@ async function loadRealMap(){
   marker.addEventListener('click',showWaesala);
   marker.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showWaesala();}});
   svg.appendChild(marker);
+
+  // Lokasi sementara: Desa Toniku
+  const toniku=project([127.620288,0.798038]);
+  const markerToniku=document.createElementNS(NS,'circle');
+  markerToniku.setAttribute('cx',toniku[0]); markerToniku.setAttribute('cy',toniku[1]);
+  markerToniku.setAttribute('r','7'); markerToniku.setAttribute('class','map-location-marker');
+  markerToniku.setAttribute('tabindex','0'); markerToniku.setAttribute('role','button');
+  markerToniku.setAttribute('aria-label','Desa Toniku, klik untuk melihat data lokasi');
+  const showToniku=()=>{
+    const tp=document.getElementById('tonikuPopup');
+    tp.style.left=Math.min(toniku[0]+18,360)+'px';
+    tp.style.top=Math.max(toniku[1]-55,55)+'px';
+    tp.classList.add('show');
+  };
+  markerToniku.addEventListener('click',showToniku);
+  markerToniku.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showToniku();}});
+  svg.appendChild(markerToniku);
+  const tp=document.getElementById('tonikuPopup');
+  tp.querySelector('.close-map-popup').addEventListener('click',()=>tp.classList.remove('show'));
+
   const pop=document.getElementById('waesalaPopup');
   pop.querySelector('.close-map-popup').addEventListener('click',()=>pop.classList.remove('show'));
  }catch(e){
