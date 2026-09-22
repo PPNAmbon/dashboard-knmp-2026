@@ -137,7 +137,7 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="hero"><div><div class="tag">DATA LOKASI KNMP</div><h1>WILAYAH & LOKASI</h1><div class="subtitle">KABUPATEN/KOTA · HASIL PLENO · NAMA DESA</div></div></div>
 <div class="panel" style="margin-top:18px">
 <h2>DAFTAR LOKASI KNMP MALUKU & MALUKU UTARA</h2>
-<div class="legend" style="margin:0 0 10px">Data bersumber dari tab Google Sheet <b>Data_Lokasi</b></div>
+<div class="legend" style="margin:0 0 10px">Data bersumber langsung dari Google Sheet Dashboard KNMP • Update DATA REVISI(8)</div>
 <div style="margin:12px 0">
 <input id="location-search" type="search" placeholder="🔎 Cari wilayah, kabupaten/kota, hasil pleno, atau nama desa..." oninput="renderLocationData()" onsearch="renderLocationData()" onkeydown="if(event.key==='Enter'){event.preventDefault();renderLocationData();}" style="width:100%;padding:12px 14px;border:1px solid #cfe1ed;border-radius:12px;font-size:14px;outline:none;box-sizing:border-box">
 </div>
@@ -347,7 +347,7 @@ async function loadCompanyData(){
 
 async function loadSheet(){
  try{
-  const res=await fetch(SHEET_URL,{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
+  const res=await fetch(SHEET_URL+'&_='+Date.now(),{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
   data=parseCSV(await res.text()); updateDashboard(); updatePage2();
  }catch(e){
   document.getElementById('rows').innerHTML='<tr><td colspan="6" style="padding:24px;color:#b42318"><b>Google Sheets belum dapat dibaca.</b><br>Pastikan akses: Siapa saja yang memiliki link → Pelihat.</td></tr>';
