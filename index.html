@@ -136,6 +136,26 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
   #page2 .table-scroll{max-height:600px}
 }
 </style>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+ integrity="sha256-p4NxAoJBhIINfQ3ynhY3p8m0iC2KjMZbMZbMZbMZbM=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+#leafletKnmpMap{
+  width:100%; height:560px; border-radius:14px; overflow:hidden;
+  background:#dbeafe; box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);
+}
+#leafletKnmpMap .leaflet-popup-content{margin:12px 14px;line-height:1.45;font-family:inherit}
+#leafletKnmpMap .leaflet-popup-content b{font-size:14px}
+.knmp-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#e53935;border:1.5px solid #fff;
+  box-shadow:0 0 0 1px rgba(0,0,0,.28);
+}
+.knmp-map-note{
+  font-size:11px;color:#587083;margin:7px 2px 0;
+}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -168,7 +188,9 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
   <div class="region-summary-item malut-summary">MALUKU UTARA<br><b id="map-malut">-</b></div>
 </div>
 <div class="map maluku-map">
-<svg id="realMap" viewBox="0 0 620 485" role="img" aria-label="Peta geografis Maluku dan Maluku Utara"></svg>
+<div id="leafletKnmpMap" aria-label="Peta interaktif lokasi KNMP Maluku dan Maluku Utara"></div>
+<div class="knmp-map-note">Geser peta dengan mouse • gunakan +/− atau scroll untuk zoom • klik titik untuk detail lokasi</div>
+<svg id="realMap" viewBox="0 0 620 485" role="img" aria-label="Peta geografis Maluku dan Maluku Utara" style="display:none"></svg>
 <div class="map-title-small">Peta Wilayah Maluku & Maluku Utara</div><div class="map-zoom-controls" aria-label="Kontrol zoom peta">
 <button type="button" id="mapZoomIn" title="Perbesar peta">+</button>
 <button type="button" id="mapZoomOut" title="Perkecil peta">−</button>
@@ -183,6 +205,10 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 </div>
 <div id="sidongoliPopup" class="map-popup"><button type="button" class="close-map-popup" aria-label="Tutup">×</button><b>Desa Sidongoli Dehe</b><div>Halmahera Barat · Maluku Utara</div><div class="coord">0.888616, 127.517018</div><div style="margin-top:9px"><a href="https://www.google.com/maps?q=0.888616,127.517018" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div></div>
 <div id="kusuPopup" class="map-popup"><button type="button" class="close-map-popup" aria-label="Tutup">×</button><b>Desa Kusu Lofra</b><div>Halmahera Utara · Maluku Utara</div><div class="coord">1.186944, 127.908611</div><div style="margin-top:9px"><a href="https://www.google.com/maps?q=1.186944,127.908611" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div></div>
+<div id="dynamicMapPopup" class="map-popup">
+<button type="button" class="close-map-popup" aria-label="Tutup">×</button>
+<div id="dynamicMapPopupBody"></div>
+</div>
 <div id="waesalaPopup" class="map-popup">
 <button type="button" class="close-map-popup" aria-label="Tutup">×</button>
 <b>Desa Waesala</b>
@@ -505,6 +531,7 @@ async function loadProjection(){
 
 
 let locationData=[];
+window.locationData=locationData;
 function renderLocationData(){
  const input=document.getElementById('location-search');
  const q=(input?.value||'').toLowerCase().trim();
@@ -528,13 +555,50 @@ async function loadLocationData(){
    const rawWilayah=(r[0]||'').trim(), rawKabupaten=(r[1]||'').trim();
    if(rawWilayah) lastWilayah=rawWilayah;
    if(rawKabupaten) lastKabupaten=rawKabupaten;
-   return {wilayah:lastWilayah,kabupaten:lastKabupaten,pleno:(r[2]||'').trim(),desa:(r[3]||'').trim()};
+   return {wilayah:lastWilayah,kabupaten:lastKabupaten,pleno:(r[2]||'').trim(),desa:(r[3]||'').trim(),koordinat:(r[4]||'').trim(),luas:(r[5]||'').trim(),keliling:(r[6]||'').trim()};
   }).filter(x=>x.kabupaten||x.desa||x.pleno);
+  window.locationData=locationData;
   renderLocationData();
+  renderDynamicMapMarkers();
+  if(window.renderLeafletKnmpMap) window.renderLeafletKnmpMap();
  }catch(e){
   const body=document.getElementById('location-rows');
   if(body) body.innerHTML='<tr><td colspan="5">Data lokasi belum dapat dimuat.</td></tr>';
  }
+}
+
+
+function renderDynamicMapMarkers(){
+ const svg=document.getElementById('realMap');
+ const project=window.knmpMapProject;
+ if(!svg||!project) return;
+ svg.querySelectorAll('.dynamic-location-marker').forEach(el=>el.remove());
+ const manualNames=new Set(['waesala','toniku','sidongoli dehe','kusu lofra']);
+ const pop=document.getElementById('dynamicMapPopup');
+ const body=document.getElementById('dynamicMapPopupBody');
+ if(pop && !pop.dataset.bound){
+   pop.querySelector('.close-map-popup')?.addEventListener('click',()=>pop.classList.remove('show'));
+   pop.dataset.bound='1';
+ }
+ locationData.forEach(x=>{
+   if(!x.koordinat || manualNames.has((x.desa||'').toLowerCase())) return;
+   const parts=x.koordinat.split(',').map(Number);
+   if(parts.length<2 || !Number.isFinite(parts[0]) || !Number.isFinite(parts[1])) return;
+   const lat=parts[0],lon=parts[1],pt=project([lon,lat]);
+   const m=document.createElementNS('http://www.w3.org/2000/svg','circle');
+   m.setAttribute('cx',pt[0]);m.setAttribute('cy',pt[1]);m.setAttribute('r','2.5');
+   m.setAttribute('class','map-location-marker dynamic-location-marker');
+   m.setAttribute('tabindex','0');m.setAttribute('role','button');
+   m.setAttribute('aria-label',(x.desa||'Lokasi KNMP')+', klik untuk melihat data lokasi');
+   const show=()=>{
+     if(!pop||!body)return;
+     const extras=[x.pleno?`<div><b>Hasil Pleno:</b> ${escapeHTML(x.pleno)}</div>`:'',x.luas?`<div><b>Luas:</b> ${escapeHTML(x.luas)}</div>`:'',x.keliling?`<div><b>Keliling:</b> ${escapeHTML(x.keliling)}</div>`:''].join('');
+     body.innerHTML=`<b>${escapeHTML(x.desa||'Lokasi KNMP')}</b><div>${escapeHTML(x.kabupaten||'')} · ${escapeHTML(x.wilayah||'')}</div><div class="coord">${lat.toFixed(6)}, ${lon.toFixed(6)}</div>${extras}<div style="margin-top:9px"><a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div>`;
+     pop.style.left=Math.min(pt[0]+18,360)+'px';pop.style.top=Math.max(pt[1]-55,55)+'px';pop.classList.add('show');
+   };
+   m.addEventListener('click',show);m.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show();}});
+   svg.appendChild(m);
+ });
 }
 
 let companyData=[];
@@ -599,4 +663,52 @@ loadPage2Content();
  }
 })();
 </script>
+
+<script>
+(function(){
+ let knmpLeafletMap=null, knmpLayer=null;
+ function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+ window.renderLeafletKnmpMap=function(){
+   const el=document.getElementById('leafletKnmpMap');
+   if(!el || typeof L==='undefined' || !Array.isArray(window.locationData || locationData)) return;
+   if(!knmpLeafletMap){
+     knmpLeafletMap=L.map(el,{zoomControl:true,scrollWheelZoom:true,minZoom:5,maxZoom:18}).setView([-1.9,128.0],7);
+     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+       maxZoom:19,
+       attribution:'&copy; OpenStreetMap contributors'
+     }).addTo(knmpLeafletMap);
+     L.control.scale({imperial:false,position:'bottomleft'}).addTo(knmpLeafletMap);
+   }
+   if(knmpLayer) knmpLayer.remove();
+   knmpLayer=L.layerGroup().addTo(knmpLeafletMap);
+   const bounds=[];
+   (window.locationData || locationData).forEach(x=>{
+     if(!x.koordinat) return;
+     const p=x.koordinat.split(',').map(Number);
+     if(p.length<2||!Number.isFinite(p[0])||!Number.isFinite(p[1])) return;
+     const lat=p[0],lon=p[1]; bounds.push([lat,lon]);
+     const icon=L.divIcon({className:'',html:'<div class="knmp-dot"></div>',iconSize:[7,7],iconAnchor:[3.5,3.5]});
+     const marker=L.marker([lat,lon],{icon,keyboard:true}).addTo(knmpLayer);
+     const extras=[
+       x.pleno?`<div><b>Hasil Pleno:</b> ${esc(x.pleno)}</div>`:'',
+       x.luas?`<div><b>Luas:</b> ${esc(x.luas)}</div>`:'',
+       x.keliling?`<div><b>Keliling:</b> ${esc(x.keliling)}</div>`:''
+     ].join('');
+     marker.bindPopup(
+       `<b>${esc(x.desa||'Lokasi KNMP')}</b>`+
+       `<div>${esc(x.kabupaten||'')} · ${esc(x.wilayah||'')}</div>`+
+       `<div style="font-family:monospace;margin:4px 0">${lat.toFixed(6)}, ${lon.toFixed(6)}</div>`+
+       extras+
+       `<div style="margin-top:9px"><a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div>`
+     );
+   });
+   if(bounds.length) knmpLeafletMap.fitBounds(bounds,{padding:[28,28],maxZoom:8});
+   setTimeout(()=>knmpLeafletMap.invalidateSize(),100);
+ };
+})();
+</script>
 </body></html>
+<style>
+.map-zoom-controls{display:none!important}
+#dynamicMapPopup,#waesalaPopup,#tonikuPopup,#kusuPopup,#sidongoliPopup{display:none!important}
+</style>
