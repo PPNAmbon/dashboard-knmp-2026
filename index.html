@@ -638,4 +638,17 @@ loadPage2Content();
  }
 })();
 </script>
+
+<script>
+window.addEventListener('load',()=>{
+  let tries=0;
+  const timer=setInterval(()=>{
+    tries++;
+    if(typeof renderDynamicMapMarkers==='function' && window.knmpMapProject){
+      renderDynamicMapMarkers();
+      if(document.querySelectorAll('#realMap .dynamic-location-marker').length || tries>=12) clearInterval(timer);
+    }else if(tries>=12){ clearInterval(timer); }
+  },500);
+});
+</script>
 </body></html>
