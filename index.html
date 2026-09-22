@@ -396,6 +396,7 @@ async function loadRealMap(){
   const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
   const W=620,H=485,pad=55,scale=Math.min((W-2*pad)/(maxX-minX),(H-2*pad)/(maxY-minY));
   const project=p=>[pad+(p[0]-minX)*scale,H-pad-(p[1]-minY)*scale];
+  window.knmpMapProject=project;
   for(const g of geos){
    for(const f of g.geo.features){
     const path=document.createElementNS(NS,'path');
@@ -470,6 +471,9 @@ async function loadRealMap(){
 
   const pop=document.getElementById('waesalaPopup');
   pop.querySelector('.close-map-popup').addEventListener('click',()=>pop.classList.remove('show'));
+
+  // Semua titik dari Data_Lokasi digambar setelah peta benar-benar selesai.
+  if(typeof renderDynamicMapMarkers==='function') renderDynamicMapMarkers();
  }catch(e){
   const t=document.createElementNS(NS,'text');t.setAttribute('x','40');t.setAttribute('y','240');t.setAttribute('class','map-error');
   t.textContent='Peta tidak dapat dimuat. Periksa koneksi internet.';svg.appendChild(t);
