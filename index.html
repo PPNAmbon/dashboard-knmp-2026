@@ -134,16 +134,16 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 </div>
 
 <section id="page3" class="page">
-<div class="hero"><div><div class="tag">DATA LOKASI KNMP</div><h1>WILAYAH & LOKASI</h1><div class="subtitle">KABUPATEN/KOTA · HASIL PLENO · NAMA DESA · CALON PENYEDIA · WSP</div></div></div>
+<div class="hero"><div><div class="tag">DATA LOKASI KNMP</div><h1>WILAYAH & LOKASI</h1><div class="subtitle">KABUPATEN/KOTA · HASIL PLENO · NAMA DESA</div></div></div>
 <div class="panel" style="margin-top:18px">
 <h2>DAFTAR LOKASI KNMP MALUKU & MALUKU UTARA</h2>
 <div class="legend" style="margin:0 0 10px">Data bersumber dari tab Google Sheet <b>Data_Lokasi</b></div>
 <div style="margin:12px 0">
-<input id="location-search" type="search" placeholder="🔎 Cari wilayah, kabupaten/kota, hasil pleno, nama desa, penyedia, atau WSP..." oninput="renderLocationData()" onsearch="renderLocationData()" onkeydown="if(event.key==='Enter'){event.preventDefault();renderLocationData();}" style="width:100%;padding:12px 14px;border:1px solid #cfe1ed;border-radius:12px;font-size:14px;outline:none;box-sizing:border-box">
+<input id="location-search" type="search" placeholder="🔎 Cari wilayah, kabupaten/kota, hasil pleno, atau nama desa..." oninput="renderLocationData()" onsearch="renderLocationData()" onkeydown="if(event.key==='Enter'){event.preventDefault();renderLocationData();}" style="width:100%;padding:12px 14px;border:1px solid #cfe1ed;border-radius:12px;font-size:14px;outline:none;box-sizing:border-box">
 </div>
 <div class="scroll-note">↕ Scroll untuk melihat seluruh lokasi &nbsp; • &nbsp; <b id="location-count">0 data</b></div>
-<div class="table-scroll"><table><thead><tr><th>No</th><th>Wilayah</th><th>Kabupaten/Kota</th><th>Hasil Pleno</th><th>Nama Desa</th><th>Calon Penyedia</th><th>WSP</th></tr></thead>
-<tbody id="location-rows"><tr><td colspan="7">Memuat data lokasi...</td></tr></tbody></table></div>
+<div class="table-scroll"><table><thead><tr><th>No</th><th>Wilayah</th><th>Kabupaten/Kota</th><th>Hasil Pleno</th><th>Nama Desa</th></tr></thead>
+<tbody id="location-rows"><tr><td colspan="5">Memuat data lokasi...</td></tr></tbody></table></div>
 </div></section>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
@@ -306,15 +306,15 @@ function renderLocationData(){
  const input=document.getElementById('location-search');
  const q=(input?.value||'').toLowerCase().trim();
  const filtered=locationData.filter(x=>
-   [x.wilayah,x.kabupaten,x.pleno,x.desa,x.penyedia,x.wsp].join(' ').toLowerCase().includes(q)
+   [x.wilayah,x.kabupaten,x.pleno,x.desa].join(' ').toLowerCase().includes(q)
  );
  const body=document.getElementById('location-rows');
  if(!body) return;
  const count=document.getElementById('location-count');
  if(count) count.textContent=filtered.length+' data';
  body.innerHTML=filtered.length
-   ? filtered.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.wilayah||'-')}</b></td><td>${escapeHTML(x.kabupaten||'-')}</td><td>${escapeHTML(x.pleno||'-')}</td><td>${escapeHTML(x.desa||'-')}</td><td>${escapeHTML(x.penyedia||'-')}</td><td>${escapeHTML(x.wsp||'-')}</td></tr>`).join('')
-   : `<tr><td colspan="7" style="padding:24px;text-align:center">${q?'Data yang dicari tidak ditemukan.':'Belum ada data lokasi.'}</td></tr>`;
+   ? filtered.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.wilayah||'-')}</b></td><td>${escapeHTML(x.kabupaten||'-')}</td><td>${escapeHTML(x.pleno||'-')}</td><td>${escapeHTML(x.desa||'-')}</td></tr>`).join('')
+   : `<tr><td colspan="5" style="padding:24px;text-align:center">${q?'Data yang dicari tidak ditemukan.':'Belum ada data lokasi.'}</td></tr>`;
 }
 async function loadLocationData(){
  try{
@@ -325,12 +325,12 @@ async function loadLocationData(){
    const rawWilayah=(r[0]||'').trim(), rawKabupaten=(r[1]||'').trim();
    if(rawWilayah) lastWilayah=rawWilayah;
    if(rawKabupaten) lastKabupaten=rawKabupaten;
-   return {wilayah:lastWilayah,kabupaten:lastKabupaten,pleno:(r[2]||'').trim(),desa:(r[3]||'').trim(),penyedia:(r[4]||'').trim(),wsp:(r[5]||'').trim()};
+   return {wilayah:lastWilayah,kabupaten:lastKabupaten,pleno:(r[2]||'').trim(),desa:(r[3]||'').trim()};
   }).filter(x=>x.kabupaten||x.desa||x.pleno);
   renderLocationData();
  }catch(e){
   const body=document.getElementById('location-rows');
-  if(body) body.innerHTML='<tr><td colspan="7">Data lokasi belum dapat dimuat.</td></tr>';
+  if(body) body.innerHTML='<tr><td colspan="5">Data lokasi belum dapat dimuat.</td></tr>';
  }
 }
 
