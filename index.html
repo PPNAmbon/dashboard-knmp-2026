@@ -70,6 +70,63 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 .table-scroll::-webkit-scrollbar-track{background:#eef8fd}
 .scroll-note{font-size:12px;color:#58758a;padding:8px 14px;background:#f7fcff;border-bottom:1px solid #e2eef5}
 </style>
+
+<style>
+/* Legend wilayah dibuat tidak menutupi area peta */
+.map-legend{
+  position:relative !important;
+  left:auto !important; right:auto !important; top:auto !important; bottom:auto !important;
+  display:flex !important; align-items:center; justify-content:center; gap:16px;
+  width:100%; margin:8px 0 0; padding:6px 10px;
+  background:rgba(255,255,255,.94); border-radius:8px;
+  box-shadow:none !important; z-index:1;
+  font-size:12px;
+}
+</style>
+
+<style>
+/* Ringkasan wilayah dipindahkan ke atas supaya tidak menutupi peta */
+.map-region-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:0 0 10px;
+}
+.region-summary-item{
+  background:#fff;
+  border:2px solid #3b9dd1;
+  border-radius:12px;
+  padding:9px 14px;
+  font-weight:900;
+  font-size:13px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+.region-summary-item b{font-size:18px}
+.maluku-summary{border-color:#0b67b2}
+.malut-summary{border-color:#8b35d1}
+
+/* Peta sedikit diperbesar */
+.maluku-map{min-height:555px !important}
+#realMap{
+  inset:42px 8px 20px !important;
+  width:calc(100% - 16px) !important;
+  height:calc(100% - 62px) !important;
+}
+</style>
+
+<style>
+.map-zoom-controls{
+ position:absolute;right:16px;top:54px;z-index:12;
+ display:flex;flex-direction:column;gap:5px
+}
+.map-zoom-controls button{
+ width:38px;height:38px;border:0;border-radius:9px;background:#fff;
+ color:#0b4d83;font-size:22px;font-weight:900;cursor:pointer;
+ box-shadow:0 3px 10px rgba(0,0,0,.18)
+}
+.map-zoom-controls button:hover{background:#eaf6ff}
+#realMap{transform-origin:center center;transition:transform .18s ease}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -97,11 +154,17 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 </div>
 <div class="panel">
 <h2>SEBARAN STATUS PERUSAHAAN MALUKU & MALUKU UTARA</h2>
+<div class="map-region-summary">
+  <div class="region-summary-item maluku-summary">MALUKU<br><b id="map-maluku">-</b></div>
+  <div class="region-summary-item malut-summary">MALUKU UTARA<br><b id="map-malut">-</b></div>
+</div>
 <div class="map maluku-map">
 <svg id="realMap" viewBox="0 0 620 485" role="img" aria-label="Peta geografis Maluku dan Maluku Utara"></svg>
-<div class="region malut-card">MALUKU UTARA<br><b id="map-malut">-</b></div>
-<div class="region maluku-card">MALUKU<br><b id="map-maluku">-</b></div>
-<div class="map-title-small">Peta Wilayah Maluku & Maluku Utara</div>
+<div class="map-title-small">Peta Wilayah Maluku & Maluku Utara</div><div class="map-zoom-controls" aria-label="Kontrol zoom peta">
+<button type="button" id="mapZoomIn" title="Perbesar peta">+</button>
+<button type="button" id="mapZoomOut" title="Perkecil peta">−</button>
+<button type="button" id="mapZoomReset" title="Kembali ke ukuran awal">⌂</button>
+</div>
 <div id="tonikuPopup" class="map-popup">
 <button type="button" class="close-map-popup" aria-label="Tutup">×</button>
 <b>Desa Toniku</b>
@@ -109,6 +172,8 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="coord">0.798038, 127.620288</div>
 <div style="margin-top:9px"><a href="https://www.google.com/maps?q=0.798038,127.620288" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div>
 </div>
+<div id="sidongoliPopup" class="map-popup"><button type="button" class="close-map-popup" aria-label="Tutup">×</button><b>Desa Sidongoli Dehe</b><div>Halmahera Barat · Maluku Utara</div><div class="coord">0.888616, 127.517018</div><div style="margin-top:9px"><a href="https://www.google.com/maps?q=0.888616,127.517018" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div></div>
+<div id="kusuPopup" class="map-popup"><button type="button" class="close-map-popup" aria-label="Tutup">×</button><b>Desa Kusu Lofra</b><div>Halmahera Utara · Maluku Utara</div><div class="coord">1.186944, 127.908611</div><div style="margin-top:9px"><a href="https://www.google.com/maps?q=1.186944,127.908611" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div></div>
 <div id="waesalaPopup" class="map-popup">
 <button type="button" class="close-map-popup" aria-label="Tutup">×</button>
 <b>Desa Waesala</b>
@@ -334,7 +399,35 @@ async function loadRealMap(){
   markerToniku.setAttribute('tabindex','0'); markerToniku.setAttribute('role','button');
   markerToniku.setAttribute('aria-label','Desa Toniku, klik untuk melihat data lokasi');
   const showToniku=()=>{
-    const tp=document.getElementById('tonikuPopup');
+    // Lokasi sementara: Desa Kusu Lofra
+  const kusu=project([127.908611,1.186944]);
+  const markerKusu=document.createElementNS(NS,'circle');
+  markerKusu.setAttribute('cx',kusu[0]); markerKusu.setAttribute('cy',kusu[1]);
+  markerKusu.setAttribute('r','7'); markerKusu.setAttribute('class','map-location-marker');
+  markerKusu.setAttribute('tabindex','0'); markerKusu.setAttribute('role','button');
+  markerKusu.setAttribute('aria-label','Desa Kusu Lofra, klik untuk melihat data lokasi');
+  const showKusu=()=>{const kp=document.getElementById('kusuPopup');kp.style.left=Math.min(kusu[0]+18,360)+'px';kp.style.top=Math.max(kusu[1]-55,55)+'px';kp.classList.add('show');};
+  markerKusu.addEventListener('click',showKusu);
+  markerKusu.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showKusu();}});
+  svg.appendChild(markerKusu);
+  // Lokasi: Desa Sidongoli Dehe
+  const sidongoli=project([127.517018,0.888616]);
+  const markerSidongoli=document.createElementNS(NS,'circle');
+  markerSidongoli.setAttribute('cx',sidongoli[0]); markerSidongoli.setAttribute('cy',sidongoli[1]);
+  markerSidongoli.setAttribute('r','7'); markerSidongoli.setAttribute('class','map-location-marker');
+  markerSidongoli.setAttribute('tabindex','0'); markerSidongoli.setAttribute('role','button');
+  markerSidongoli.setAttribute('aria-label','Desa Sidongoli Dehe, klik untuk melihat data lokasi');
+  const showSidongoli=()=>{const sp=document.getElementById('sidongoliPopup');sp.style.left=Math.min(sidongoli[0]+18,360)+'px';sp.style.top=Math.max(sidongoli[1]-55,55)+'px';sp.classList.add('show');};
+  markerSidongoli.addEventListener('click',showSidongoli);
+  markerSidongoli.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showSidongoli();}});
+  svg.appendChild(markerSidongoli);
+  const sp=document.getElementById('sidongoliPopup');
+  sp.querySelector('.close-map-popup').addEventListener('click',()=>sp.classList.remove('show'));
+
+  const kp=document.getElementById('kusuPopup');
+  kp.querySelector('.close-map-popup').addEventListener('click',()=>kp.classList.remove('show'));
+
+  const tp=document.getElementById('tonikuPopup');
     tp.style.left=Math.min(toniku[0]+18,360)+'px';
     tp.style.top=Math.max(toniku[1]-55,55)+'px';
     tp.classList.add('show');
@@ -444,5 +537,26 @@ loadCompanyData();
 loadProjection();
 loadKendalaSolusi();
 loadPage2Content();
+</script>
+
+<script>
+(function(){
+ let mapZoom=1;
+ const svg=document.getElementById('realMap');
+ const applyZoom=()=>{ if(svg) svg.style.transform=`scale(${mapZoom})`; };
+ const zin=document.getElementById('mapZoomIn');
+ const zout=document.getElementById('mapZoomOut');
+ const reset=document.getElementById('mapZoomReset');
+ if(zin) zin.addEventListener('click',()=>{mapZoom=Math.min(2.5,+(mapZoom+0.2).toFixed(1));applyZoom();});
+ if(zout) zout.addEventListener('click',()=>{mapZoom=Math.max(0.7,+(mapZoom-0.2).toFixed(1));applyZoom();});
+ if(reset) reset.addEventListener('click',()=>{mapZoom=1;applyZoom();});
+ if(svg){
+   svg.addEventListener('wheel',e=>{
+     e.preventDefault();
+     mapZoom=e.deltaY<0?Math.min(2.5,+(mapZoom+0.1).toFixed(1)):Math.max(0.7,+(mapZoom-0.1).toFixed(1));
+     applyZoom();
+   },{passive:false});
+ }
+})();
 </script>
 </body></html>
