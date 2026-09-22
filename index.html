@@ -146,6 +146,15 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 .pleno-pin .pin{font-size:12px;margin-right:3px}
 @media(max-width:700px){.pleno-pin-filter{display:flex;margin:7px 0 0}}
 </style>
+
+<style>
+.open-mymaps-btn{
+ display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid #bcd8e8;
+ border-radius:10px;background:#fff;color:#174a68;font-size:12px;font-weight:800;
+ text-decoration:none;box-shadow:0 2px 8px rgba(20,70,100,.08);transition:.18s ease;
+}
+.open-mymaps-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(20,70,100,.14);background:#f5fbff}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -176,6 +185,9 @@ footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding
 <div class="map-region-summary">
   <div class="region-summary-item maluku-summary">MALUKU<br><b id="map-maluku">-</b></div>
   <div class="region-summary-item malut-summary">MALUKU UTARA<br><b id="map-malut">-</b></div>
+</div>
+<div style="display:flex;justify-content:flex-end;margin:0 0 10px">
+<a class="open-mymaps-btn" href="https://www.google.com/maps/d/u/0/viewer?mid=1-5fyEUyOs2u7kB8iZh9bXA-7axrBO5g&ll=-0.5719494703015211%2C127.60016493323499&z=7&utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer" title="Buka peta lengkap di tab baru">📍 Buka Google My Maps ↗</a>
 </div>
 <div class="map maluku-map">
 <svg id="realMap" viewBox="0 0 620 485" role="img" aria-label="Peta geografis Maluku dan Maluku Utara"></svg>
