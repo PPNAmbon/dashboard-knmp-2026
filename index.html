@@ -216,7 +216,65 @@ th:nth-child(2) .th-filter{max-width:145px}
 .pr-bar i{display:block;height:100%;background:#17a768;border-radius:999px}
 .total-row .pr-bar{background:rgba(255,255,255,.35)}
 </style>
-</head>
+
+<style>
+.page1-layout-reference{
+  grid-column:1/-1!important;
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.page1-progress-full{
+  display:block!important;
+  width:100%!important;
+  margin:0 0 14px!important;
+}
+.page1-progress-full>.panel{
+  width:100%!important;max-width:none!important;margin:0!important;box-sizing:border-box!important;
+}
+.page1-lower-two-col{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,1fr)!important;
+  gap:14px!important;
+  align-items:stretch!important;
+  width:100%!important;
+}
+.page1-locations-left,.page1-map-right{min-width:0!important;width:100%!important}
+.page1-locations-left>.panel,.page1-map-right>.panel{
+  width:100%!important;max-width:none!important;margin:0!important;box-sizing:border-box!important;
+}
+.page1-map-right>.panel{height:100%!important}
+.page1-map-right .map-region-summary{
+  display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin:8px 0 12px!important;
+}
+.page1-map-right .region-summary-item{
+  padding:10px!important;border-radius:10px!important;font-weight:900!important;
+}
+.page1-map-right .region-metrics{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:6px!important;margin-top:7px!important}
+.page1-map-right .region-metrics span{background:#eef7ff;padding:7px 4px;border-radius:7px;text-align:center;font-size:10px;line-height:1.2}
+.page1-map-right .region-metrics span:nth-child(2){background:#e8f8ee}
+.page1-map-right .region-metrics .selisih{background:#fff0f0;color:#c62828}
+.page1-map-right .region-metrics b{font-size:20px}
+.page1-map-right .region-metrics small{font-size:9px}
+@media(max-width:900px){
+  .page1-lower-two-col{grid-template-columns:1fr!important}
+}
+</style>
+
+<style>
+.page1-map-right .map-region-summary{display:none!important;}
+</style>
+<style>
+.maluku-map{position:relative!important}.map-target-overlay{position:absolute;inset:0;z-index:8;pointer-events:none}
+.map-region-card{position:absolute;background:rgba(255,255,255,.95);border:1px solid #d7e7f3;border-radius:12px;padding:10px;box-shadow:0 4px 14px rgba(5,76,130,.12);min-width:205px}
+.map-card-malut{top:14px;left:14px}.map-card-maluku{right:14px;bottom:28px}
+.map-card-title{font-size:14px;font-weight:900;color:#073b82;border-left:5px solid #0874d1;padding-left:7px;margin-bottom:7px}
+.map-card-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.map-card-stats span{background:#eaf4ff;border-radius:8px;text-align:center;padding:6px 5px;line-height:1.05}
+.map-card-stats .real{background:#e8f8ee;color:#08783d}.map-card-stats .gap{background:#fff0f0;color:#d51f26}
+.map-card-stats small,.map-card-stats em{display:block;font-size:9px;font-style:normal;font-weight:700}.map-card-stats b{display:block;font-size:20px;margin:2px 0}
+.map-label{position:absolute;background:#078bd3;color:white;border-radius:999px;padding:6px 20px;font-size:12px;font-weight:900}
+.map-label-malut{top:30%;right:15%}.map-label-maluku{bottom:25%;left:38%}
+</style></head>
 <body>
 <div class="wrap">
 <div class="navtabs"><button class="navbtn active" id="tab1" onclick="showPage(1)">Halaman 1 · Progres</button><button class="navbtn" id="tab2" onclick="showPage(2)">Halaman 2 · Pelaksanaan</button>
@@ -236,7 +294,9 @@ th:nth-child(2) .th-filter{max-width:145px}
 </section>
 
 <section class="grid">
-<div class="panel progress-wilayah-panel">
+
+<div class="page1-layout-reference">
+  <div class="page1-progress-full"><div class="panel progress-wilayah-panel">
 <h2>TABEL PROGRES PER WILAYAH</h2>
 <div class="progress-table-wrap">
 <table class="progress-region-table">
@@ -248,9 +308,26 @@ th:nth-child(2) .th-filter{max-width:145px}
 </tbody>
 </table>
 </div>
+</div></div>
+  <div class="page1-lower-two-col">
+    <div class="page1-locations-left"><div class="panel">
+<h2>DAFTAR LOKASI KNMP MALUKU & MALUKU UTARA</h2>
+<div class="legend" style="margin:0 0 10px"></div>
+<div style="margin:12px 0">
+<input id="location-search" type="search" placeholder="🔎 Cari wilayah, kabupaten/kota, hasil pleno, atau nama desa..." oninput="renderLocationData()" onsearch="renderLocationData()" onkeydown="if(event.key==='Enter'){event.preventDefault();renderLocationData();}" style="width:100%;padding:12px 14px;border:1px solid #cfe1ed;border-radius:12px;font-size:14px;outline:none;box-sizing:border-box">
 </div>
-<div class="panel">
-<h2>SEBARAN TARGET DAN REALISASI KONTRAK PER WILAYAH</h2>
+<div class="scroll-note">↕ Scroll untuk melihat seluruh lokasi &nbsp; • &nbsp; <b id="location-count">0 data</b></div>
+<div class="table-scroll"><table><thead><tr>
+<th>No</th>
+<th><span class="th-filter-wrap"><span>Kabupaten/Kota</span><select id="p1-kab-filter" class="th-filter" onchange="renderLocationData()" title="Filter Kabupaten/Kota"><option value="">Semua</option></select></span></th>
+<th>Nama Desa</th>
+<th><span class="th-filter-wrap"><span>Wilayah</span><select id="p1-wilayah-filter" class="th-filter" onchange="renderLocationData()" title="Filter Wilayah"><option value="">Semua</option><option value="Maluku">Maluku</option><option value="Maluku Utara">Maluku Utara</option></select></span></th>
+<th><span class="th-filter-wrap"><span>Hasil Pleno</span><select id="p1-pleno-filter" class="th-filter" onchange="renderLocationData()" title="Filter Hasil Pleno"><option value="">Semua</option><option value="Hub">Hub</option><option value="Penyangga">Penyangga</option><option value="Penyangga (+CS)">Penyangga (+CS)</option></select></span></th>
+</tr></thead>
+<tbody id="location-rows"><tr><td colspan="5">Memuat data lokasi...</td></tr></tbody></table></div>
+</div></div>
+    <div class="page1-map-right"><div class="panel">
+<h2>PETA SEBARAN LOKASI KNMP MALUKU & MALUKU UTARA</h2>
 <div class="map-region-summary contract-region-summary">
   <div class="region-contract-card">
     <div class="region-contract-name">MALUKU</div>
@@ -289,7 +366,11 @@ th:nth-child(2) .th-filter{max-width:145px}
 <div style="display:flex;justify-content:flex-end;margin:0 0 10px">
 <a class="open-mymaps-btn" href="https://www.google.com/maps/d/u/0/viewer?mid=1-5fyEUyOs2u7kB8iZh9bXA-7axrBO5g&ll=-0.5719494703015211%2C127.60016493323499&z=7&utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer" title="Buka peta lengkap di tab baru">📍 Buka Google My Maps ↗</a>
 </div>
-<div class="map maluku-map">
+<div class="map maluku-map"><div class="map-target-overlay">
+<div class="map-region-card map-card-malut"><div class="map-card-title">MALUKU UTARA</div><div class="map-card-stats"><span><small>Target</small><b>66</b><em>lokasi</em></span><span class="real"><small>Realisasi</small><b>57</b><em>lokasi</em></span><span class="gap"><small>Selisih</small><b>9</b><em>lokasi</em></span></div></div>
+<div class="map-region-card map-card-maluku"><div class="map-card-title">MALUKU</div><div class="map-card-stats"><span><small>Target</small><b>79</b><em>lokasi</em></span><span class="real"><small>Realisasi</small><b>57</b><em>lokasi</em></span><span class="gap"><small>Selisih</small><b>22</b><em>lokasi</em></span></div></div>
+<div class="map-label map-label-malut">Maluku Utara</div><div class="map-label map-label-maluku">Maluku</div>
+</div>
 <svg id="realMap" viewBox="0 0 620 485" role="img" aria-label="Peta geografis Maluku dan Maluku Utara"></svg>
 <div class="map-title-small">Peta Wilayah Maluku & Maluku Utara</div><div class="map-zoom-controls" aria-label="Kontrol zoom peta">
 <button type="button" id="mapZoomIn" title="Perbesar peta">+</button>
@@ -319,16 +400,11 @@ th:nth-child(2) .th-filter{max-width:145px}
 </div>
 <div class="legend">Ringkasan: Jumlah Perusahaan | Jumlah Lokasi</div>
 </div>
+</div></div>
+  </div>
 </div>
-</section>
 
-<section class="highlights">
-<div class="hl title">▥ &nbsp; HIGHLIGHT UTAMA</div>
-<div class="hl"><div class="num">1</div><div id="hl-total">Memuat progres kontrak Maluku dan Maluku Utara...</div></div>
-<div class="hl"><div class="num">2</div><div id="hl-maluku">Memuat progres Maluku...</div></div>
-<div class="hl"><div class="num">3</div><div id="hl-malut">Memuat progres Maluku Utara...</div></div>
-</section>
-</div>
+ln-info-intro" style="font-size:13px;margin-bottom:10px">Memuat informasi...</div>
 <div id="page2" class="page">
 <section class="hero page2hero">
 <h1>PELAKSANAAN KONTRAK</h1>
