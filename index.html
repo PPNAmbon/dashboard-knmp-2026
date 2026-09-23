@@ -202,6 +202,11 @@ th:nth-child(2) .th-filter{max-width:145px}
 .pr-bar{display:block;width:90px;height:10px;background:#dbe3e9;border-radius:999px;overflow:hidden}
 .pr-bar i{display:block;height:100%;background:#17a768;border-radius:999px}
 .total-row .pr-bar{background:rgba(255,255,255,.35)}
+</style><style>
+/* Tabel progres full-width; di bawah: Daftar Lokasi kiri, Peta kanan */
+.progress-wilayah-panel{width:100%;display:block;margin-bottom:14px}
+.lokasi-peta-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr);gap:14px;align-items:start}
+@media(max-width:900px){.lokasi-peta-row{grid-template-columns:1fr}}
 </style></head>
 <body>
 <div class="wrap">
@@ -232,6 +237,7 @@ th:nth-child(2) .th-filter{max-width:145px}
 <tr><td>2</td><td><b>Maluku Utara</b></td><td>66</td><td>57</td><td>9</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:86.4%"></i></span><b>86,4%</b></div></td></tr>
 <tr class="total-row"><td colspan="2"><b>Total</b></td><td><b>145</b></td><td><b>114</b></td><td><b>31</b></td><td><div class="pr-cell"><span class="pr-bar"><i style="width:78.6%"></i></span><b>78,6%</b></div></td></tr>
 </tbody></table></div></div>
+<div class="lokasi-peta-row">
 <div class="panel">
 <h2>DAFTAR LOKASI KNMP MALUKU & MALUKU UTARA</h2>
 <div class="legend" style="margin:0 0 10px"></div>
@@ -286,6 +292,7 @@ th:nth-child(2) .th-filter{max-width:145px}
 <div style="margin-top:9px"><a href="https://www.google.com/maps?q=-3.159204,127.838281" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div>
 </div>
 <div class="legend">Ringkasan: Jumlah Perusahaan | Jumlah Lokasi</div>
+</div>
 </div>
 </div>
 </section>
