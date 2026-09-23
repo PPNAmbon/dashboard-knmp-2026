@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Progres Kontraktual KNMP TA 2026</title>
+<style>
+:root{--navy:#063b79;--blue:#0b67b2;--green:#07955c;--orange:#ff8a00;--red:#ef233c;--bg:#eef8fd;--ink:#07356b}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#f7fcff,#eaf7ff);color:var(--ink)}
+.wrap{max-width:1500px;margin:auto;padding:22px}.hero{background:linear-gradient(105deg,#fff 0%,#e8f8ff 60%,#0875bb 100%);border-radius:22px;padding:25px 30px;box-shadow:0 12px 35px #07558a20;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-40px;top:-70px;width:430px;height:240px;border:28px solid #ffffff25;border-radius:50%;transform:rotate(-12deg)}
+h1{margin:0;font-size:clamp(28px,4vw,55px);line-height:.95;letter-spacing:-2px}.sub{font-size:clamp(18px,2.5vw,34px);font-weight:800;margin-top:8px}.tag{letter-spacing:7px;font-weight:700;margin-top:16px;font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:18px 0}.card{background:#fff;border-radius:20px;padding:20px;box-shadow:0 8px 25px #07558a18;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.card.green{background:linear-gradient(135deg,#effff6,#c9f7df)}.card.orange{background:linear-gradient(135deg,#fff9f1,#ffe8d4)}
+.icon{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:white;font-size:34px}.green .icon{background:var(--green)}.orange .icon{background:#ff5a00}
+.label{font-weight:800;font-size:18px}.big{font-size:52px;font-weight:900;line-height:1}.unit{font-size:20px}
+.ring{--p:50;--c:var(--green);width:105px;aspect-ratio:1;border-radius:50%;background:conic-gradient(var(--c) calc(var(--p)*1%),#dbe5e9 0);display:grid;place-items:center}
+.ring:after{content:"";width:72px;aspect-ratio:1;background:white;border-radius:50%;position:absolute}.ring span{position:relative;z-index:1;font-weight:900;text-align:center}
+.grid{display:grid;grid-template-columns:1.15fr .95fr;gap:16px}.panel{background:#fff;border-radius:20px;box-shadow:0 8px 25px #07558a18;overflow:hidden}.panel h2{margin:0;background:linear-gradient(90deg,#07447e,#087fc2);color:#fff;padding:14px 18px;font-size:20px}
+.controls{padding:12px 16px;display:flex;gap:10px;flex-wrap:wrap}.controls input{border:1px solid #c8dce8;border-radius:10px;padding:9px 12px;flex:1;min-width:180px}
+button{border:0;border-radius:10px;padding:10px 14px;background:var(--navy);color:#fff;font-weight:700;cursor:pointer}
+table{width:100%;border-collapse:collapse}th{background:#07508e;color:#fff;padding:11px 8px;font-size:14px}td{padding:10px 8px;border-bottom:1px solid #e2edf3;text-align:center}td:nth-child(2){text-align:left;font-weight:700}
+.bar{height:17px;background:#dce7ec;border-radius:20px;overflow:hidden;min-width:110px}.fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#08a260,#3dc67d)}
+.map{position:relative;min-height:485px;background:radial-gradient(circle at center,#f8fdff,#eaf7fb);padding:18px;overflow:hidden}
+.islands{position:absolute;inset:70px 40px 70px 40px;opacity:.18;background:
+radial-gradient(ellipse at 12% 48%,#0a7 0 8%,transparent 9%),
+radial-gradient(ellipse at 35% 55%,#f90 0 10%,transparent 11%),
+radial-gradient(ellipse at 57% 43%,#e23 0 12%,transparent 13%),
+radial-gradient(ellipse at 78% 52%,#8b35d1 0 14%,transparent 15%),
+linear-gradient(170deg,transparent 48%,#0875bb 49% 52%,transparent 53%);filter:blur(1px)}
+.region{position:absolute;background:#fff;border:2px solid #3b9dd1;border-radius:12px;padding:8px 12px;box-shadow:0 5px 14px #0001;font-weight:800;font-size:13px}.region b{font-size:18px}.r1{left:7%;top:20%}.r2{left:28%;top:47%}.r3{left:48%;top:19%}.r4{right:5%;top:20%}.r5{right:4%;top:46%}.r6{left:43%;bottom:12%}.r7{left:8%;bottom:11%}
+.legend{position:absolute;bottom:15px;right:18px;font-size:12px;background:#ffffffd9;padding:7px 10px;border-radius:10px}
+.highlights{display:grid;grid-template-columns:190px repeat(3,1fr);gap:12px;margin-top:16px}.hl{background:#fff;border-radius:17px;padding:18px;box-shadow:0 8px 25px #07558a18;display:flex;align-items:center;gap:13px}.hl.title{font-size:21px;font-weight:900;background:#dff4ff}.num{flex:0 0 44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:24px;font-weight:900;background:var(--green)}.hl:nth-child(3) .num{background:#f5aa00}.hl:nth-child(4) .num{background:var(--red)}
+footer{margin-top:16px;background:#053b75;color:white;border-radius:16px;padding:15px;text-align:center;font-weight:700;letter-spacing:2px}
+
+.maluku-map{min-height:485px;background:linear-gradient(180deg,#effaff,#dff5ff);position:relative}
+
+
+
+
+
+
+.malut-card{right:7%;top:14%;border-color:#8b35d1}.maluku-card{left:8%;bottom:18%;border-color:#0b67b2}
+.map-title-small{position:absolute;top:18px;left:20px;font-weight:900;color:#0b4d83;letter-spacing:.5px}
+#realMap{position:absolute;inset:45px 20px 35px;width:calc(100% - 40px);height:calc(100% - 80px)}
+.map-land{stroke:#fff;stroke-width:1.2;vector-effect:non-scaling-stroke}
+.map-maluku{fill:#168bc1}.map-malut{fill:#8b35d1}
+.map-error{font-size:16px;fill:#b42318;font-weight:700}
+.map-location-marker{fill:#e53935;stroke:#fff;stroke-width:1.2;cursor:pointer;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.map-location-marker:hover{r:3.8}
+.map-popup{position:absolute;z-index:8;display:none;min-width:230px;max-width:300px;background:#fff;border:1px solid #cbd5e1;border-radius:12px;padding:12px 14px;box-shadow:0 10px 28px rgba(15,23,42,.18);font-size:13px;color:#17324d}
+.map-popup.show{display:block}
+.map-popup b{font-size:15px;color:#0b4d83}
+.map-popup .coord{margin-top:7px;font-family:monospace;font-size:12px}
+.map-popup .close-map-popup{float:right;border:0;background:#eef4f8;border-radius:50%;width:26px;height:26px;cursor:pointer;font-weight:900;color:#355}
+
+
+.navtabs{display:flex;gap:10px;justify-content:flex-end;margin:14px 0}.navbtn{background:#fff;color:var(--navy);border:2px solid #0b67b2;padding:10px 18px;border-radius:999px;box-shadow:0 5px 15px #07558a15}.navbtn.active{background:linear-gradient(90deg,#07447e,#087fc2);color:#fff}.page{display:none}.page.active{display:block}
+.page2grid{display:grid;grid-template-columns:.85fr 1.35fr;gap:16px}.ks{padding:18px}.ksbox{border-radius:18px;padding:16px 18px;margin-bottom:14px}.ksbox.bad{background:#fff0ef;border-left:7px solid #ef233c}.ksbox.good{background:#effcf5;border-left:7px solid #07955c}.kshead{font-size:22px;font-weight:900;margin-bottom:10px}.ksitem{display:flex;gap:12px;margin:10px 0;line-height:1.35}.ksnum{width:34px;height:34px;flex:0 0 34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;background:#ef233c}.good .ksnum{background:#07955c}.projection{padding:0 0 10px}.projrow{display:grid;grid-template-columns:1.25fr .75fr .75fr .75fr 1.4fr;align-items:center;border-bottom:1px solid #deebf2;min-height:74px}.projrow>div{padding:12px;text-align:center}.projrow.head{background:#07508e;color:#fff;font-weight:800;min-height:54px}.projrow .name{text-align:left;font-weight:900}.pbar{height:18px;background:#dce7ec;border-radius:20px;overflow:hidden}.pbar>i{display:block;height:100%;background:linear-gradient(90deg,#08a260,#3dc67d);border-radius:20px}.bottom3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}.mini{background:#fff;border-radius:18px;padding:18px;box-shadow:0 8px 25px #07558a18}.mini b{display:block;font-size:18px;margin-bottom:5px}.page2hero{margin-bottom:16px}.totalpill{display:inline-flex;gap:10px;align-items:center;background:#fff;border-radius:16px;padding:10px 16px;margin-top:15px;font-weight:800;box-shadow:0 6px 18px #07558a18}.totalpill strong{font-size:28px}
+@media(max-width:950px){.cards,.grid,.highlights,.page2grid,.bottom3{grid-template-columns:1fr}.card{min-height:150px}.map{min-height:520px}.tag{letter-spacing:3px}.hl.title{justify-content:center}}
+@media print{body{background:white}.wrap{max-width:none;padding:0}.controls{display:none}.panel,.card,.hl,.hero{box-shadow:none}button{display:none}}
+.company-cards{grid-template-columns:repeat(4,1fr)}@media(max-width:1100px){.company-cards{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.company-cards{grid-template-columns:1fr}}
+.p2company{width:100%;border-collapse:collapse;font-size:13px}.p2company th{background:#075695;color:#fff;padding:10px 7px}.p2company td{padding:10px 7px;border-bottom:1px solid #d6e8f3}.p2company tfoot td{background:#075695;color:#fff;font-size:15px}
+
+.table-scroll{max-height:620px;overflow:auto;scrollbar-gutter:stable;border-radius:0 0 18px 18px}
+.table-scroll table{margin:0}
+.table-scroll thead th{position:sticky;top:0;z-index:4;box-shadow:0 2px 0 #d7e8f2}
+.table-scroll::-webkit-scrollbar{width:11px;height:11px}
+.table-scroll::-webkit-scrollbar-thumb{background:#8bbbd6;border-radius:10px;border:3px solid #eef8fd}
+.table-scroll::-webkit-scrollbar-track{background:#eef8fd}
+.scroll-note{font-size:12px;color:#58758a;padding:8px 14px;background:#f7fcff;border-bottom:1px solid #e2eef5}
+</style>
+
+<style>
+/* Legend wilayah dibuat tidak menutupi area peta */
+.map-legend{
+  position:relative !important;
+  left:auto !important; right:auto !important; top:auto !important; bottom:auto !important;
+  display:flex !important; align-items:center; justify-content:center; gap:16px;
+  width:100%; margin:8px 0 0; padding:6px 10px;
+  background:rgba(255,255,255,.94); border-radius:8px;
+  box-shadow:none !important; z-index:1;
+  font-size:12px;
+}
+</style>
+
+<style>
+/* Ringkasan wilayah dipindahkan ke atas supaya tidak menutupi peta */
+.map-region-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:0 0 10px;
+}
+.region-summary-item{
+  background:#fff;
+  border:2px solid #3b9dd1;
+  border-radius:12px;
+  padding:9px 14px;
+  font-weight:900;
+  font-size:13px;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+.region-summary-item b{font-size:18px}
+.maluku-summary{border-color:#0b67b2}
+.malut-summary{border-color:#8b35d1}
+
+/* Peta sedikit diperbesar */
+.maluku-map{min-height:555px !important}
+#realMap{
+  inset:42px 8px 20px !important;
+  width:calc(100% - 16px) !important;
+  height:calc(100% - 62px) !important;
+}
+</style>
+
+<style>
+.map-zoom-controls{
+ position:absolute;right:16px;top:54px;z-index:12;
+ display:flex;flex-direction:column;gap:5px
+}
+.map-zoom-controls button{
+ width:38px;height:38px;border:0;border-radius:9px;background:#fff;
+ color:#0b4d83;font-size:22px;font-weight:900;cursor:pointer;
+ box-shadow:0 3px 10px rgba(0,0,0,.18)
+}
+.map-zoom-controls button:hover{background:#eaf6ff}
+#realMap{transform-origin:center center;transition:transform .18s ease}
+</style>
+
+<style>
+@media(max-height:800px){
+  #page2 .table-scroll{max-height:520px}
+}
+@media(max-width:950px){
+  #page2 .table-scroll{max-height:600px}
+}
+</style>
+<script>window.KNMP_LOCATION_FIXED=[{"wilayah": "Maluku", "kabupaten": "Buru Selatan", "pleno": "Penyangga", "desa": "Nalbessy", "koordinat": "-3.789617, 126.550509", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Aru", "pleno": "Penyangga", "desa": "Kalar-kalar", "koordinat": "-6.549834, 134.096099", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Aru", "pleno": "Penyangga", "desa": "Samang", "koordinat": "-5.663773, 134.251505", "luas": "0.06 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Hub", "desa": "Arma", "koordinat": "-7.422330, 131.693237", "luas": "0.2 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Lelingluan", "koordinat": "-7.149729, 131.709632", "luas": "1.03 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Meyano Das", "koordinat": "-7.644109, 131.621358", "luas": "0.38 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Ritabel", "koordinat": "-7.158778, 131.715810", "luas": "0.2 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Hub", "desa": "Kamatubun", "koordinat": "-7.668110, 131.031157", "luas": "0.1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Adodo Molu", "koordinat": "-6.708698, 131.560349", "luas": "0.35 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Latdalam", "koordinat": "-7.952927, 131.108966", "luas": "0.07 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Makatian", "koordinat": "-7.564712, 131.202469", "luas": "0.76 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Matakus", "koordinat": "-8.052753, 131.204252", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Teineman", "koordinat": "-7.098300, 131.444300", "luas": "41", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Tutunametal", "koordinat": "-6.798996, 131.523865", "luas": "0.66 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga", "desa": "Wabar", "koordinat": "-7.331738, 131.446533", "luas": "0.17 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kepulauan Tanimbar", "pleno": "Penyangga (+cs)", "desa": "Adaut", "koordinat": "-8.096000, 131.046100", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kota Tual", "pleno": "Penyangga", "desa": "Dullah Laut", "koordinat": "-5.537186, 132.748625", "luas": "0.1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Kota Tual", "pleno": "Penyangga (+cs)", "desa": "Tam Ngurhir", "koordinat": "-5.723778, 132.196761", "luas": "0.5 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Barat Daya", "pleno": "Penyangga", "desa": "Labelau", "koordinat": "-8.026111, 127.150139", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Barat Daya", "pleno": "Hub", "desa": "Nuwewang", "koordinat": "-8.184428, 127.641633", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Asilulu", "koordinat": "-3.529806, 127.952813", "luas": "0.3 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Besi", "koordinat": "-2.939960, 129.213129", "luas": "0.84 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Labuan", "koordinat": "-2.796076, 129.037894", "luas": "0.53 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Hub", "desa": "Negeri Lima", "koordinat": "-3.646284, 127.965139", "luas": "0.851 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Hub", "desa": "Nolloth", "koordinat": "-3.501480, 128.691550", "luas": "0.51 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Haya", "koordinat": "-3.413165, 129.563562", "luas": "1.5 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Hitulama", "koordinat": "-3.583838, 128.175783", "luas": "0.11 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Kulur", "koordinat": "-3.498076, 128.567012", "luas": "0.6 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Pelauw", "koordinat": "-3.523224, 128.517150", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Sila", "koordinat": "-3.648500, 128.770100", "luas": "0.06 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Yainuelo", "koordinat": "-3.348802, 129.030620", "luas": "1.01 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tengah", "pleno": "Penyangga", "desa": "Olong", "koordinat": "-2.942083, 129.182222", "luas": "0.25 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tenggara", "pleno": "Penyangga", "desa": "Dudunwahan", "koordinat": "-5.609586, 132.682492", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tenggara", "pleno": "Penyangga", "desa": "Hoor Kristen", "koordinat": "-5.368484, 133.092025", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tenggara", "pleno": "Penyangga", "desa": "Sare", "koordinat": "-5.949593, 132.741763", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tenggara", "pleno": "Penyangga", "desa": "Sather", "koordinat": "-5.861560, 132.955520", "luas": "1.8 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tenggara", "pleno": "Penyangga", "desa": "Tamangil Nuhuyanat", "koordinat": "-5.837300, 132.891100", "luas": "0.2 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Maluku Tenggara", "pleno": "Penyangga", "desa": "Watuar", "koordinat": "-5.724100, 132.942632", "luas": "0.64 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Barat", "pleno": "Penyangga", "desa": "Waesala", "koordinat": "-3.159204, 127.838281", "luas": "1,14 ha", "keliling": "533,96 m"}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Barat", "pleno": "Penyangga", "desa": "Tahalupu", "koordinat": "-3.239350, 127.659110", "luas": "0.8 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Bemo Perak", "koordinat": "-3.405852, 129.975258", "luas": "0.56 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Kilga Kilwouw", "koordinat": "-3.631430, 130.868210", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Sesar", "koordinat": "-3.060460, 130.460250", "luas": "0.64 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Hub", "desa": "Amarsekaru", "koordinat": "-4.071424, 131.284403", "luas": "0.35 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Aki Jaya", "koordinat": "-3.011440, 130.133602", "luas": "1.241 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Bula", "koordinat": "-3.100613, 130.491985", "luas": "2 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Englas", "koordinat": "-3.055994, 130.443565", "luas": "0.625 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Kilwaru", "koordinat": "-3.882075, 130.952925", "luas": "1.03 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Hub", "desa": "Geser", "koordinat": "-3.884727, 130.897445", "luas": "0.8 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Kellu", "koordinat": "-3.871582, 130.862322", "luas": "0.35 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Kilfura", "koordinat": "-3.890536, 130.910951", "luas": "0.13 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Kwamor Kecil Mata Wawa", "koordinat": "-3.867383, 130.811704", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Batuasa", "koordinat": "-3.547700, 130.178300", "luas": "0.25 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Dawang", "koordinat": "-3.319760, 130.630838", "luas": "0.75 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Ilili", "koordinat": "-4.379940, 131.581280", "luas": "0.04 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Kurwara", "koordinat": "-4.481502, 131.659317", "luas": "0.09 ha", "keliling": ""}, {"wilayah": "Maluku", "kabupaten": "Seram Bagian Timur", "pleno": "Penyangga", "desa": "Waru", "koordinat": "-3.405350, 130.683160", "luas": "0.38 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Barat", "pleno": "Penyangga", "desa": "Saria", "koordinat": "1.039840, 127.412730", "luas": "1.5 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Barat", "pleno": "Penyangga", "desa": "Toniku", "koordinat": "0.798038, 127.620288", "luas": "41", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Barat", "pleno": "Penyangga", "desa": "Sidongoli Dehe", "koordinat": "0.888616, 127.517018", "luas": "41", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Silang", "koordinat": "-0.854320, 127.718020", "luas": "0.351 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Bokimiake", "koordinat": "-0.228180, 127.097760", "luas": "0.6 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Kampung Baru", "koordinat": "-0.638980, 127.301560", "luas": "0.06 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Lele", "koordinat": "-0.760000, 127.300000", "luas": "0.105 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Talimau", "koordinat": "-0.020318, 127.198487", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Waya", "koordinat": "-0.708779, 127.289497", "luas": "0.06 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Hub", "desa": "Bajo", "koordinat": "-0.626986, 127.401111", "luas": "1.03 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Bibinoi", "koordinat": "-0.692487, 127.725760", "luas": "0.65 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Dowora", "koordinat": "-0.849696, 128.105193", "luas": "1.12 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Indari", "koordinat": "-0.432798, 127.306591", "luas": "0.96 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Kakupang", "koordinat": "-0.945651, 128.313098", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Laluin", "koordinat": "-0.040400, 127.425700", "luas": "2.02 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Loleo Jaya", "koordinat": "-0.353451, 127.266927", "luas": "0.06 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Matuting", "koordinat": "-0.322650, 128.011798", "luas": "0.6 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Panamboang", "koordinat": "-0.693483, 127.454365", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Selatan", "pleno": "Penyangga", "desa": "Sidopo", "koordinat": "-0.349536, 127.401533", "luas": "0.06 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Tengah", "pleno": "Hub", "desa": "Sakam", "koordinat": "0.491496, 128.668929", "luas": "0.76 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Tengah", "pleno": "Penyangga", "desa": "Bilifitu", "koordinat": "0.317749, 128.781075", "luas": "0.25 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Tengah", "pleno": "Penyangga", "desa": "Messa", "koordinat": "0.399117, 128.289502", "luas": "0.26 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Timur", "pleno": "Penyangga", "desa": "Majiko Tongone", "koordinat": "1.520278, 128.413028", "luas": "0.67 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Timur", "pleno": "Penyangga", "desa": "Patlean", "koordinat": "1.507306, 128.685500", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Timur", "pleno": "Penyangga", "desa": "Sil", "koordinat": "0.549610, 128.618860", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Timur", "pleno": "Penyangga", "desa": "Saramaake", "koordinat": "1.052963, 127.970224", "luas": "0.57 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Timur", "pleno": "Penyangga", "desa": "Subaim", "koordinat": "1.119653, 128.139312", "luas": "1.2 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Utara", "pleno": "Penyangga", "desa": "Leleoto", "koordinat": "1.596854, 128.001386", "luas": "0.144 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Utara", "pleno": "Hub", "desa": "Kusu Lofra", "koordinat": "1.186944, 127.908611", "luas": "41", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Utara", "pleno": "Penyangga", "desa": "Bobale", "koordinat": "1.282704, 128.015566", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Halmahera Utara", "pleno": "Penyangga", "desa": "Dama", "koordinat": "41", "luas": "41", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Kepulauan Sula", "pleno": "Penyangga", "desa": "Kabau Pantai", "koordinat": "-2.198056, 125.880000", "luas": "0.471 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Kepulauan Sula", "pleno": "Penyangga", "desa": "Malbufa", "koordinat": "-2.006463, 125.886553", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Kepulauan Sula", "pleno": "Penyangga", "desa": "Waiboga", "koordinat": "-2.180670, 125.962190", "luas": "0.32 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Kota Ternate", "pleno": "Penyangga", "desa": "Rua", "koordinat": "0.777010, 127.301370", "luas": "41", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Kota Tidore Kepulauan", "pleno": "Penyangga", "desa": "Tomalou", "koordinat": "0.623530, 127.398782", "luas": "0.65 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Cucumare", "koordinat": "2.169138, 128.247084", "luas": "2 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Daruba", "koordinat": "2.058169, 128.291239", "luas": "0.37 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Gorua", "koordinat": "2.429047, 128.689443", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Juanga", "koordinat": "1.996751, 128.270920", "luas": "0.05 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Koloray", "koordinat": "2.053948, 128.211122", "luas": "0.07 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Loleo Jaya", "koordinat": "2.375836, 128.656858", "luas": "0.14 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Maba", "koordinat": "2.397600, 128.666950", "luas": "0.6 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Mandiri", "koordinat": "2.045956, 128.367166", "luas": "0.055 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Mira", "koordinat": "2.155825, 128.584808", "luas": "0.1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Pangeo", "koordinat": "2.571434, 128.607727", "luas": "0.15 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Posi-Posi", "koordinat": "2.291273, 128.175642", "luas": "0.25 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Tiley", "koordinat": "2.199572, 128.247750", "luas": "0.6 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Titigogoli", "koordinat": "2.555759, 128.428145", "luas": "0.13 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Morotai", "pleno": "Penyangga", "desa": "Wayabula", "koordinat": "2.277607, 128.204727", "luas": "0.9 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Taliabu", "pleno": "Penyangga", "desa": "Galebo", "koordinat": "-1.965810, 124.691337", "luas": "1.5 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Taliabu", "pleno": "Penyangga", "desa": "Kasango", "koordinat": "-1.870310, 124.341119", "luas": "3 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Taliabu", "pleno": "Penyangga", "desa": "Nunu", "koordinat": "-1.662326, 124.522472", "luas": "4.61 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Taliabu", "pleno": "Hub", "desa": "Limbo", "koordinat": "-1.792003, 124.314446", "luas": "0.5 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Taliabu", "pleno": "Penyangga", "desa": "Jorjoga", "koordinat": "-1.679294, 124.807845", "luas": "1 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Taliabu", "pleno": "Penyangga", "desa": "Talo", "koordinat": "-2.005460, 124.396200", "luas": "3 ha", "keliling": ""}, {"wilayah": "Maluku Utara", "kabupaten": "Pulau Taliabu", "pleno": "Penyangga", "desa": "Wayo", "koordinat": "-1.988800, 124.397000", "luas": "2 ha", "keliling": ""}];</script>
+<script>window.KNMP_COMPANY_FIXED=[{"perusahaan": "PT. Permaisa Karya Utama (Menengah)", "wilayah": "Maluku", "lokasi": 3, "kabupaten": "Buru Selatan, Kepulauan Aru, Maluku Tengah", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Mirtada Sejahtera (Menengah)", "wilayah": "Maluku", "lokasi": 4, "kabupaten": "Kepulauan Aru, Kota Tual, Maluku Barat Daya", "hasil": "Penyangga, Penyangga (+cs)", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "CV. Seribu Dinar Konstruksi (Kecil)", "wilayah": "Maluku", "lokasi": 4, "kabupaten": "Kepulauan Tanimbar", "hasil": "Hub, Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Murni Konstruksi Indonesia (Besar)", "wilayah": "Maluku", "lokasi": 9, "kabupaten": "Kepulauan Tanimbar", "hasil": "Hub, Penyangga, Penyangga (+cs)", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Seram Indo Pratama (Kecil)", "wilayah": "Maluku", "lokasi": 3, "kabupaten": "Maluku Barat Daya, Seram Bagian Barat, Seram Bagian Timur", "hasil": "Hub, Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "CV. Indah Pratama (Kecil)", "wilayah": "Maluku", "lokasi": 3, "kabupaten": "Maluku Tengah", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Masco Energi (Mennegah)", "wilayah": "Maluku", "lokasi": 8, "kabupaten": "Maluku Tengah", "hasil": "Hub, Penyangga", "status": "Sudah Kontrak", "kendala": "Desa Haya: lahan sudah clear, namun jalur/akses masuk masih milik perorangan. Desa Sila: lahan belum sesuai karena lahan terlalu kecil. Desa Noloth: karena tipe Hub, sudah disiapkan lahan tambahan jika masih kurang. Informasi dari Dinas terkait dan Penyedia."}, {"perusahaan": "PT. Sapta Manuggal Karya (Menengah)", "wilayah": "Maluku", "lokasi": 6, "kabupaten": "Maluku Tenggara", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Mallindo Persada Makmur (Menengah)", "wilayah": "Maluku", "lokasi": 5, "kabupaten": "Seram Bagian Barat, Seram Bagian Timur", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "CV. Purnama Cemerlang", "wilayah": "Maluku", "lokasi": 3, "kabupaten": "Seram Bagian Timur", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Duta Abadi (Menengah)", "wilayah": "Maluku", "lokasi": 5, "kabupaten": "Seram Bagian Timur", "hasil": "Hub, Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Mahkota Bintang Langit (Kecil)", "wilayah": "Maluku", "lokasi": 4, "kabupaten": "Seram Bagian Timur", "hasil": "Hub, Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "CV. Baris Sejahtera Konstruksi", "wilayah": "Maluku Utara", "lokasi": 4, "kabupaten": "Halmahera Barat, Kota Ternate, Kota Tidore Kepulauan", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "CV. Citra Wanita Indoensia (Kecil)", "wilayah": "Maluku Utara", "lokasi": 2, "kabupaten": "Halmahera Barat, Halmahera Utara", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "CV. Bambu Runcing (Kecil)", "wilayah": "Maluku Utara", "lokasi": 4, "kabupaten": "Halmahera Selatan, Halmahera Timur", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Gelora Mega Sejahtera (Menengah)", "wilayah": "Maluku Utara", "lokasi": 5, "kabupaten": "Halmahera Selatan", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Sultan Sukses Mandiri (Menengah)", "wilayah": "Maluku Utara", "lokasi": 10, "kabupaten": "Halmahera Selatan", "hasil": "Hub, Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "CV. Sunrise Utama (Kecil)", "wilayah": "Maluku Utara", "lokasi": 3, "kabupaten": "Halmahera Tengah", "hasil": "Hub, Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "CV. WIja Dwipa (Kecil)", "wilayah": "Maluku Utara", "lokasi": 2, "kabupaten": "Halmahera Timur", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Duta Tunggal Jaya (Menengah)", "wilayah": "Maluku Utara", "lokasi": 3, "kabupaten": "Halmahera Utara", "hasil": "Hub, Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Wahana Dimensia Indonesia (Menengah)", "wilayah": "Maluku Utara", "lokasi": 4, "kabupaten": "Kepulauan Sula, Pulau Taliabu", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Tiga Muara Jaya (Besar)", "wilayah": "Maluku Utara", "lokasi": 14, "kabupaten": "Pulau Morotai", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "CV. Santika Jaya Abadi", "wilayah": "Maluku Utara", "lokasi": 3, "kabupaten": "Pulau Taliabu", "hasil": "Penyangga", "status": "Sudah Kontrak", "kendala": ""}, {"perusahaan": "PT. Berkah Timur Mandiri (Kecil)", "wilayah": "Maluku Utara", "lokasi": 3, "kabupaten": "Pulau Taliabu", "hasil": "Hub, Penyangga", "status": "Sudah Kontrak", "kendala": ""}];</script>
+<script>window.KNMP_CONTRACT_FIXED=[{"penyedia": "CV. Citra Wanita Indonesia", "ruang": "1. Desa Leleoto, Kec. Tobelo Selatan, Kabupaten Halmahera Utara, Provinsi Maluku Utara.\n2. Desa Sidangoli Dehe, Kec. Jailolo Selatan, Kabupaten Halmahera Barat, Provinsi Maluku Utara.", "tanggal": "14/09/2026"}, {"penyedia": "PT. Gelora Megah Sejahtera", "ruang": "1. Desa Talimau, Kec. Kayoa, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n2. Desa Kampung Baru, Kec. Kepulauan Botanglomang, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n3. Desa Bokimiake, Kec. Kayoa Barat, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n4. Desa Lele, Kec. Mandioli Selatan, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n5. Desa Waya, Kec. Mandioli Utara, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.", "tanggal": "14/09/2026"}, {"penyedia": "PT. Berkah Timur Mandiri", "ruang": "1. Desa Limbo, Kecamatan Taliabu Barat, Kabupaten Pulau Taliabu, Provinsi Maluku Utara", "tanggal": "15/09/2026"}, {"penyedia": "PT. Berkah Timur Mandiri", "ruang": "1. Desa Talo, Kec Taliabu Barat, Kab Pulau Taliabu, Maluku Utara\n2. Desa Jorjoga Kec Taliabu Barat, Kab Pulau Taliabu, Maluku Utara", "tanggal": "15/09/2026"}, {"penyedia": "PT. Duta Abadi", "ruang": "1. Desa Bula, Kec Bula, Kab Seram Bagian Timur, Maluku\n2. Desa Englas, Kec Bula, Kab Seram Bagian Timur, Maluku\n3. Desa Aki Jaya, Kec Bula Barat, Kab Seram Bagian Timur, Maluku\n4. Amarsekaru, Kec Pulau Gorom, Kab Seram Bagian Timur, Maluku\n5. Desa Kilwaru, Kec Seram Timur, Kab Seram Bagian Timur, Maluku", "tanggal": "15/09/2026"}, {"penyedia": "PT. Mallindo Persada Makmur", "ruang": "1. Desa Waesala, kec Huamual Belakang, Kab Seram Bagian Barat, Maluku\n2. Desa Dawang, Kec Teluk Waru, Kab Seram Bagian Timur, Maluku\n3. Desa llili. Kec Wakate, Kab Seram Bagian Timur, Maluku\n4. Desa Kurwara, Kec. Kec Wakate, Kab Seram Bagian Timur, Maluku\n5. Desa Batuasa, Kec Werimena, Kab Seram Bagian Timur, Maluku", "tanggal": "15/09/2026"}, {"penyedia": "PT. Masco Energi (Mennegah)", "ruang": "1. Desa Yainuelo, Kecamatan Amahai, Kabupaten Maluku Tengah, Provinsi Maluku\n2. Desa Hitulama, Kecamatan Leihitu, Kabupaten Maluku Tengah, Provinsi Maluku\n3. Desa Negeri Lima, Kecamatan Leihitu, Kabupaten Maluku Tengah, Provinsi Maluku\n4. Desa Sila, Kecamatan Nusa Laut, Kabupaten Maluku Tengah, Provinsi Maluku\n5. Desa Pelauw, Kecamatan Pulau Haruku, Kabupaten Maluku Tengah, Provinsi Maluku\n6. Desa Kulur, Kecamatan Saparua, Kabupaten Maluku Tengah, Provinsi Maluku\n7. Desa Nolloth, Kecamatan Saparua, Kabupaten Maluku Tengah, Provinsi Maluku\n8. Desa Haya, Kecamatan Tehoru, Kabupaten Maluku Tengah, Provinsi Maluku", "tanggal": "15/09/2026"}, {"penyedia": "PT. Murni Konstruksi Indonesia (Besar)", "ruang": "1. Desa Adodo Molu, Kec. Molu Maru, Kabupaten Kepulauan Tanimbar, Provinsi Maluku.\n2. Desa Tutunametal, Kec. Molu Maru, Kabupaten Kepulauan Tanimbar, Provinsi Maluku.\n3. Desa Adaut, Kec. Selaru, Kabupaten Kepulauan Tanimbar, Provinsi Maluku.\n4. Desa Latdalam, Kec. Tanimbar Selatan, Kabupaten Kepulauan Tanimbar, Provinsi Maluku.\n5. Desa Matakus, Kec. Tanimbar Selatan, Kabupaten Kepulauan Tanimbar, Provinsi Maluku.\n6. Desa Kamatubun, Kec. Wermaktian, Kabupaten Kepulauan Tanimbar, Provinsi Maluku.\n7. Desa Makatian, Kec. Wermaktian, Kabupaten Kepulauan Tanimbar, Provinsi Maluku.\n8. Desa Teineman, Kec. Wuar Labobar, Kabupaten Kepulauan Tanimbar, Provinsi Maluku.\n9. Desa Wabar, Kec. Wuar Labobar, Kabupaten Kepulauan Tanimbar, Provinsi Maluku.", "tanggal": "15/09/2026"}, {"penyedia": "PT. Permaisa Karya Utama (Menengah)", "ruang": "1. Desa Samang, Kecamatan Pulau-Pulau Aru, Kabupaten Kepulauan Aru, Provinsi Maluku\n2. Desa Olong, Kecamatan Seram Utara, Kabupaten Maluku Tengah, Provinsi Maluku\n3. Desa Nalbessy, Kecamatan Leksula, Kabupaten Buru Selatan, Provinsi Maluku", "tanggal": "15/09/2026"}, {"penyedia": "PT. Mirtada Sejahtera", "ruang": "1. Desa Kalar-kalar, Kec Aru Selatan, Kab Kep.Aru, Maluku\n2. Desa Labelau, Kec Kisar Utara. Kab Maluku Barat Daya, Maluku\n3. Desa Dullah Laut, Kec Pulau Dullah utara, Kota Tual, Maluku\n4. Desa Tam Ngurhir, Kec Tayado Tam, kota Tual , maluku", "tanggal": "16/09/2026"}, {"penyedia": "PT. Tiga Muara Jaya", "ruang": "1. Desa Maba, Kec. Morotai Utara, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n2. Desa Gorua, Kec. Morotai Utara, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n3. Desa Loleo Jaya, Kec. Morotai Utara, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n4. Desa Pangeo, Kec. Morotai Jaya, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n5. Desa Titigogoli, Kec. Morotai Jaya, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n6. Desa Mira, Kec. Morotai Timur, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n7. Desa Koloray, Kec. Morotai Selatan, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n8. Desa Daruba, Kec. Morotai Selatan, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n9. Desa Juanga, Kec. Morotai Selatan, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n10. Desa Mandiri, Kec. Morotai Selatan, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n11. Desa Posiposi, Kec. Pulau Rao, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n12. Desa Tiley, Kec. Morotai Selatan Barat, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n13. Desa Wayabula, Kec. Morotai Selatan Barat, Kabupaten Pulau Morotai, Provinsi Maluku Utara.\n14. Desa Cucumare, Kec. Morotai Selatan Barat, Kabupaten Pulau Morotai, Provinsi Maluku Utara.", "tanggal": "16/09/2026"}, {"penyedia": "CV. Bambu Runcing (Kecil)", "ruang": "1. Desa Majiko Tongone, Kec. Wasile Utara, Kabupaten Halmahera Timur, Provinsi Maluku Utara.\n2. Desa Patean, Kec. Maba Utara, Kabupaten Halmahera Timur, Provinsi Maluku Utara.\n3. Desa Sil, Kec. Maba Selatan, Kabupaten Halmahera Timur, Provinsi Maluku Utara.", "tanggal": "17/09/2026"}, {"penyedia": "CV. Bambu Runcing (Kecil)", "ruang": "Desa Silang", "tanggal": "17/09/2026"}, {"penyedia": "CV. Indah Pratama", "ruang": "1. Desa Asilulu, Kecamatan Leihitu, Kabupaten Maluku Tengah, Provinsi Maluku\n2. Desa Besi, Kecamatan Seram Utara, Kabupaten Maluku Tengah, Provinsi Maluku\n3. Desa Labuan, Kecamatan Seram Utara Barat, Kabupaten Maluku Tengah, Provinsi Maluku", "tanggal": "17/09/2026"}, {"penyedia": "CV. Seribu Dinar Konstruksi", "ruang": "1. Desa Meyano Das, kec Kormomolin, Kab Kep. Tanimbar, Maluku\n2.Desa Arma, Kec Nirunmas, Kab Kep Tanimbar, Maluku", "tanggal": "17/09/2026"}, {"penyedia": "CV. Seribu Dinar Konstruksi", "ruang": "1. Desa Lelingluan kec Tanimbar Utara, Kab Kep. Tanimbar, Maluku\n2. Desa Ritabel kec Tanimbar Utara, Kab Kep. Tanimbar, Maluku", "tanggal": "17/09/2026"}, {"penyedia": "CV. Wija Dwipa", "ruang": "1. Desa Saramaake, Kec. Wasile Selatan, Kabupaten Halmahera Timur, Provinsi Maluku Utara.\n2. Desa Subaim, Kec. Wasile, Kabupaten Halmahera Timur, Provinsi Maluku Utara", "tanggal": "17/09/2026"}, {"penyedia": "PT. Sapta Manuggal Karya", "ruang": "1. Desa Watuar, Kec Kei Besar, Kab Maluku Tenggara, Maluku\n2. Desa Sather, Kec Kei Besar Selatan, Kab Maluku Tenggara, Maluku\n3. Desa Tamangil Nuhuyanat, Kec Kei Besar Selatan , Kab Maluku Tenggara, Maluku\n4. Desa Hoor Kristen, Kec Kei Besar Utara Barat, Kab Maluku Tenggara, Maluku\n5. Desa Sare, Kec Kei Kecil timur Selatan, Kab Maluku Tenggara, Maluku\n6. Desa Dudunwahan", "tanggal": "17/09/2026"}, {"penyedia": "CV. Baris Sejahtera Konstruksi", "ruang": "1. Desa Tomalou, Kecamatan Tidore Selatan, Kota Tidore Kepulauan, Provinsi Maluku Utara\n2. Desa Rua, Kecamatan Pulau Ternate, Kota Ternate, Provinsi Maluku Utara", "tanggal": "18/09/2026"}, {"penyedia": "CV. Baris Sejahtera Konstruksi", "ruang": "1. Desa Saria, Kec. Jailolo, Kabupaten Halmahera Barat, Provinsi Maluku Utara.\n2. Desa Toniku, Kec. Jailolo Selatan, Kabupaten Halmahera Barat, Provinsi Maluku Utara", "tanggal": "18/09/2026"}, {"penyedia": "CV. Purnama Cemerlang", "ruang": "1. Desa Bemo Perak, Kecamatan Werinama, Kabupaten Seram Bagian Timur, Provinsi Maluku", "tanggal": "18/09/2026"}, {"penyedia": "CV. Purnama Cemerlang", "ruang": "1. Desa Kilga Kilwouw, Kecamatan Kian Darat, Kabupaten Seram Bagian Timur, Provinsi Maluku\n2. Desa Sesar, Kecamatan Bula, Kabupaten Seram Bagian Timur, Provinsi Maluku", "tanggal": "18/09/2026"}, {"penyedia": "CV. Santika Jaya Abadi", "ruang": "1. Desa Kasango, Kec. Taliabu Barat Laut, Kabupaten Pulau Taliabu, Provinsi Maluku Utara.\n2. Desa Nunu, Kec. Taliabu Utara, Kabupaten Pulau Taliabu, Provinsi Maluku Utara.", "tanggal": "18/09/2026"}, {"penyedia": "CV. Santika Jaya Abadi", "ruang": "1. Desa Galebo, Kecamatan Taliabu Selatan, Kabupaten Pulau Taliabu, Provinsi Maluku Utara.", "tanggal": "18/09/2026"}, {"penyedia": "CV. Sunrise Utama (Kecil)", "ruang": "1. Desa Sakam, Kecamatan Patani Timur, kab. Halmahera Tengah Prov. Maluku Utara", "tanggal": "18/09/2026"}, {"penyedia": "CV. Sunrise Utama (Kecil)", "ruang": "1. Desa Bifitu, Kec. Patani Utara, Kabupaten Halmahera Tengah, Provinsi Maluku Utara.\n2. Desa Messa, Kec. Weda Timur, Kabupaten Halmahera Tengah, Provinsi Maluku Utara.", "tanggal": "18/09/2026"}, {"penyedia": "PT. Duta Tunggal Jaya", "ruang": "1. Desa Kusu Lofra, Kec. Kao, Kabupaten Halmahera Utara, Provinsi Maluku Utara.\n2. Desa Bobale, Kec. Kao Utara, Kabupaten Halmahera Utara, Provinsi Maluku Utara.\n3. Desa Dama, Kec. Loloda Kepulauan, Kabupaten Halmahera Utara, Provinsi Maluku Utara.", "tanggal": "18/09/2026"}, {"penyedia": "PT. Mahkota Bintang Langit", "ruang": "1. Desa Geser, Kec Seram Timur, Kab Seram Bagian Barat, Maluku", "tanggal": "18/09/2026"}, {"penyedia": "PT. Mahkota Bintang Langit", "ruang": "1. Desa Kellu, Kec Seram Timur, Kab Seram Bagian Timur, Maluku\n2. Desa Kilfura, Kec Seram Timur, Kab Seram Bagian Timur, Maluku", "tanggal": "18/09/2026"}, {"penyedia": "PT. Mahkota Bintang Langit", "ruang": "1. Desa Kwamor Kecil Mata Wawa, Kec Ukar Sengan, Kab Seram Bagian Timur, Maluku", "tanggal": "18/09/2026"}, {"penyedia": "PT. Seram Indo Pratama (Kecil)", "ruang": "1. Desa Nuwenang, Kecamatan Leti, Kabupaten Maluku Barat Daya, Provinsi Maluku.\n2. Desa Waru, Kecamatan Teluk Waru, Kabupaten Seram Bagian Timur, Provinsi Maluku.\n3. Desa Tahalupu, Kecamatan Huamual Belakang, Kabupaten Seram Bagian Barat, Provinsi Maluku.", "tanggal": "18/09/2026"}, {"penyedia": "PT. Sultan Sukses Mandiri", "ruang": "1. Desa Bajo, Kec. Kepulauan Botanglomang, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n2. Desa Bibinoi, Kec. Bacan Timur Tengah, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n3. Desa Indari, Kec. Bacan Barat, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n4. Desa Sidopo, Kec. Bacan Barat Utara, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n5. Desa Panamboang, Kec. Bacan Selatan, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.", "tanggal": "18/09/2026"}, {"penyedia": "PT. Sultan Sukses Mandiri", "ruang": "1. Desa Dowora, Kec. Gane Barat Selatan, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n2. Desa Laluin, Kec. Kayoa Selatan, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n3. Desa Matuting, Kec. Gane Timur Tengah, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n4. Desa Kakupang, Kec. Kepulauan Joronga, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.\n5. Desa Loleo Jaya, Kec. Kerasuta Timur, Kabupaten Halmahera Selatan, Provinsi Maluku Utara.", "tanggal": "18/09/2026"}, {"penyedia": "PT. Wahana Dimensia Indonesia", "ruang": "1. Desa Malbufa, Kec. Sanana Utara, Kabupaten Kepulauan Sula, Provinsi Maluku Utara.\n2. Desa Kabau Pantai, Kec. Sulabesi Barat, Kabupaten Kepulauan Sula, Provinsi Maluku Utara.\n3. Desa Waiboga, Kec. Sulabesi Tengah, Kabupaten Kepulauan Sula, Provinsi Maluku Utara.\n4. Desa Wayo, Kec. Taliabu Barat, Kabupaten Pulau Taliabu, Provinsi Maluku Utara.", "tanggal": "18/09/2026"}];</script>
+
+<style>
+.pleno-pin-filter{display:inline-flex;gap:7px;align-items:center;flex-wrap:wrap;margin-left:10px;vertical-align:middle}
+.pleno-pin{border:1px solid #cbdde8;background:#fff;border-radius:999px;padding:5px 9px;cursor:pointer;font-size:11px;font-weight:800;color:#315267}
+.pleno-pin:hover,.pleno-pin.active{background:#e8f4fb;border-color:#6caed2}
+.pleno-pin .pin{font-size:12px;margin-right:3px}
+@media(max-width:700px){.pleno-pin-filter{display:flex;margin:7px 0 0}}
+</style>
+
+<style>
+.open-mymaps-btn{
+ display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid #bcd8e8;
+ border-radius:10px;background:#fff;color:#174a68;font-size:12px;font-weight:800;
+ text-decoration:none;box-shadow:0 2px 8px rgba(20,70,100,.08);transition:.18s ease;
+}
+.open-mymaps-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(20,70,100,.14);background:#f5fbff}
+</style>
+<style>
+.p1-data-filters{display:flex;align-items:flex-end;justify-content:flex-end;gap:9px;flex-wrap:wrap;padding:0 16px 10px}
+.p1-data-filters label{font-size:11px;font-weight:800;color:#36586b;display:flex;align-items:center;gap:6px}
+.p1-data-filters select{padding:7px 28px 7px 9px;border:1px solid #cbdde8;border-radius:9px;background:#fff;color:#24495e;font-size:11px;font-weight:700;outline:none}
+.p1-reset-filter{padding:7px 10px;border:1px solid #cbdde8;border-radius:9px;background:#f7fbfd;color:#315267;font-size:11px;font-weight:800;cursor:pointer}
+@media(max-width:760px){.p1-data-filters{justify-content:flex-start}.p1-data-filters label{width:100%;justify-content:space-between}.p1-data-filters select{min-width:58%}}
+</style>
+<style>
+.th-filter-wrap{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.th-filter{max-width:118px;padding:4px 20px 4px 6px;border:1px solid rgba(255,255,255,.55);border-radius:7px;background:#fff;color:#234b62;font-size:10px;font-weight:800;cursor:pointer}
+th:nth-child(2) .th-filter{max-width:145px}
+@media(max-width:760px){.th-filter-wrap{align-items:flex-start;flex-direction:column;gap:4px}.th-filter{max-width:105px}}
+</style>
+<style>
+.mini-progress{height:8px;background:rgba(15,23,42,.10);border-radius:999px;overflow:hidden;margin-top:10px}
+.mini-progress span{display:block;height:100%;background:#16a34a;border-radius:999px}
+.mini-progress.pending span{background:#f59e0b}
+.mini-percent{font-size:12px;font-weight:800;margin-top:5px;opacity:.78}
+</style>
+<style>
+/* KPI cards adapted from the approved circular-percentage mockup */
+.kpi-cards-v2 .card{min-height:142px;position:relative;overflow:hidden}
+.kpi-cards-v2 .kpi-with-ring{display:flex;align-items:center;gap:12px;padding-right:16px}
+.kpi-cards-v2 .kpi-copy{flex:1;min-width:0}
+.kpi-cards-v2 .donut{--p:0;width:94px;height:94px;min-width:94px;border-radius:50%;position:relative;display:grid;place-items:center;background:conic-gradient(#16a34a calc(var(--p)*1%),#dce5ea 0);box-shadow:inset 0 0 0 1px rgba(15,23,42,.03)}
+.kpi-cards-v2 .donut-pending{background:conic-gradient(#ef4444 calc(var(--p)*1%),#e4e7ea 0)}
+.kpi-cards-v2 .donut:after{content:"";position:absolute;width:68px;height:68px;border-radius:50%;background:#fff;box-shadow:0 1px 5px rgba(15,23,42,.08)}
+.kpi-cards-v2 .donut-inner{position:relative;z-index:2;text-align:center;line-height:1.05}
+.kpi-cards-v2 .donut-inner b{display:block;font-size:20px;color:#15803d;letter-spacing:-.4px}
+.kpi-cards-v2 .donut-pending .donut-inner b{color:#dc2626}
+.kpi-cards-v2 .donut-inner span{display:block;font-size:10px;font-weight:800;color:#475569;margin-top:5px;white-space:nowrap}
+@media(max-width:1100px){.kpi-cards-v2 .donut{width:82px;height:82px;min-width:82px}.kpi-cards-v2 .donut:after{width:59px;height:59px}.kpi-cards-v2 .donut-inner b{font-size:17px}}
+@media(max-width:760px){.kpi-cards-v2 .kpi-with-ring{align-items:center}.kpi-cards-v2 .donut{width:76px;height:76px;min-width:76px}.kpi-cards-v2 .donut:after{width:55px;height:55px}.kpi-cards-v2 .donut-inner b{font-size:16px}.kpi-cards-v2 .donut-inner span{font-size:9px}}
+</style>
+<style>
+.progress-wilayah-panel{margin-bottom:14px}
+.progress-table-wrap{overflow-x:auto}
+.progress-region-table{width:100%;border-collapse:collapse;font-size:13px}
+.progress-region-table th{background:#07558d;color:#fff;padding:10px 8px;text-align:center}
+.progress-region-table td{padding:10px 8px;text-align:center;border-bottom:1px solid #dbe7f0}
+.progress-region-table td:nth-child(2){text-align:left}
+.progress-region-table .total-row td{background:#07558d;color:#fff}
+.pr-cell{display:flex;align-items:center;gap:8px;justify-content:center;min-width:145px}
+.pr-bar{display:block;width:90px;height:10px;background:#dbe3e9;border-radius:999px;overflow:hidden}
+.pr-bar i{display:block;height:100%;background:#17a768;border-radius:999px}
+.total-row .pr-bar{background:rgba(255,255,255,.35)}
+</style><style>
+/* Tabel progres full-width; di bawah: Daftar Lokasi kiri, Peta kanan */
+.progress-wilayah-panel{width:100%;display:block;margin-bottom:14px}
+.lokasi-peta-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr);gap:14px;align-items:start}
+@media(max-width:900px){.lokasi-peta-row{grid-template-columns:1fr}}
+</style><style>
+.map-region-summary{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;margin:10px 0 14px!important}
+.region-summary-item{padding:14px 10px!important;border-radius:12px!important;text-align:center!important;line-height:1.4!important}
+.region-name{display:block;font-size:15px!important;font-weight:900!important;margin-bottom:8px!important}
+.region-metrics{display:flex!important;justify-content:center!important;flex-wrap:wrap!important;gap:6px!important}
+.region-metrics span{background:#fff!important;border:1px solid #d8e6ef!important;border-radius:8px!important;padding:6px 8px!important;font-size:12px!important;font-weight:800!important;white-space:nowrap!important}
+.region-metrics .belum{color:#c62828!important}
+@media(max-width:1050px){.map-region-summary{grid-template-columns:1fr!important}}
+</style></head>
+<body>
+<div class="wrap">
+<div class="navtabs"><button class="navbtn active" id="tab1" onclick="showPage(1)">Halaman 1 · Progres</button><button class="navbtn" id="tab2" onclick="showPage(2)">Halaman 2 · Pelaksanaan</button>
+<button class="navbtn" id="tab3" onclick="showPage(3)">Halaman 3 · Penyedia</button><button class="navbtn" id="tab4" onclick="showPage(4)">Halaman 4 · Kontrak</button></div>
+<div id="page1" class="page active">
+<section class="hero">
+<h1>PROGRES KONTRAK</h1>
+<div class="sub">KONSTRUKSI PEMBANGUNAN KNMP MALUKU DAN MALUKU UTARA TA 2026</div>
+<div class="tag">INFRASTRUKTUR TANGGUH &nbsp;|&nbsp; KONEKTIVITAS MERATA &nbsp;|&nbsp; INDONESIA MAJU</div>
+</section>
+
+<section class="cards company-cards kpi-cards-v2">
+<div class="card kpi-target"><div class="icon">◎</div><div class="kpi-copy"><div class="label">Target Lokasi</div><div class="big" id="target-total">145</div><div class="unit">lokasi</div></div></div>
+<div class="card green kpi-with-ring"><div class="icon">✓</div><div class="kpi-copy"><div class="label">Realisasi Kontrak</div><div class="big" id="location-total">114</div><div class="unit">lokasi</div></div><div class="donut donut-real" id="donut-real" style="--p:78.6"><div class="donut-inner"><b id="pct-real">78,6%</b><span>dari target</span></div></div></div>
+<div class="card orange kpi-with-ring"><div class="icon">◔</div><div class="kpi-copy"><div class="label">Belum Kontrak</div><div class="big" id="pending-total">31</div><div class="unit">lokasi</div></div><div class="donut donut-pending" id="donut-pending" style="--p:21.4"><div class="donut-inner"><b id="pct-pending">21,4%</b><span>dari target</span></div></div></div>
+<div class="card kpi-kab"><div class="icon">▦</div><div class="kpi-copy"><div class="label">Jumlah Kabupaten/Kota</div><div class="big" id="kabupaten-total">19</div><div class="unit">kabupaten/kota</div></div></div>
+</section>
+
+<section class="grid">
+<div class="panel progress-wilayah-panel">
+<h2>TABEL PROGRES PER WILAYAH</h2>
+<div class="progress-table-wrap">
+<table class="progress-region-table">
+<thead><tr><th>No</th><th>Wilayah</th><th>Target Lokasi</th><th>Realisasi Kontrak</th><th>Belum Kontrak</th><th>Persentase Realisasi</th></tr></thead>
+<tbody id="progress-region-rows">
+<tr><td>1</td><td><b>Maluku</b></td><td>79</td><td>57</td><td>22</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:72.2%"></i></span><b>72,2%</b></div></td></tr>
+<tr><td>2</td><td><b>Maluku Utara</b></td><td>66</td><td>57</td><td>9</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:86.4%"></i></span><b>86,4%</b></div></td></tr>
+<tr class="total-row"><td colspan="2"><b>Total</b></td><td><b>145</b></td><td><b>114</b></td><td><b>31</b></td><td><div class="pr-cell"><span class="pr-bar"><i style="width:78.6%"></i></span><b>78,6%</b></div></td></tr>
+</tbody></table></div></div>
+<div class="lokasi-peta-row">
+<div class="panel">
+<h2>DAFTAR LOKASI KNMP MALUKU & MALUKU UTARA</h2>
+<div class="legend" style="margin:0 0 10px"></div>
+<div style="margin:12px 0">
+<input id="location-search" type="search" placeholder="🔎 Cari wilayah, kabupaten/kota, hasil pleno, atau nama desa..." oninput="renderLocationData()" onsearch="renderLocationData()" onkeydown="if(event.key==='Enter'){event.preventDefault();renderLocationData();}" style="width:100%;padding:12px 14px;border:1px solid #cfe1ed;border-radius:12px;font-size:14px;outline:none;box-sizing:border-box">
+</div>
+<div class="scroll-note">↕ Scroll untuk melihat seluruh lokasi &nbsp; • &nbsp; <b id="location-count">0 data</b></div>
+<div class="table-scroll"><table><thead><tr>
+<th>No</th>
+<th><span class="th-filter-wrap"><span>Kabupaten/Kota</span><select id="p1-kab-filter" class="th-filter" onchange="renderLocationData()" title="Filter Kabupaten/Kota"><option value="">Semua</option></select></span></th>
+<th>Nama Desa</th>
+<th><span class="th-filter-wrap"><span>Wilayah</span><select id="p1-wilayah-filter" class="th-filter" onchange="renderLocationData()" title="Filter Wilayah"><option value="">Semua</option><option value="Maluku">Maluku</option><option value="Maluku Utara">Maluku Utara</option></select></span></th>
+<th><span class="th-filter-wrap"><span>Hasil Pleno</span><select id="p1-pleno-filter" class="th-filter" onchange="renderLocationData()" title="Filter Hasil Pleno"><option value="">Semua</option><option value="Hub">Hub</option><option value="Penyangga">Penyangga</option><option value="Penyangga (+CS)">Penyangga (+CS)</option></select></span></th>
+</tr></thead>
+<tbody id="location-rows"><tr><td colspan="5">Memuat data lokasi...</td></tr></tbody></table></div>
+</div>
+<div class="panel">
+<h2>SEBARAN TARGET DAN REALISASI KONTRAK PER WILAYAH</h2>
+<div class="map-region-summary">
+  <div class="region-summary-item maluku-summary"><span class="region-name">MALUKU</span><div class="region-metrics"><span>Target <b>66</b></span><span>Realisasi <b>57</b></span><span class="belum">Belum <b>9</b></span></div></div>
+  <div class="region-summary-item malut-summary"><span class="region-name">MALUKU UTARA</span><div class="region-metrics"><span>Target <b>79</b></span><span>Realisasi <b>57</b></span><span class="belum">Belum <b>22</b></span></div></div>
+</div>
+<div style="display:flex;justify-content:flex-end;margin:0 0 10px">
+<a class="open-mymaps-btn" href="https://www.google.com/maps/d/u/0/viewer?mid=1-5fyEUyOs2u7kB8iZh9bXA-7axrBO5g&ll=-0.5719494703015211%2C127.60016493323499&z=7&utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer" title="Buka peta lengkap di tab baru">📍 Buka Google My Maps ↗</a>
+</div>
+<div class="map maluku-map">
+<svg id="realMap" viewBox="0 0 620 485" role="img" aria-label="Peta geografis Maluku dan Maluku Utara"></svg>
+<div class="map-title-small">Peta Wilayah Maluku & Maluku Utara</div><div class="map-zoom-controls" aria-label="Kontrol zoom peta">
+<button type="button" id="mapZoomIn" title="Perbesar peta">+</button>
+<button type="button" id="mapZoomOut" title="Perkecil peta">−</button>
+<button type="button" id="mapZoomReset" title="Kembali ke ukuran awal">⌂</button>
+</div>
+<div id="tonikuPopup" class="map-popup">
+<button type="button" class="close-map-popup" aria-label="Tutup">×</button>
+<b>Desa Toniku</b>
+<div>Halmahera Barat · Maluku Utara</div>
+<div class="coord">0.798038, 127.620288</div>
+<div style="margin-top:9px"><a href="https://www.google.com/maps?q=0.798038,127.620288" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div>
+</div>
+<div id="sidongoliPopup" class="map-popup"><button type="button" class="close-map-popup" aria-label="Tutup">×</button><b>Desa Sidongoli Dehe</b><div>Halmahera Barat · Maluku Utara</div><div class="coord">0.888616, 127.517018</div><div style="margin-top:9px"><a href="https://www.google.com/maps?q=0.888616,127.517018" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div></div>
+<div id="kusuPopup" class="map-popup"><button type="button" class="close-map-popup" aria-label="Tutup">×</button><b>Desa Kusu Lofra</b><div>Halmahera Utara · Maluku Utara</div><div class="coord">1.186944, 127.908611</div><div style="margin-top:9px"><a href="https://www.google.com/maps?q=1.186944,127.908611" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div></div>
+<div id="dynamicMapPopup" class="map-popup">
+<button type="button" class="close-map-popup" aria-label="Tutup">×</button>
+<div id="dynamicMapPopupBody"></div>
+</div>
+<div id="waesalaPopup" class="map-popup">
+<button type="button" class="close-map-popup" aria-label="Tutup">×</button>
+<b>Desa Waesala</b>
+<div>Seram Bagian Barat · Maluku</div>
+<div class="coord">-3.159204, 127.838281</div>
+<div><b>Luas:</b> 1,14 ha &nbsp; <b>Keliling:</b> 533,96 m</div>
+<div style="margin-top:9px"><a href="https://www.google.com/maps?q=-3.159204,127.838281" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div>
+</div>
+<div class="legend">Ringkasan: Jumlah Perusahaan | Jumlah Lokasi</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="highlights">
+<div class="hl title">▥ &nbsp; HIGHLIGHT UTAMA</div>
+<div class="hl"><div class="num">1</div><div id="hl-total">Memuat progres kontrak Maluku dan Maluku Utara...</div></div>
+<div class="hl"><div class="num">2</div><div id="hl-maluku">Memuat progres Maluku...</div></div>
+<div class="hl"><div class="num">3</div><div id="hl-malut">Memuat progres Maluku Utara...</div></div>
+</section>
+</div>
+<div id="page2" class="page">
+<section class="hero page2hero">
+<h1>PELAKSANAAN KONTRAK</h1>
+<div class="sub">KONSTRUKSI PEMBANGUNAN KNMP MALUKU DAN MALUKU UTARA TA 2026</div>
+<div class="tag">KENDALA &nbsp;|&nbsp; SOLUSI &nbsp;|&nbsp; STATUS KONTRAK</div>
+<div class="totalpill">◎ <strong id="p2total">Memuat...</strong> Perusahaan/Penyedia &nbsp; • &nbsp; <strong id="p2locations">Memuat...</strong> Lokasi</div>
+</section>
+<section class="page2grid">
+<div class="panel"><h2>KENDALA DAN SOLUSI</h2><div class="ks">
+<div class="ksbox bad"><div class="kshead">⚠ Kendala</div><div id="kendala-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
+<div class="ksbox good"><div class="kshead">💡 Solusi</div><div id="solusi-list"><div class="ksitem"><span>Memuat data dari Google Sheets...</span></div></div></div>
+</div>
+<div id="pln-info" style="margin-top:14px;padding:14px;border-radius:14px;background:#eef7ff;border:1px solid #c9e2f5">
+  <div style="font-weight:900;color:#0b4d83;margin-bottom:8px" id="pln-info-title">INFORMASI</div>
+  <div style="background:white;border-radius:12px;padding:12px 14px;border:1px solid #d7e6f2">
+    <div style="font-weight:900;color:#0b67b2;margin-bottom:7px">1. PEMBAGIAN WILAYAH PLN PROVINSI MALUKU UTARA</div>
+    <div id="pln-info-intro" style="font-size:13px;margin-bottom:10px">Memuat informasi...</div>
+    <div id="pln-info-list" style="display:grid;gap:8px"></div>
+  </div>
+</div>
+</div>
+<div class="panel"><h2>PROYEKSI PENYELESAIAN PEKERJAAN</h2>
+
+<div class="scroll-note">↕ Scroll untuk melihat seluruh data proyeksi</div><div class="table-scroll"><table class="p2company"><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Nama Lokasi</th><th>Kendala</th></tr></thead><tbody id="projection-rows"><tr><td colspan="7">Memuat data...</td></tr></tbody><tfoot><tr><td colspan="3"><b>JUMLAH</b></td><td id="projection-total"><b>0</b></td><td colspan="3"></td></tr></tfoot></table></div>
+</div>
+</section>
+<section class="bottom3">
+<div class="mini"><b>◎ <span id="judul-target">TARGET UTAMA</span></b><span id="isi-target">Memuat data...</span></div>
+<div class="mini"><b>⚙ <span id="judul-komitmen">KOMITMEN</span></b><span id="isi-komitmen">Memuat data...</span></div>
+<div class="mini"><b>♟ <span id="judul-manfaat">MANFAAT</span></b><span id="isi-manfaat">Memuat data...</span></div>
+</section>
+</div>
+<footer>INFRASTRUKTUR TANGGUH &nbsp; • &nbsp; KONEKTIVITAS MERATA &nbsp; • &nbsp; MANFAAT UNTUK RAKYAT &nbsp; • &nbsp; TA 2026</footer>
+</div>
+
+<section id="page3" class="page">
+<div class="hero"><div><div class="tag">DATA PENYEDIA KNMP</div><h1>PERUSAHAAN / PENYEDIA</h1><div class="subtitle">WILAYAH · JUMLAH LOKASI · STATUS KONTRAK</div></div></div>
+<div class="panel" style="margin-top:18px">
+<h2>MONITORING STATUS PERUSAHAAN / PENYEDIA</h2>
+<div class="controls"><input id="search" type="search" placeholder="Cari perusahaan, wilayah, status, atau kendala..." oninput="render()" onsearch="render()" onkeydown="if(event.key==='Enter'){event.preventDefault();render();}"><button onclick="window.print()">Cetak / PDF</button></div>
+<div class="scroll-note">↕ Scroll tabel untuk melihat seluruh perusahaan tanpa memperpanjang dashboard</div><div class="table-scroll"><table><thead><tr><th>No</th><th>Perusahaan / Penyedia</th><th>Wilayah</th><th>Jumlah Lokasi</th><th>Kabupaten/Kota</th><th>Hasil Pleno</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div>
+</div></section>
+<section id="page4" class="page">
+<div class="hero"><div><div class="tag">DATA BERDASARKAN KONTRAK</div><h1>DAFTAR KONTRAK</h1>
+<div class="subtitle">PENYEDIA · RUANG LINGKUP SP · TANGGAL TTD KONTRAK</div></div></div>
+<div class="panel" style="margin-top:18px"><h2>PELAKSANAAN KNMP BERDASARKAN KONTRAK</h2>
+<div style="margin:12px 16px"><input id="contract-search" type="search"
+placeholder="🔎 Cari penyedia, ruang lingkup/lokasi, atau tanggal kontrak..."
+oninput="renderContractData()" style="width:100%;padding:12px 14px;border:1px solid #cfe1ed;border-radius:12px;font-size:14px"></div>
+<div class="scroll-note" style="padding:0 16px 10px">↕ Scroll untuk melihat seluruh kontrak • <b id="contract-count">0 kontrak</b></div>
+<div class="table-scroll" style="max-height:620px"><table><thead><tr><th>No</th><th>Nama Penyedia</th><th>Ruang Lingkup SP</th><th>Tanggal TTD Kontrak</th></tr></thead>
+<tbody id="contract-rows"></tbody></table></div></div></section>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+let data = [];
+const SHEET_ID="1269tZjx2g-yHz_7uU0HNg7Lta-KrDc7FrjoLbW43cDw";
+const SHEET_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
+const KS_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Kendala_Solusi`;
+const CONTENT_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Konten_Halaman2`;
+const COMPANY_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Data_Perusahaan`;
+const PROJECTION_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Proyeksi_Penyelesaian`;
+const LOCATION_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Data_Lokasi`;
+const HIGHLIGHT_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Highlight_Utama`;
+function parseCSV(text){
+ const lines=text.trim().split(/\r?\n/);
+ const parse=line=>{let r=[],v="",q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c=='"'){if(q&&line[i+1]=='"'){v+='"';i++}else q=!q}else if(c==','&&!q){r.push(v);v=""}else v+=c}r.push(v);return r};
+ return lines.slice(1).map(line=>{const c=parse(line),target=Number(c[1]||0),realisasi=Number(c[2]||0);return {wilayah:(c[0]||"").trim(),target,realisasi,belum:Math.max(0,target-realisasi)}}).filter(x=>x.wilayah);
+}
+const fmt=n=>n.toLocaleString('id-ID');
+function pct(a,b){return b?100*a/b:0}
+function render(){
+ const q=(document.getElementById('search').value||'').toLowerCase();
+ const d=companyData.filter(x=>[x.perusahaan,x.wilayah,x.kabupaten,x.hasil,x.status,x.kendala].join(' ').toLowerCase().includes(q));
+ document.getElementById('rows').innerHTML=d.length?d.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td><b>${fmt(x.lokasi)}</b></td><td>${escapeHTML(x.kabupaten||'-')}</td><td>${escapeHTML(x.hasil||'-')}</td><td>${escapeHTML(x.status||'-')}</td></tr>`).join(''):'<tr><td colspan="7" style="padding:24px;text-align:center">Belum ada data perusahaan.</td></tr>';
+}
+function updateCompanyDashboard(){
+ const valid=companyData.filter(x=>x.perusahaan);
+ const locCount=locationData.filter(x=>x.desa).length || 114;
+ const kabCount=new Set(locationData.map(x=>(x.kabupaten||'').trim()).filter(Boolean)).size || 19;
+ const e1=document.getElementById('location-total'); if(e1) e1.textContent=fmt(locCount);
+ const e2=document.getElementById('kabupaten-total'); if(e2) e2.textContent=fmt(kabCount);
+ const maluku=valid.filter(x=>x.wilayah==='Maluku'), malut=valid.filter(x=>x.wilayah==='Maluku Utara');
+ const sumLoc=v=>v.reduce((n,x)=>n+x.lokasi,0);
+ const mm= if(mm) mm.textContent=`${maluku.length} perusahaan | ${sumLoc(maluku)} lokasi`;
+ const mu= if(mu) mu.textContent=`${malut.length} perusahaan | ${sumLoc(malut)} lokasi`;
+ render();
+}
+function updatePage2(){
+ const valid=companyData.filter(x=>x.perusahaan);
+ document.getElementById('p2total').textContent=fmt(valid.length);
+ document.getElementById('p2locations').textContent=fmt(valid.reduce((a,x)=>a+x.lokasi,0));
+}
+
+async function loadPage2Content(){
+ try{
+  const res=await fetch(CONTENT_URL+'&_='+Date.now(),{cache:'no-store'});
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const rows=parseCSVGeneric(await res.text());
+  const map={};
+  rows.forEach(r=>map[(r[0]||'').trim().toLowerCase()]={judul:r[1]||'',isi:r[2]||''});
+  const set=(key,jid,iid)=>{
+   if(!map[key]) return;
+   document.getElementById(jid).textContent=map[key].judul;
+   document.getElementById(iid).textContent=map[key].isi;
+  };
+  set('target_utama','judul-target','isi-target');
+  set('komitmen','judul-komitmen','isi-komitmen');
+  set('manfaat','judul-manfaat','isi-manfaat');
+
+  if(map['informasi_pln']){
+    document.getElementById('pln-info-title').textContent='INFORMASI';
+    document.getElementById('pln-info-intro').textContent=map['informasi_pln'].isi;
+  }
+  const plnKeys=['pln_up3_ternate','pln_up3_sofifi','pln_up3_tobelo'];
+  const plnList=document.getElementById('pln-info-list');
+  const items=plnKeys.filter(k=>map[k]).map(k=>{
+    const areas=String(map[k].isi||'').split(';').map(x=>x.trim()).filter(Boolean);
+    return `<div style="background:white;border-radius:10px;padding:10px 12px;border-left:4px solid #0b67b2">
+      <b style="color:#073b70">${escapeHTML(map[k].judul)}</b>
+      <div style="font-size:12px;line-height:1.55;margin-top:4px">${areas.map(a=>'• '+escapeHTML(a)).join('<br>')}</div>
+    </div>`;
+  });
+  if(plnList) plnList.innerHTML=items.join('');
+ }catch(e){
+  console.warn('Konten Halaman 2 gagal dimuat',e);
+ }
+}
+
+async function loadKendalaSolusi(){
+ try{
+  const res=await fetch(KS_URL+'&_='+Date.now(),{cache:'no-store'});
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const rows=parseCSVGeneric(await res.text());
+  const aktif=rows.filter(r=>(r[3]||'Aktif').trim().toLowerCase()!=='nonaktif');
+  const renderKS=(kategori,id)=>{
+    const list=aktif.filter(r=>(r[0]||'').trim().toLowerCase()===kategori.toLowerCase());
+    document.getElementById(id).innerHTML=list.length?list.map((r,i)=>`<div class="ksitem"><span class="ksnum">${r[1]||i+1}</span><span>${escapeHTML(r[2]||'')}</span></div>`).join(''):'<div class="ksitem"><span>Belum ada data.</span></div>';
+  };
+  renderKS('Kendala','kendala-list'); renderKS('Solusi','solusi-list');
+ }catch(e){
+  document.getElementById('kendala-list').innerHTML='<div class="ksitem"><span>Data Kendala belum dapat dimuat.</span></div>';
+  document.getElementById('solusi-list').innerHTML='<div class="ksitem"><span>Data Solusi belum dapat dimuat.</span></div>';
+ }
+}
+function parseCSVGeneric(text){
+ // Parser CSV yang mendukung line break di dalam satu sel Google Sheets.
+ const rows=[]; let row=[],v="",q=false;
+ for(let i=0;i<text.length;i++){
+  const c=text[i];
+  if(c=='"'){
+   if(q && text[i+1]=='"'){v+='"';i++;}
+   else q=!q;
+  }else if(c==',' && !q){
+   row.push(v);v="";
+  }else if((c=='\n'||c=='\r') && !q){
+   if(c=='\r' && text[i+1]=='\n') i++;
+   row.push(v);v="";
+   if(row.some(x=>String(x).trim())) rows.push(row);
+   row=[];
+  }else{
+   v+=c;
+  }
+ }
+ if(v.length||row.length){row.push(v);if(row.some(x=>String(x).trim())) rows.push(row);}
+ return rows.slice(1);
+}
+function escapeHTML(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+async function loadRealMap(){
+ const svg=document.getElementById('realMap');
+ const NS='http://www.w3.org/2000/svg';
+ try{
+  const sources=[
+   {url:'https://raw.githubusercontent.com/ghapsara/indonesia-atlas/master/kabupaten-kota/Maluku/maluku-simplified-topo.json',cls:'map-maluku'},
+   {url:'https://raw.githubusercontent.com/ghapsara/indonesia-atlas/master/kabupaten-kota/Maluku%20Utara/maluku-utara-simplified-topo.json',cls:'map-malut'}
+  ];
+  const geos=[];
+  for(const src of sources){
+   const topo=await (await fetch(src.url)).json();
+   const key=Object.keys(topo.objects)[0];
+   const geo=topojson.feature(topo,topo.objects[key]);
+   geos.push({geo,cls:src.cls});
+  }
+  const all=geos.flatMap(g=>g.geo.features.flatMap(f=>flattenCoords(f.geometry.coordinates)));
+  const xs=all.map(p=>p[0]),ys=all.map(p=>p[1]);
+  const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+  const W=620,H=485,pad=55,scale=Math.min((W-2*pad)/(maxX-minX),(H-2*pad)/(maxY-minY));
+  const project=p=>[pad+(p[0]-minX)*scale,H-pad-(p[1]-minY)*scale];
+  window.knmpMapProject=project;
+  for(const g of geos){
+   for(const f of g.geo.features){
+    const path=document.createElementNS(NS,'path');
+    path.setAttribute('d',geometryPath(f.geometry,project));
+    path.setAttribute('class','map-land '+g.cls);
+    svg.appendChild(path);
+   }
+  }
+  // Lokasi sementara: Desa Waesala
+  const waesala=project([127.838281,-3.159204]);
+  const marker=document.createElementNS(NS,'circle');
+  marker.setAttribute('cx',waesala[0]); marker.setAttribute('cy',waesala[1]);
+  marker.setAttribute('r','2.5'); marker.setAttribute('class','map-location-marker');
+  marker.setAttribute('tabindex','0'); marker.setAttribute('role','button');
+  marker.setAttribute('aria-label','Desa Waesala, klik untuk melihat data lokasi');
+  const showWaesala=()=>{
+    const pop=document.getElementById('waesalaPopup');
+    pop.style.left=Math.min(waesala[0]+18,360)+'px';
+    pop.style.top=Math.max(waesala[1]-55,55)+'px';
+    pop.classList.add('show');
+  };
+  marker.addEventListener('click',showWaesala);
+  marker.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showWaesala();}});
+  svg.appendChild(marker);
+
+  // Lokasi sementara: Desa Toniku
+  const toniku=project([127.620288,0.798038]);
+  const markerToniku=document.createElementNS(NS,'circle');
+  markerToniku.setAttribute('cx',toniku[0]); markerToniku.setAttribute('cy',toniku[1]);
+  markerToniku.setAttribute('r','2.5'); markerToniku.setAttribute('class','map-location-marker');
+  markerToniku.setAttribute('tabindex','0'); markerToniku.setAttribute('role','button');
+  markerToniku.setAttribute('aria-label','Desa Toniku, klik untuk melihat data lokasi');
+  const showToniku=()=>{
+    // Lokasi sementara: Desa Kusu Lofra
+  const kusu=project([127.908611,1.186944]);
+  const markerKusu=document.createElementNS(NS,'circle');
+  markerKusu.setAttribute('cx',kusu[0]); markerKusu.setAttribute('cy',kusu[1]);
+  markerKusu.setAttribute('r','2.5'); markerKusu.setAttribute('class','map-location-marker');
+  markerKusu.setAttribute('tabindex','0'); markerKusu.setAttribute('role','button');
+  markerKusu.setAttribute('aria-label','Desa Kusu Lofra, klik untuk melihat data lokasi');
+  const showKusu=()=>{const kp=document.getElementById('kusuPopup');kp.style.left=Math.min(kusu[0]+18,360)+'px';kp.style.top=Math.max(kusu[1]-55,55)+'px';kp.classList.add('show');};
+  markerKusu.addEventListener('click',showKusu);
+  markerKusu.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showKusu();}});
+  svg.appendChild(markerKusu);
+  // Lokasi: Desa Sidongoli Dehe
+  const sidongoli=project([127.517018,0.888616]);
+  const markerSidongoli=document.createElementNS(NS,'circle');
+  markerSidongoli.setAttribute('cx',sidongoli[0]); markerSidongoli.setAttribute('cy',sidongoli[1]);
+  markerSidongoli.setAttribute('r','2.5'); markerSidongoli.setAttribute('class','map-location-marker');
+  markerSidongoli.setAttribute('tabindex','0'); markerSidongoli.setAttribute('role','button');
+  markerSidongoli.setAttribute('aria-label','Desa Sidongoli Dehe, klik untuk melihat data lokasi');
+  const showSidongoli=()=>{const sp=document.getElementById('sidongoliPopup');sp.style.left=Math.min(sidongoli[0]+18,360)+'px';sp.style.top=Math.max(sidongoli[1]-55,55)+'px';sp.classList.add('show');};
+  markerSidongoli.addEventListener('click',showSidongoli);
+  markerSidongoli.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showSidongoli();}});
+  svg.appendChild(markerSidongoli);
+  const sp=document.getElementById('sidongoliPopup');
+  sp.querySelector('.close-map-popup').addEventListener('click',()=>sp.classList.remove('show'));
+
+  const kp=document.getElementById('kusuPopup');
+  kp.querySelector('.close-map-popup').addEventListener('click',()=>kp.classList.remove('show'));
+
+  const tp=document.getElementById('tonikuPopup');
+    tp.style.left=Math.min(toniku[0]+18,360)+'px';
+    tp.style.top=Math.max(toniku[1]-55,55)+'px';
+    tp.classList.add('show');
+  };
+  markerToniku.addEventListener('click',showToniku);
+  markerToniku.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showToniku();}});
+  svg.appendChild(markerToniku);
+  const tp=document.getElementById('tonikuPopup');
+  tp.querySelector('.close-map-popup').addEventListener('click',()=>tp.classList.remove('show'));
+
+  const pop=document.getElementById('waesalaPopup');
+  pop.querySelector('.close-map-popup').addEventListener('click',()=>pop.classList.remove('show'));
+
+  // Semua titik dari Data_Lokasi digambar setelah peta benar-benar selesai.
+  if(typeof renderDynamicMapMarkers==='function') renderDynamicMapMarkers();
+ }catch(e){
+  const t=document.createElementNS(NS,'text');t.setAttribute('x','40');t.setAttribute('y','240');t.setAttribute('class','map-error');
+  t.textContent='Peta tidak dapat dimuat. Periksa koneksi internet.';svg.appendChild(t);
+ }
+}
+function flattenCoords(c){return typeof c[0]==='number'?[c]:c.flatMap(flattenCoords)}
+function geometryPath(g,proj){
+ const polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];
+ return polys.map(poly=>poly.map(r=>r.map((p,i)=>{const q=proj(p);return (i?'L':'M')+q[0].toFixed(1)+','+q[1].toFixed(1)}).join('')+'Z').join('')).join('');
+}
+
+
+function showPage(n){
+ [1,2,3,4].forEach(i=>{
+  const page=document.getElementById('page'+i);
+  const tab=document.getElementById('tab'+i);
+  if(page) page.classList.toggle('active',n===i);
+  if(tab) tab.classList.toggle('active',n===i);
+ });
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function updatePage2(){
+ const valid=companyData.filter(x=>x.perusahaan && !x.perusahaan.toLowerCase().startsWith('contoh '));
+ document.getElementById('p2total').textContent=fmt(valid.length);
+ document.getElementById('p2locations').textContent=fmt(valid.reduce((a,x)=>a+x.lokasi,0));
+ const body=document.getElementById('projection-rows');
+ if(body){
+   body.innerHTML=valid.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td><b>${fmt(x.lokasi)}</b></td><td>${escapeHTML(x.kabupaten||'-')}</td><td>${escapeHTML(((x.kendala||'').trim()==='41'?'':x.kendala)||'-')}</td></tr>`).join('');
+ }
+ const total=document.getElementById('projection-total');
+ if(total) total.innerHTML=`<b>${fmt(valid.reduce((a,x)=>a+x.lokasi,0))}</b>`;
+}
+
+let projectionData=[];
+async function loadProjection(){
+ try{
+  const res=await fetch(PROJECTION_URL+'&_='+Date.now(),{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
+  const rows=parseCSVGeneric(await res.text());
+  projectionData=rows.map(r=>({perusahaan:(r[0]||'').trim(),wilayah:(r[1]||'').trim(),lokasi:Number(String(r[2]||'0').replace(/\./g,'').replace(',','.'))||0,namaLokasi:(r[3]||'').trim(),target:(r[4]||'').trim(),kendala:(r[5]||'').trim()})).filter(x=>x.perusahaan&&!x.perusahaan.toLowerCase().startsWith('contoh '));
+  document.getElementById('projection-rows').innerHTML=projectionData.length?projectionData.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.perusahaan)}</b></td><td>${escapeHTML(x.wilayah)}</td><td><b>${fmt(x.lokasi)}</b></td><td>${escapeHTML(x.namaLokasi||'-')}</td><td>${escapeHTML(((x.kendala||'').trim()==='41'?'':x.kendala)||'-')}</td></tr>`).join(''):'<tr><td colspan="6" style="padding:24px;text-align:center">Belum ada data proyeksi.</td></tr>';
+  document.getElementById('projection-total').innerHTML=`<b>${fmt(projectionData.reduce((a,x)=>a+x.lokasi,0))}</b>`;
+ }catch(e){document.getElementById('projection-rows').innerHTML='<tr><td colspan="6">Data proyeksi belum dapat dimuat.</td></tr>'}
+}
+
+
+let locationData=[];
+
+function populateP1KabupatenFilter(){
+ const el=document.getElementById('p1-kab-filter'); if(!el) return;
+ const current=el.value;
+ const vals=[...new Set(locationData.map(x=>x.kabupaten).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'id'));
+ el.innerHTML='<option value="">Semua Kabupaten/Kota</option>'+vals.map(v=>`<option value="${escapeHTML(v)}">${escapeHTML(v)}</option>`).join('');
+ if(vals.includes(current)) el.value=current;
+}
+function resetP1LocationFilters(){
+ ['p1-kab-filter','p1-wilayah-filter','p1-pleno-filter'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+ const q=document.getElementById('location-search'); if(q) q.value='';
+ renderLocationData();
+}
+function renderLocationData(){
+ populateP1KabupatenFilter();
+ const input=document.getElementById('location-search');
+ const q=(input?.value||'').toLowerCase().trim();
+ const kab=(document.getElementById('p1-kab-filter')?.value||'').trim();
+ const wilayah=(document.getElementById('p1-wilayah-filter')?.value||'').trim();
+ const pleno=(document.getElementById('p1-pleno-filter')?.value||'').trim();
+ const filtered=locationData.filter(x=>
+   [x.wilayah,x.kabupaten,x.pleno,x.desa].join(' ').toLowerCase().includes(q)
+   && (!kab || x.kabupaten===kab)
+   && (!wilayah || x.wilayah===wilayah)
+   && (!pleno || (()=>{
+      const norm=v=>(v||'').toLowerCase().replace(/\s+/g,'').replace(/hub/g,'hub').replace(/\(\+cs\)/g,'+cs');
+      const xp=norm(x.pleno), fp=norm(pleno);
+      if(fp==='hub') return xp.includes('hub');
+      if(fp==='hu') return xp==='hu' || xp.startsWith('hu,') || xp.includes(',hu');
+      if(fp==='penyangga') return xp==='penyangga';
+      if(fp==='penyangga+cs') return xp.includes('penyangga+cs');
+      return xp.includes(fp);
+   })())
+ );
+ const body=document.getElementById('location-rows');
+ if(!body) return;
+ const count=document.getElementById('location-count');
+ if(count) count.textContent=filtered.length+' data';
+ body.innerHTML=filtered.length
+   ? filtered.map((x,i)=>`<tr><td>${i+1}</td><td>${escapeHTML(x.kabupaten||'-')}</td><td><b>${escapeHTML(x.desa||'-')}</b></td><td>${escapeHTML(x.wilayah||'-')}</td><td>${escapeHTML(x.pleno||'-')}</td></tr>`).join('')
+   : `<tr><td colspan="5" style="padding:24px;text-align:center">${q?'Data yang dicari tidak ditemukan.':'Belum ada data lokasi.'}</td></tr>`;
+}
+async function loadLocationData(){
+ locationData=(window.KNMP_LOCATION_FIXED||[]).map(x=>({...x}));
+ populateP1KabupatenFilter();
+ renderLocationData();
+ if(typeof updateCompanyDashboard==='function') updateCompanyDashboard();
+}
+
+
+function renderDynamicMapMarkers(){
+ const svg=document.getElementById('realMap');
+ const project=window.knmpMapProject;
+ if(!svg||!project) return;
+ svg.querySelectorAll('.dynamic-location-marker').forEach(el=>el.remove());
+ const manualNames=new Set(['waesala','toniku','sidongoli dehe','kusu lofra']);
+ const pop=document.getElementById('dynamicMapPopup');
+ const body=document.getElementById('dynamicMapPopupBody');
+ if(pop && !pop.dataset.bound){
+   pop.querySelector('.close-map-popup')?.addEventListener('click',()=>pop.classList.remove('show'));
+   pop.dataset.bound='1';
+ }
+ locationData.forEach(x=>{
+   if(!x.koordinat || manualNames.has((x.desa||'').toLowerCase())) return;
+   const parts=x.koordinat.split(',').map(Number);
+   if(parts.length<2 || !Number.isFinite(parts[0]) || !Number.isFinite(parts[1])) return;
+   const lat=parts[0],lon=parts[1],pt=project([lon,lat]);
+   const m=document.createElementNS('http://www.w3.org/2000/svg','circle');
+   m.setAttribute('cx',pt[0]);m.setAttribute('cy',pt[1]);m.setAttribute('r','2.5');
+   m.setAttribute('class','map-location-marker dynamic-location-marker');
+   m.setAttribute('tabindex','0');m.setAttribute('role','button');
+   m.setAttribute('aria-label',(x.desa||'Lokasi KNMP')+', klik untuk melihat data lokasi');
+   const show=()=>{
+     if(!pop||!body)return;
+     const extras=[x.pleno?`<div><b>Hasil Pleno:</b> ${escapeHTML(x.pleno)}</div>`:'',x.luas?`<div><b>Luas:</b> ${escapeHTML(x.luas)}</div>`:'',x.keliling?`<div><b>Keliling:</b> ${escapeHTML(x.keliling)}</div>`:''].join('');
+     body.innerHTML=`<b>${escapeHTML(x.desa||'Lokasi KNMP')}</b><div>${escapeHTML(x.kabupaten||'')} · ${escapeHTML(x.wilayah||'')}</div><div class="coord">${lat.toFixed(6)}, ${lon.toFixed(6)}</div>${extras}<div style="margin-top:9px"><a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank" rel="noopener" style="display:inline-block;background:#0b67b2;color:#fff;text-decoration:none;padding:7px 10px;border-radius:8px;font-weight:800">Buka di Google Maps ↗</a></div>`;
+     pop.style.left=Math.min(pt[0]+18,360)+'px';pop.style.top=Math.max(pt[1]-55,55)+'px';pop.classList.add('show');
+   };
+   m.addEventListener('click',show);m.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show();}});
+   svg.appendChild(m);
+ });
+}
+
+
+let contractData=[];
+function renderContractData(){
+ const q=(document.getElementById('contract-search')?.value||'').toLowerCase().trim();
+ const d=contractData.filter(x=>[x.penyedia,x.ruang,x.tanggal].join(' ').toLowerCase().includes(q));
+ document.getElementById('contract-rows').innerHTML=d.map((x,i)=>`<tr><td>${i+1}</td><td style="text-align:left"><b>${escapeHTML(x.penyedia)}</b></td><td style="text-align:left;white-space:pre-line">${escapeHTML(x.ruang||'-')}</td><td>${escapeHTML(x.tanggal||'-')}</td></tr>`).join('');
+ document.getElementById('contract-count').textContent=d.length+' kontrak';
+}
+function loadContractData(){contractData=(window.KNMP_CONTRACT_FIXED||[]).map(x=>({...x}));renderContractData();}
+
+let companyData=[];
+async function loadCompanyData(){
+ companyData=(window.KNMP_COMPANY_FIXED||[]).map(x=>({...x}));
+ updateCompanyDashboard();
+ updatePage2();
+ render();
+}
+
+
+
+async function loadProgressWilayah(){
+ try{
+  const res=await fetch(HIGHLIGHT_URL+'&_='+Date.now(),{cache:'no-store'});
+  if(!res.ok) throw new Error('HTTP '+res.status);
+  const rows=parseCSVGeneric(await res.text()), h=(rows[0]||[]).map(x=>(x||'').trim().toLowerCase());
+  const wi=h.indexOf('wilayah'),ti=h.indexOf('target lokasi'),ri=h.indexOf('realisasi kontrak'),bi=h.indexOf('belum kontrak');
+  if(wi<0||ti<0||ri<0)return;
+  const data=rows.slice(1).filter(r=>r[wi]).map(r=>{const target=Number(r[ti]||0)||0,real=Number(r[ri]||0)||0,belum=bi>=0?(Number(r[bi]||0)||0):Math.max(0,target-real);return{wilayah:(r[wi]||'').trim(),target,real,belum,pct:target?real/target*100:0}}).filter(x=>x.wilayah==='Maluku'||x.wilayah==='Maluku Utara');
+  if(!data.length)return;
+  const body=document.getElementById('progress-region-rows'); if(!body)return;
+  const pc=n=>n.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+  const t=data.reduce((a,x)=>({target:a.target+x.target,real:a.real+x.real,belum:a.belum+x.belum}),{target:0,real:0,belum:0}),tp=t.target?t.real/t.target*100:0;
+  body.innerHTML=data.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.wilayah)}</b></td><td>${fmt(x.target)}</td><td>${fmt(x.real)}</td><td>${fmt(x.belum)}</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:${Math.min(100,x.pct)}%"></i></span><b>${pc(x.pct)}</b></div></td></tr>`).join('')+`<tr class="total-row"><td colspan="2"><b>Total</b></td><td><b>${fmt(t.target)}</b></td><td><b>${fmt(t.real)}</b></td><td><b>${fmt(t.belum)}</b></td><td><div class="pr-cell"><span class="pr-bar"><i style="width:${Math.min(100,tp)}%"></i></span><b>${pc(tp)}</b></div></td></tr>`;
+ }catch(e){}
+}
+
+async function loadHighlightUtama(){
+ try{
+   const res=await fetch(HIGHLIGHT_URL+'&_='+Date.now(),{cache:'no-store'});
+   if(!res.ok) throw new Error('HTTP '+res.status);
+   const rows=parseCSVGeneric(await res.text());
+   const map={};
+   rows.slice(1).forEach(r=>{ if(r[0]) map[(r[0]||'').trim().toLowerCase()]=Number(String(r[1]||'0').replace(/\./g,'').replace(',','.'))||0; });
+
+   const target=map['target lokasi']||145;
+   const real=map['realisasi kontrak']||114;
+   const pending=('belum kontrak' in map)?map['belum kontrak']:Math.max(0,target-real);
+   const kab=map['jumlah kabupaten/kota']||19;
+   const pr=target?real/target*100:0;
+   const pb=target?pending/target*100:0;
+   const idPct=n=>n.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+
+   const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+   set('target-total',fmt(target));
+   set('location-total',fmt(real));
+   set('pending-total',fmt(pending));
+   set('kabupaten-total',fmt(kab));
+   set('pct-real',idPct(pr));
+   set('pct-pending',idPct(pb));
+
+   const dr=document.getElementById('donut-real'); if(dr) dr.style.setProperty('--p',Math.max(0,Math.min(100,pr)));
+   const dp=document.getElementById('donut-pending'); if(dp) dp.style.setProperty('--p',Math.max(0,Math.min(100,pb)));
+
+   set('hl-total',`Target pembangunan ${fmt(target)} lokasi KNMP di Wilayah IV Maluku & Maluku Utara.`);
+   set('hl-maluku',`Realisasi kontrak telah mencapai ${fmt(real)} lokasi atau ${idPct(pr)} dari target.`);
+   set('hl-malut',`Masih terdapat ${fmt(pending)} lokasi atau ${idPct(pb)} dari target yang belum kontrak.`);
+ }catch(e){
+   // fallback angka terakhir jika sheet belum dapat dibaca
+   const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+   set('hl-total','Target pembangunan 145 lokasi KNMP di Wilayah IV Maluku & Maluku Utara.');
+   set('hl-maluku','Realisasi kontrak telah mencapai 114 lokasi atau 78,6% dari target.');
+   set('hl-malut','Masih terdapat 31 lokasi atau 21,4% dari target yang belum kontrak.');
+ }
+}
+
+async function loadSheet(){
+ try{
+  const res=await fetch(SHEET_URL+'&_='+Date.now(),{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
+  data=parseCSV(await res.text()); /* jangan menimpa ringkasan perusahaan */
+ }catch(e){
+  document.getElementById('rows').innerHTML='<tr><td colspan="6" style="padding:24px;color:#b42318"><b>Google Sheets belum dapat dibaca.</b><br>Pastikan akses: Siapa saja yang memiliki link → Pelihat.</td></tr>';
+ }
+}
+loadRealMap();
+loadSheet();
+loadLocationData();
+loadContractData();
+loadCompanyData();
+// loadProjection dinonaktifkan: Halaman 2 langsung memakai Data_Perusahaan 24 penyedia / 114 lokasi.
+loadKendalaSolusi();
+loadPage2Content();
+loadHighlightUtama();
+loadProgressWilayah();
+</script>
+
+<script>
+(function(){
+ let mapZoom=1, panX=0, panY=0, dragging=false, sx=0, sy=0, startX=0, startY=0;
+ const svg=document.getElementById('realMap');
+ const applyMap=()=>{ if(svg) svg.style.transform=`translate(${panX}px,${panY}px) scale(${mapZoom})`; };
+ const zin=document.getElementById('mapZoomIn');
+ const zout=document.getElementById('mapZoomOut');
+ const reset=document.getElementById('mapZoomReset');
+ if(zin) zin.addEventListener('click',()=>{mapZoom=Math.min(5,+(mapZoom+0.2).toFixed(1));applyMap();});
+ if(zout) zout.addEventListener('click',()=>{mapZoom=Math.max(0.7,+(mapZoom-0.2).toFixed(1));applyMap();});
+ if(reset) reset.addEventListener('click',()=>{mapZoom=1;panX=0;panY=0;applyMap();});
+ if(svg){
+   svg.style.cursor='grab';
+   svg.style.touchAction='none';
+   svg.addEventListener('wheel',e=>{
+     e.preventDefault();
+     mapZoom=e.deltaY<0?Math.min(5,+(mapZoom+0.1).toFixed(1)):Math.max(0.7,+(mapZoom-0.1).toFixed(1));
+     applyMap();
+   },{passive:false});
+   svg.addEventListener('pointerdown',e=>{
+     if(e.target && e.target.classList && e.target.classList.contains('map-location-marker')) return;
+     dragging=true;sx=e.clientX;sy=e.clientY;startX=panX;startY=panY;
+     svg.setPointerCapture(e.pointerId);svg.style.cursor='grabbing';
+   });
+   svg.addEventListener('pointermove',e=>{
+     if(!dragging)return;
+     panX=startX+(e.clientX-sx);panY=startY+(e.clientY-sy);applyMap();
+   });
+   const endDrag=e=>{dragging=false;svg.style.cursor='grab';};
+   svg.addEventListener('pointerup',endDrag);
+   svg.addEventListener('pointercancel',endDrag);
+ }
+})();
+</script>
+
+<script>
+window.addEventListener('load',()=>{
+  let tries=0;
+  const timer=setInterval(()=>{
+    tries++;
+    if(typeof renderDynamicMapMarkers==='function' && window.knmpMapProject){
+      renderDynamicMapMarkers();
+      if(document.querySelectorAll('#realMap .dynamic-location-marker').length || tries>=12) clearInterval(timer);
+    }else if(tries>=12){ clearInterval(timer); }
+  },500);
+});
+</script>
+
+<script>
+let plenoPinChoice='';
+function filterPlenoPin(value,btn){
+  plenoPinChoice = (plenoPinChoice===value ? '' : value);
+  document.querySelectorAll('.pleno-pin').forEach(b=>b.classList.toggle('active',b.dataset.pleno===plenoPinChoice || b.textContent.trim().replace(/^📍\s*/,'')===plenoPinChoice));
+  const selects=[...document.querySelectorAll('#page3 select')];
+  const plenoSelect=selects.find(x=>(x.id+' '+x.name+' '+(x.previousElementSibling?.textContent||'')).toLowerCase().includes('pleno'));
+  if(plenoSelect){
+    const opt=[...plenoSelect.options].find(o=>o.text.trim().toLowerCase()===plenoPinChoice.toLowerCase());
+    plenoSelect.value=plenoPinChoice && opt ? opt.value : '';
+    plenoSelect.dispatchEvent(new Event('change',{bubbles:true}));
+    return;
+  }
+  const rows=document.querySelectorAll('#page3 tbody tr');
+  rows.forEach(tr=>{tr.style.display=!plenoPinChoice||tr.textContent.toLowerCase().includes(plenoPinChoice.toLowerCase())?'':'none';});
+}
+</script>
+
+</body></html>
