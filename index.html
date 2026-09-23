@@ -191,9 +191,22 @@ th:nth-child(2) .th-filter{max-width:145px}
 @media(max-width:760px){.kpi-cards-v2 .kpi-with-ring{align-items:center}.kpi-cards-v2 .donut{width:76px;height:76px;min-width:76px}.kpi-cards-v2 .donut:after{width:55px;height:55px}.kpi-cards-v2 .donut-inner b{font-size:16px}.kpi-cards-v2 .donut-inner span{font-size:9px}}
 </style>
 <style>
+.contract-region-summary{display:grid!important;grid-template-columns:1fr 1fr;gap:12px!important;margin:10px 0 14px}
+.region-contract-card{background:#fff;border:1px solid #dbe8f3;border-radius:14px;padding:11px 12px;box-shadow:0 5px 14px rgba(15,65,120,.06)}
+.region-contract-name{font-size:13px;font-weight:950;color:#0b477e;margin-bottom:8px}
+.region-contract-values{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.rc{text-align:center;border-radius:10px;padding:7px 4px}
+.rc span,.rc small{display:block;font-size:9px;font-weight:800}
+.rc b{display:block;font-size:22px;line-height:1.05;margin:2px 0;font-weight:950}
+.rc.target{background:#e6f2ff;color:#075baa}
+.rc.real{background:#e6f8ec;color:#14783b}
+.rc.gap{background:#ffe9e9;color:#c62525}
+@media(max-width:700px){.contract-region-summary{grid-template-columns:1fr!important}}
+</style>
+<style>
 .progress-wilayah-panel{margin-bottom:14px}
 .progress-table-wrap{overflow-x:auto}
-.progress-region-table{width:100%;border-collapse:collapse;font-size:13px}
+.progress-region-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
 .progress-region-table th{background:#07558d;color:#fff;padding:10px 8px;text-align:center}
 .progress-region-table td{padding:10px 8px;text-align:center;border-bottom:1px solid #dbe7f0}
 .progress-region-table td:nth-child(2){text-align:left}
@@ -202,81 +215,8 @@ th:nth-child(2) .th-filter{max-width:145px}
 .pr-bar{display:block;width:90px;height:10px;background:#dbe3e9;border-radius:999px;overflow:hidden}
 .pr-bar i{display:block;height:100%;background:#17a768;border-radius:999px}
 .total-row .pr-bar{background:rgba(255,255,255,.35)}
-</style><style>
-/* Tabel progres full-width; di bawah: Daftar Lokasi kiri, Peta kanan */
-.progress-wilayah-panel{width:100%;display:block;margin-bottom:14px}
-.lokasi-peta-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr);gap:14px;align-items:start}
-@media(max-width:900px){.lokasi-peta-row{grid-template-columns:1fr}}
-</style><style>
-.map-region-summary{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;margin:10px 0 14px!important}
-.region-summary-item{padding:14px 10px!important;border-radius:12px!important;text-align:center!important;line-height:1.4!important}
-.region-name{display:block;font-size:15px!important;font-weight:900!important;margin-bottom:8px!important}
-.region-metrics{display:flex!important;justify-content:center!important;flex-wrap:wrap!important;gap:6px!important}
-.region-metrics span{background:#fff!important;border:1px solid #d8e6ef!important;border-radius:8px!important;padding:6px 8px!important;font-size:12px!important;font-weight:800!important;white-space:nowrap!important}
-.region-metrics .belum{color:#c62828!important}
-@media(max-width:1050px){.map-region-summary{grid-template-columns:1fr!important}}
 </style>
-<style>
-.page1-final-layout{display:block!important;width:100%!important}
-.page1-progress-row{display:block!important;width:100%!important;margin:0 0 14px!important}
-.page1-progress-row>.panel{width:100%!important;max-width:none!important;margin:0!important;box-sizing:border-box!important}
-.page1-bottom-row{display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr)!important;gap:14px!important;width:100%!important;align-items:start!important}
-.page1-location-col,.page1-map-col{display:block!important;width:auto!important;min-width:0!important}
-.page1-location-col>.panel,.page1-map-col>.panel{width:100%!important;max-width:none!important;margin:0!important;box-sizing:border-box!important}
-@media(max-width:900px){.page1-bottom-row{grid-template-columns:1fr!important}}
-</style>
-
-<style>
-/* FIX KUNCI: seluruh blok Halaman 1 mengambil lebar penuh grid induk */
-#page1 .page1-final-layout{
-  grid-column:1 / -1 !important;
-  width:100% !important;
-  max-width:none !important;
-  display:block !important;
-}
-#page1 .page1-progress-row{
-  width:100% !important;
-  display:block !important;
-  margin-bottom:16px !important;
-}
-#page1 .page1-bottom-row{
-  width:100% !important;
-  display:grid !important;
-  grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr) !important;
-  gap:16px !important;
-  align-items:start !important;
-}
-#page1 .page1-location-col,
-#page1 .page1-map-col{
-  min-width:0 !important;
-  width:100% !important;
-}
-@media(max-width:900px){
-  #page1 .page1-bottom-row{grid-template-columns:1fr !important;}
-}
-</style>
-
-<style>
-#page1 .page1-final-layout{grid-column:1/-1!important;width:100%!important;display:block!important}
-#page1 .page1-progress-row{display:block!important;width:100%!important;margin-bottom:16px!important}
-#page1 .page1-bottom-row{display:grid!important;grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr)!important;gap:16px!important;align-items:start!important;width:100%!important}
-#page1 .page1-location-col,#page1 .page1-map-col{width:100%!important;min-width:0!important}
-@media(max-width:900px){#page1 .page1-bottom-row{grid-template-columns:1fr!important}}
-</style>
-<style>
-#page1 .highlight-full-row{
- grid-column:1/-1!important;
- width:100%!important;
- display:block!important;
- margin-top:16px!important;
-}
-#page1 .highlight-full-row>.panel{
- width:100%!important;
- max-width:none!important;
- display:block!important;
- box-sizing:border-box!important;
-}
-</style></head>
+</head>
 <body>
 <div class="wrap">
 <div class="navtabs"><button class="navbtn active" id="tab1" onclick="showPage(1)">Halaman 1 · Progres</button><button class="navbtn" id="tab2" onclick="showPage(2)">Halaman 2 · Pelaksanaan</button>
@@ -296,20 +236,31 @@ th:nth-child(2) .th-filter{max-width:145px}
 </section>
 
 <section class="grid">
-
-<div class="page1-final-layout">
-  <div class="page1-progress-row"><div class="panel progress-wilayah-panel">
+<div class="panel progress-wilayah-panel">
 <h2>TABEL PROGRES PER WILAYAH</h2>
 <div class="progress-table-wrap">
 <table class="progress-region-table">
 <thead><tr><th>No</th><th>Wilayah</th><th>Target Lokasi</th><th>Realisasi Kontrak</th><th>Belum Kontrak</th><th>Persentase Realisasi</th></tr></thead>
 <tbody id="progress-region-rows">
-<tr><td>1</td><td><b>Maluku</b></td><td>79 lokasi</td><td>57 lokasi</td><td>22 lokasi</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:72.2%"></i></span><b>72,2%</b></div></td></tr>
-<tr><td>2</td><td><b>Maluku Utara</b></td><td>66 lokasi</td><td>57 lokasi</td><td>9 lokasi</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:86.4%"></i></span><b>86,4%</b></div></td></tr>
-<tr class="total-row"><td colspan="2"><b>Total</b></td><td><b>145 lokasi</b></td><td><b>114 lokasi</b></td><td><b>31 lokasi</b></td><td><div class="pr-cell"><span class="pr-bar"><i style="width:78.6%"></i></span><b>78,6%</b></div></td></tr>
-</tbody></table></div></div></div>
-  <div class="page1-bottom-row">
-    <div class="page1-location-col"><div class="panel">
+<tr><td>1</td><td><b>Maluku</b></td><td>79</td><td>57</td><td>22</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:72.2%"></i></span><b>72,2%</b></div></td></tr>
+<tr><td>2</td><td><b>Maluku Utara</b></td><td>66</td><td>57</td><td>9</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:86.4%"></i></span><b>86,4%</b></div></td></tr>
+<tr class="total-row"><td colspan="2"><b>Total</b></td><td><b>145</b></td><td><b>114</b></td><td><b>31</b></td><td><div class="pr-cell"><span class="pr-bar"><i style="width:78.6%"></i></span><b>78,6%</b></div></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="panel">
+<h2>SEBARAN TARGET DAN REALISASI KONTRAK PER WILAYAH</h2>
+<div class="map-region-summary contract-region-summary">
+  <div class="region-contract-card">
+    <div class="region-contract-name">MALUKU</div>
+    <div class="region-contract-values">
+      <div class="rc target"><span>Target</span><b>79</b><small>lokasi</small></div>
+      <div class="rc real"><span>Realisasi</span><b>57</b><small>lokasi</small></div>
+      <div class="rc gap"><span>Selisih</span><b>22</b><small>lokasi</small></div>
+    </div>
+  </div>
+<div class="panel">
 <h2>DAFTAR LOKASI KNMP MALUKU & MALUKU UTARA</h2>
 <div class="legend" style="margin:0 0 10px"></div>
 <div style="margin:12px 0">
@@ -324,15 +275,16 @@ th:nth-child(2) .th-filter{max-width:145px}
 <th><span class="th-filter-wrap"><span>Hasil Pleno</span><select id="p1-pleno-filter" class="th-filter" onchange="renderLocationData()" title="Filter Hasil Pleno"><option value="">Semua</option><option value="Hub">Hub</option><option value="Penyangga">Penyangga</option><option value="Penyangga (+CS)">Penyangga (+CS)</option></select></span></th>
 </tr></thead>
 <tbody id="location-rows"><tr><td colspan="5">Memuat data lokasi...</td></tr></tbody></table></div>
-</div></div>
-    <div class="page1-map-col"></div>
-  </div>
 </div>
-<div class="highlight-full-row"><div class="panel">
-<h2>SEBARAN TARGET DAN REALISASI KONTRAK PER WILAYAH</h2>
-<div class="map-region-summary">
-  <div class="region-summary-item maluku-summary"><span class="region-name">MALUKU</span><div class="region-metrics"><span>Target <b>79</b> lokasi</span><span>Realisasi <b>57</b> lokasi</span><span class="belum">Belum <b>22</b> lokasi</span></div></div>
-  <div class="region-summary-item malut-summary"><span class="region-name">MALUKU UTARA</span><div class="region-metrics"><span>Target <b>66</b> lokasi</span><span>Realisasi <b>57</b> lokasi</span><span class="belum">Belum <b>9</b> lokasi</span></div></div>
+
+  <div class="region-contract-card">
+    <div class="region-contract-name">MALUKU UTARA</div>
+    <div class="region-contract-values">
+      <div class="rc target"><span>Target</span><b>66</b><small>lokasi</small></div>
+      <div class="rc real"><span>Realisasi</span><b>57</b><small>lokasi</small></div>
+      <div class="rc gap"><span>Selisih</span><b>9</b><small>lokasi</small></div>
+    </div>
+  </div>
 </div>
 <div style="display:flex;justify-content:flex-end;margin:0 0 10px">
 <a class="open-mymaps-btn" href="https://www.google.com/maps/d/u/0/viewer?mid=1-5fyEUyOs2u7kB8iZh9bXA-7axrBO5g&ll=-0.5719494703015211%2C127.60016493323499&z=7&utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer" title="Buka peta lengkap di tab baru">📍 Buka Google My Maps ↗</a>
@@ -367,12 +319,6 @@ th:nth-child(2) .th-filter{max-width:145px}
 </div>
 <div class="legend">Ringkasan: Jumlah Perusahaan | Jumlah Lokasi</div>
 </div>
-</div></div>
-
-
-<div class="lokasi-peta-row">
-
-
 </div>
 </section>
 
@@ -466,8 +412,6 @@ function updateCompanyDashboard(){
  const e2=document.getElementById('kabupaten-total'); if(e2) e2.textContent=fmt(kabCount);
  const maluku=valid.filter(x=>x.wilayah==='Maluku'), malut=valid.filter(x=>x.wilayah==='Maluku Utara');
  const sumLoc=v=>v.reduce((n,x)=>n+x.lokasi,0);
- const mm= if(mm) mm.textContent=`${maluku.length} perusahaan | ${sumLoc(maluku)} lokasi`;
- const mu= if(mu) mu.textContent=`${malut.length} perusahaan | ${sumLoc(malut)} lokasi`;
  render();
 }
 function updatePage2(){
@@ -802,18 +746,22 @@ async function loadProgressWilayah(){
  try{
   const res=await fetch(HIGHLIGHT_URL+'&_='+Date.now(),{cache:'no-store'});
   if(!res.ok) throw new Error('HTTP '+res.status);
-  const rows=parseCSVGeneric(await res.text()), h=(rows[0]||[]).map(x=>(x||'').trim().toLowerCase());
-  const wi=h.indexOf('wilayah'),ti=h.indexOf('target lokasi'),ri=h.indexOf('realisasi kontrak'),bi=h.indexOf('belum kontrak');
-  if(wi<0||ti<0||ri<0)return;
-  const data=[
- {wilayah:'Maluku',target:79,real:57,belum:22,pct:(57/79)*100},
- {wilayah:'Maluku Utara',target:66,real:57,belum:9,pct:(57/66)*100}
-];
-if(!data.length)return;
+  const rows=parseCSVGeneric(await res.text());
+  const h=(rows[0]||[]).map(x=>(x||'').trim().toLowerCase());
+  const wi=h.indexOf('wilayah'), ti=h.indexOf('target lokasi'), ri=h.indexOf('realisasi kontrak'), bi=h.indexOf('belum kontrak');
+  if(wi<0||ti<0||ri<0) return;
+  const data=rows.slice(1).filter(r=>r[wi]).map(r=>{
+   const target=Number(r[ti]||0)||0, real=Number(r[ri]||0)||0;
+   const belum=bi>=0?(Number(r[bi]||0)||0):Math.max(0,target-real);
+   return {wilayah:(r[wi]||'').trim(),target,real,belum,pct:target?real/target*100:0};
+  }).filter(x=>x.wilayah==='Maluku'||x.wilayah==='Maluku Utara');
+  if(!data.length) return;
   const body=document.getElementById('progress-region-rows'); if(!body)return;
-  const pc=n=>n.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
-  const t=data.reduce((a,x)=>({target:a.target+x.target,real:a.real+x.real,belum:a.belum+x.belum}),{target:0,real:0,belum:0}),tp=t.target?t.real/t.target*100:0;
-  body.innerHTML=data.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.wilayah)}</b></td><td>${fmt(x.target)} lokasi</td><td>${fmt(x.real)} lokasi</td><td>${fmt(x.belum)} lokasi</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:${Math.min(100,x.pct)}%"></i></span><b>${pc(x.pct)}</b></div></td></tr>`).join('')+`<tr class="total-row"><td colspan="2"><b>Total</b></td><td><b>${fmt(t.target)} lokasi</b></td><td><b>${fmt(t.real)} lokasi</b></td><td><b>${fmt(t.belum)} lokasi</b></td><td><div class="pr-cell"><span class="pr-bar"><i style="width:${Math.min(100,tp)}%"></i></span><b>${pc(tp)}</b></div></td></tr>`;
+  const idPct=n=>n.toLocaleString('id-ID',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+  const total=data.reduce((a,x)=>({target:a.target+x.target,real:a.real+x.real,belum:a.belum+x.belum}),{target:0,real:0,belum:0});
+  const tp=total.target?total.real/total.target*100:0;
+  body.innerHTML=data.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHTML(x.wilayah)}</b></td><td>${fmt(x.target)}</td><td>${fmt(x.real)}</td><td>${fmt(x.belum)}</td><td><div class="pr-cell"><span class="pr-bar"><i style="width:${Math.min(100,x.pct)}%"></i></span><b>${idPct(x.pct)}</b></div></td></tr>`).join('')+
+  `<tr class="total-row"><td colspan="2"><b>Total</b></td><td><b>${fmt(total.target)}</b></td><td><b>${fmt(total.real)}</b></td><td><b>${fmt(total.belum)}</b></td><td><div class="pr-cell"><span class="pr-bar"><i style="width:${Math.min(100,tp)}%"></i></span><b>${idPct(tp)}</b></div></td></tr>`;
  }catch(e){}
 }
 
