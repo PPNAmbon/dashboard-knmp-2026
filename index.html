@@ -207,6 +207,14 @@ th:nth-child(2) .th-filter{max-width:145px}
 .progress-wilayah-panel{width:100%;display:block;margin-bottom:14px}
 .lokasi-peta-row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr);gap:14px;align-items:start}
 @media(max-width:900px){.lokasi-peta-row{grid-template-columns:1fr}}
+</style><style>
+.map-region-summary{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;margin:10px 0 14px!important}
+.region-summary-item{padding:14px 10px!important;border-radius:12px!important;text-align:center!important;line-height:1.4!important}
+.region-name{display:block;font-size:15px!important;font-weight:900!important;margin-bottom:8px!important}
+.region-metrics{display:flex!important;justify-content:center!important;flex-wrap:wrap!important;gap:6px!important}
+.region-metrics span{background:#fff!important;border:1px solid #d8e6ef!important;border-radius:8px!important;padding:6px 8px!important;font-size:12px!important;font-weight:800!important;white-space:nowrap!important}
+.region-metrics .belum{color:#c62828!important}
+@media(max-width:1050px){.map-region-summary{grid-template-columns:1fr!important}}
 </style></head>
 <body>
 <div class="wrap">
@@ -255,10 +263,10 @@ th:nth-child(2) .th-filter{max-width:145px}
 <tbody id="location-rows"><tr><td colspan="5">Memuat data lokasi...</td></tr></tbody></table></div>
 </div>
 <div class="panel">
-<h2>SEBARAN STATUS PERUSAHAAN MALUKU & MALUKU UTARA</h2>
+<h2>SEBARAN TARGET DAN REALISASI KONTRAK PER WILAYAH</h2>
 <div class="map-region-summary">
-  <div class="region-summary-item maluku-summary">MALUKU<br><b id="map-maluku">-</b></div>
-  <div class="region-summary-item malut-summary">MALUKU UTARA<br><b id="map-malut">-</b></div>
+  <div class="region-summary-item maluku-summary"><span class="region-name">MALUKU</span><div class="region-metrics"><span>Target <b>66</b></span><span>Realisasi <b>57</b></span><span class="belum">Belum <b>9</b></span></div></div>
+  <div class="region-summary-item malut-summary"><span class="region-name">MALUKU UTARA</span><div class="region-metrics"><span>Target <b>79</b></span><span>Realisasi <b>57</b></span><span class="belum">Belum <b>22</b></span></div></div>
 </div>
 <div style="display:flex;justify-content:flex-end;margin:0 0 10px">
 <a class="open-mymaps-btn" href="https://www.google.com/maps/d/u/0/viewer?mid=1-5fyEUyOs2u7kB8iZh9bXA-7axrBO5g&ll=-0.5719494703015211%2C127.60016493323499&z=7&utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer" title="Buka peta lengkap di tab baru">📍 Buka Google My Maps ↗</a>
@@ -387,8 +395,8 @@ function updateCompanyDashboard(){
  const e2=document.getElementById('kabupaten-total'); if(e2) e2.textContent=fmt(kabCount);
  const maluku=valid.filter(x=>x.wilayah==='Maluku'), malut=valid.filter(x=>x.wilayah==='Maluku Utara');
  const sumLoc=v=>v.reduce((n,x)=>n+x.lokasi,0);
- const mm=document.getElementById('map-maluku'); if(mm) mm.textContent=`${maluku.length} perusahaan | ${sumLoc(maluku)} lokasi`;
- const mu=document.getElementById('map-malut'); if(mu) mu.textContent=`${malut.length} perusahaan | ${sumLoc(malut)} lokasi`;
+ const mm= if(mm) mm.textContent=`${maluku.length} perusahaan | ${sumLoc(maluku)} lokasi`;
+ const mu= if(mu) mu.textContent=`${malut.length} perusahaan | ${sumLoc(malut)} lokasi`;
  render();
 }
 function updatePage2(){
